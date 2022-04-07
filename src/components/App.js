@@ -1,11 +1,6 @@
 import React from 'react';
-import {
-  HashRouter as Router,
-  Route,
-  Routes,
-  Navigate,
-} from 'react-router-dom';
-import { useApp } from '../context/AppContext';
+import { HashRouter as Router, Route, Routes } from 'react-router-dom';
+
 import Navbar from './Navbar';
 import Home from './Home';
 
