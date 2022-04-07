@@ -1,7 +1,29 @@
 import React from 'react';
+import {
+  HashRouter as Router,
+  Route,
+  Routes,
+  Navigate,
+} from 'react-router-dom';
+import { useApp } from '../context/AppContext';
+import Navbar from './Navbar';
+import Home from './Home';
 
-const App = () => {
-  return <div>App</div>;
-};
+import styled from 'styled-components';
 
-export default App;
+export default function App() {
+  return (
+    <Container>
+      <Router>
+        <Navbar />
+        <Routes>
+          <Route path='/' element={<Home />} />
+        </Routes>
+      </Router>
+    </Container>
+  );
+}
+
+const Container = styled.div`
+  display: flex;
+`;
