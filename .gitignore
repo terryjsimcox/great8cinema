@@ -67,3 +67,6 @@ node_modules/
 
 # production folder
 build/
+
+# public image folder for testing
+public/images
