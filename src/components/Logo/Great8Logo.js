@@ -14,7 +14,6 @@ export default function Great8Logo() {
 
 const Container = styled(Link)`
   z-index: 2;
-  margin-inline-start: 2rem;
   & svg {
     & #great {
       fill: ${colors.white[100]};

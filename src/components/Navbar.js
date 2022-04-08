@@ -84,6 +84,9 @@ const Container = styled.nav`
   justify-content: space-between;
   width: 100%;
   height: 5rem;
+  & > a {
+    margin-inline-start: 2rem;
+  }
 
   @media print {
     display: none;
