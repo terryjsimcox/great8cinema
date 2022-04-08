@@ -87,6 +87,9 @@ const Container = styled.nav`
   width: 100%;
   height: 5rem;
 
+  @media print {
+    display: none;
+  }
   @media only screen and (max-width: 960px) {
     justify-content: center;
   }

@@ -1,143 +1,113 @@
 import React from 'react';
+import { v4 as uuid } from 'uuid';
+import { Link } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
-import Slider from 'react-slick';
 
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
+import Carousel from './Carousel';
+import { MoviePosterCard } from './Card';
+
 import styled from 'styled-components';
 import { colors, fonts, borderRadius } from '../containts/styles.defaults';
 
 export default function Home() {
-  const { state } = useApp();
+  const movieList = [
+    {
+      title: 'Father Stu',
+      poster: '/images/FatherStu.jpg',
+    },
+    {
+      title: 'Fantastic Beasts',
+      poster: '/images/FantasticBeasts.jpg',
+    },
+    {
+      title: 'Ambulance',
+      poster: '/images/Ambulance.jpg',
+    },
+    {
+      title: 'Sonic the Hedgehog 2',
+      poster: '/images/SonictheHedgehog2.jpg',
+    },
+    {
+      title: 'The Lost City',
+      poster: '/images/TheLostCity.jpg',
+    },
+    {
+      title: 'Uncharted',
+      poster: '/images/Uncharted.jpg',
+    },
+    {
+      title: 'Spider-Man',
+      poster: '/images/Spider-Man.jpg',
+    },
+    {
+      title: 'Dog',
+      poster: '/images/Dog.jpg',
+    },
+  ];
 
-  const sliderSetting = {
-    dots: true,
-    fade: true,
-    infinite: true,
-    autoplay: true,
-    autoplaySpeed: 10000,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    pauseOnHover: true,
-  };
   return (
     <Container>
+      <Carousel />
       <Section>
-        <Carousel {...sliderSetting}>
-          <ImgContainer>
-            <Blackout />
-            <img src='/images/background/Ambulance.jpg' alt='placeholder1' />
-          </ImgContainer>
-          <ImgContainer>
-            <Blackout />
-            <img src='/images/background/Dog.jpg' alt='placeholder1' />
-          </ImgContainer>
-          <ImgContainer>
-            <Blackout />
-            <img
-              src='/images/background/FantasticBeasts.jpg'
-              alt='placeholder1'
+        <MovieListContainer>
+          <Title>Now Showing</Title>
+          {movieList.map((movie) => (
+            <MoviePosterCard
+              key={uuid()}
+              src={movie.poster}
+              alt={movie.title}
             />
-          </ImgContainer>
-          <ImgContainer>
-            <Blackout />
-            <img src='/images/Sonic.jpg' alt='placeholder1' />
-          </ImgContainer>
-          <ImgContainer>
-            <Blackout />
-            <img src='/images/background/Spider-Man.jpg' alt='placeholder1' />
-          </ImgContainer>
-        </Carousel>
+          ))}
+        </MovieListContainer>
       </Section>
     </Container>
   );
 }
 
 const Container = styled.div`
-  position: relative;
-  display: block;
-  width: 100vw;
-  height: 500px;
-  margin: 0 auto;
-  height: 5000px;
-`;
-
-const Carousel = styled(Slider)`
-  position: relative;
-  display: block;
-  width: 100%;
-  height: 100%;
-  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
   overflow: hidden;
-  & > .slick-prev::before,
-  & > .slick-next::before {
-    font-size: 2rem;
-  }
-  & > .slick-prev {
-    z-index: 2;
-    left: 1rem;
-  }
-  & > .slick-next {
-    z-index: 2;
-    right: 2rem;
-  }
-  & > .slick-dots {
-    bottom: 1rem;
-    & li {
-      & button {
-        &:hover {
-          &::before {
-            color: ${colors.white[100]};
-          }
-        }
-      }
-      & button::before {
-        font-size: 1.2rem;
-        color: ${colors.white[300]};
-      }
-    }
-    & > .slick-active {
-      & button::before {
-        color: ${colors.white[100]};
-      }
-    }
-  }
 `;
 
 const Section = styled.section`
   display: flex;
   justify-content: center;
-  width: 100vw;
-  height: 600px;
+  margin-bottom: 4rem;
+`;
+
+const MovieListContainer = styled.div`
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 4rem;
+  width: fit-content;
+  margin-top: 4rem;
   @media only screen and (max-width: 760px) {
-    display: none;
+    grid-template-columns: 1fr;
+    & h2 {
+      grid-column: 1/2;
+    }
+  }
+  @media only screen and (min-width: 761px) and (max-width: 1100px) {
+    grid-template-columns: repeat(2, 1fr);
+    & h2 {
+      grid-column: 1/3;
+    }
+  }
+  @media only screen and (min-width: 1101px) and (max-width: 1400px) {
+    grid-template-columns: repeat(3, 1fr);
+    & h2 {
+      grid-column: 1/4;
+    }
   }
 `;
 
-const ImgContainer = styled.div`
-  position: relative;
-  width: 100%;
-  height: 600px;
-  & img {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    left: 15rem;
-    z-index: -1;
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-  }
-`;
-
-const Blackout = styled.div`
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  background: linear-gradient(to right, hsla(0, 0%, 0%, 1) 10%, transparent),
-    linear-gradient(to right, hsla(0, 0%, 0%, 0.8) 10%, transparent),
-    linear-gradient(to right, hsla(0, 0%, 0%, 1) 5%, transparent);
+const Title = styled.h2`
+  grid-column: 1/5;
+  margin-bottom: 2rem;
+  color: ${colors.white[100]};
+  font-size: 3rem;
+  font-weight: ${fonts.weight[400]};
+  font-family: ${fonts.EncodeSans};
+  letter-spacing: ${fonts.letterSpacing};
 `;
