@@ -59,3 +59,5 @@ export const borderRadius = {
   md: '1rem',
   lg: '1.5rem',
 };
+
+export const carouselHeight = 600;

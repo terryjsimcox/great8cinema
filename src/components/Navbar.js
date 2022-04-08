@@ -5,7 +5,7 @@ import { useApp } from '../context/AppContext';
 import { HiMenuAlt4, HiX } from 'react-icons/hi';
 import styled from 'styled-components';
 import { colors, fonts, borderRadius } from '../containts/styles.defaults';
-import { ReactComponent as Great8Logo } from '../assets/images/great8cinema.svg';
+import { Great8Logo } from './Logo';
 
 const defaultNavItems = [
   {
@@ -51,9 +51,7 @@ export default function Navbar() {
   return (
     <Container>
       <Background opacity={scrollPos} />
-      <MainLogo to='/'>
-        <Great8Logo />
-      </MainLogo>
+      <Great8Logo />
       <NavList open={navOpen} className={navOpen && 'open'}>
         {defaultNavItems.map((item) => (
           <NavItem
@@ -86,7 +84,13 @@ const Container = styled.nav`
   justify-content: space-between;
   width: 100%;
   height: 5rem;
+  & > a {
+    margin-inline-start: 2rem;
+  }
 
+  @media print {
+    display: none;
+  }
   @media only screen and (max-width: 960px) {
     justify-content: center;
   }
@@ -103,25 +107,6 @@ const Background = styled.div`
   background-color: ${colors.dark[700]};
   @media only screen and (max-width: 960px) {
     opacity: 1;
-  }
-`;
-
-const MainLogo = styled(Link)`
-  z-index: 2;
-  margin-inline-start: 2rem;
-  & svg {
-    & #great {
-      fill: ${colors.white[100]};
-      stroke: transparent;
-    }
-    & #eight {
-      fill: ${colors.secondary[400]};
-      stroke: transparent;
-    }
-    & #cinema {
-      fill: ${colors.white[100]};
-      stroke: transparent;
-    }
   }
 `;
 
