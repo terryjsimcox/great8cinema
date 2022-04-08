@@ -5,7 +5,7 @@ import { useApp } from '../context/AppContext';
 import { HiMenuAlt4, HiX } from 'react-icons/hi';
 import styled from 'styled-components';
 import { colors, fonts, borderRadius } from '../containts/styles.defaults';
-import { ReactComponent as Great8Logo } from '../assets/images/great8cinema.svg';
+import { Great8Logo } from './Logo';
 
 const defaultNavItems = [
   {
@@ -51,9 +51,7 @@ export default function Navbar() {
   return (
     <Container>
       <Background opacity={scrollPos} />
-      <MainLogo to='/'>
-        <Great8Logo />
-      </MainLogo>
+      <Great8Logo />
       <NavList open={navOpen} className={navOpen && 'open'}>
         {defaultNavItems.map((item) => (
           <NavItem
