@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { colors, fonts, borderRadius } from '../../containts/styles.defaults';
+import { borderRadius } from '../../containts/styles.defaults';
 
 export default function MoviePosterCard({ src, alt }) {
   return (

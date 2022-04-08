@@ -1,13 +1,12 @@
 import React from 'react';
 import { v4 as uuid } from 'uuid';
-import { Link } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 
 import Carousel from './Carousel';
 import { MoviePosterCard } from './Card';
 
 import styled from 'styled-components';
-import { colors, fonts, borderRadius } from '../containts/styles.defaults';
+import { colors, fonts } from '../containts/styles.defaults';
 
 export default function Home() {
   const { state } = useApp();

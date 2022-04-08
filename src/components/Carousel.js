@@ -1,19 +1,12 @@
 import React from 'react';
-import { useApp } from '../context/AppContext';
 import Slider from 'react-slick';
 
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import styled from 'styled-components';
-import {
-  colors,
-  fonts,
-  borderRadius,
-  carouselHeight,
-} from '../containts/styles.defaults';
+import { colors, carouselHeight } from '../containts/styles.defaults';
 
 export default function Carousel() {
-  const { state } = useApp();
   const sliderSetting = {
     dots: true,
     fade: true,

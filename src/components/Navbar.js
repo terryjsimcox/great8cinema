@@ -110,25 +110,6 @@ const Background = styled.div`
   }
 `;
 
-const MainLogo = styled(Link)`
-  z-index: 2;
-  margin-inline-start: 2rem;
-  & svg {
-    & #great {
-      fill: ${colors.white[100]};
-      stroke: transparent;
-    }
-    & #eight {
-      fill: ${colors.secondary[400]};
-      stroke: transparent;
-    }
-    & #cinema {
-      fill: ${colors.white[100]};
-      stroke: transparent;
-    }
-  }
-`;
-
 const NavList = styled.ul`
   display: flex;
   z-index: 2;
