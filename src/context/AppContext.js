@@ -25,7 +25,14 @@ export const AppProvider = ({ children }) => {
 
   useEffect(() => {
     axios
-      .get('https://us-central1-great8cinema-a8432.cloudfunctions.net/GetFilms')
+      .get(
+        'https://us-central1-great8cinema-a8432.cloudfunctions.net/GetFilms',
+        {
+          headers: {
+            'Access-Control-Allow-Origin': '*',
+          },
+        }
+      )
       .then((results) => setState((s) => ({ ...s, films: results })))
       .catch((err) => console.log(err));
   });
