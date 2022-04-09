@@ -47,7 +47,7 @@ exports.GetFilms = functions.https.onRequest(async (req, res) => {
     if (req.method === 'OPTIONS') {
       res.set('Access-Control-Allow-Methods', 'GET');
       res.set('Access-Control-Max-Age', '3600');
-      res.status(204).send(results);
+      res.status(204).send('');
     } else {
       res.send(results);
     }
