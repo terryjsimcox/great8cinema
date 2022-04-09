@@ -26,7 +26,7 @@ export const AppProvider = ({ children }) => {
   useEffect(() => {
     axios
       .get('https://us-central1-great8cinema-a8432.cloudfunctions.net/GetFilms')
-      .then((results) => setState((s) => ({ ...s, films: results })))
+      .then((results) => setState((s) => ({ ...s, films: results.data })))
       .catch((err) => console.log(err));
   });
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
