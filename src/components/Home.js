@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { v4 as uuid } from 'uuid';
 import { useApp } from '../context/AppContext';
-import axios from 'axios';
+// import axios from 'axios';
 import Carousel from './Carousel';
 import { MoviePosterCard } from './Card';
 
@@ -12,12 +12,12 @@ export default function Home() {
   const { state, updateState } = useApp();
   console.log(state);
 
-  useEffect(() => {
-    axios
-      .get('https://us-central1-great8cinema-a8432.cloudfunctions.net/GetFilms')
-      .then((results) => updateState((s) => ({ ...s, films: results.data })))
-      .catch((err) => console.log(err));
-  });
+  // useEffect(() => {
+  //   axios
+  //     .get('https://us-central1-great8cinema-a8432.cloudfunctions.net/GetFilms')
+  //     .then((results) => updateState((s) => ({ ...s, films: results.data })))
+  //     .catch((err) => console.log(err));
+  // });
 
   return (
     <Container>
