@@ -10,53 +10,53 @@ import { colors, fonts } from '../containts/styles.defaults';
 
 export default function Home() {
   const { state } = useApp();
-  const movieList = [
-    {
-      category: 'Now Showing',
-      title: 'Father Stu',
-      poster: '/images/FatherStu.jpg',
-    },
-    {
-      category: 'Now Showing',
-      title: 'Fantastic Beasts',
-      poster: '/images/FantasticBeasts.jpg',
-    },
-    {
-      category: 'Now Showing',
-      title: 'Ambulance',
-      poster: '/images/Ambulance.jpg',
-    },
-    {
-      category: 'Now Showing',
-      title: 'Sonic the Hedgehog 2',
-      poster: '/images/SonictheHedgehog2.jpg',
-    },
-    {
-      category: 'Now Showing',
-      title: 'The Lost City',
-      poster: '/images/TheLostCity.jpg',
-    },
-    {
-      category: 'Now Showing',
-      title: 'Uncharted',
-      poster: '/images/Uncharted.jpg',
-    },
-    {
-      category: 'Now Showing',
-      title: 'Spider-Man',
-      poster: '/images/Spider-Man.jpg',
-    },
-    {
-      category: 'Now Showing',
-      title: 'Dog',
-      poster: '/images/Dog.jpg',
-    },
-    {
-      category: 'Coming Soon',
-      title: 'The Batman',
-      poster: '/images/TheBatman.jpg',
-    },
-  ];
+  // const movieList = [
+  //   {
+  //     category: 'Now Showing',
+  //     title: 'Father Stu',
+  //     poster: '/images/FatherStu.jpg',
+  //   },
+  //   {
+  //     category: 'Now Showing',
+  //     title: 'Fantastic Beasts',
+  //     poster: '/images/FantasticBeasts.jpg',
+  //   },
+  //   {
+  //     category: 'Now Showing',
+  //     title: 'Ambulance',
+  //     poster: '/images/Ambulance.jpg',
+  //   },
+  //   {
+  //     category: 'Now Showing',
+  //     title: 'Sonic the Hedgehog 2',
+  //     poster: '/images/SonictheHedgehog2.jpg',
+  //   },
+  //   {
+  //     category: 'Now Showing',
+  //     title: 'The Lost City',
+  //     poster: '/images/TheLostCity.jpg',
+  //   },
+  //   {
+  //     category: 'Now Showing',
+  //     title: 'Uncharted',
+  //     poster: '/images/Uncharted.jpg',
+  //   },
+  //   {
+  //     category: 'Now Showing',
+  //     title: 'Spider-Man',
+  //     poster: '/images/Spider-Man.jpg',
+  //   },
+  //   {
+  //     category: 'Now Showing',
+  //     title: 'Dog',
+  //     poster: '/images/Dog.jpg',
+  //   },
+  //   {
+  //     category: 'Coming Soon',
+  //     title: 'The Batman',
+  //     poster: '/images/TheBatman.jpg',
+  //   },
+  // ];
 
   return (
     <Container>
@@ -64,15 +64,13 @@ export default function Home() {
       <Section>
         <MovieListContainer>
           <Title>{state.current_page}</Title>
-          {movieList
-            .filter((movie) => movie.category === state.current_page)
-            .map((movie) => (
-              <MoviePosterCard
-                key={uuid()}
-                src={movie.poster}
-                alt={movie.title}
-              />
-            ))}
+          {state.films.map((movie) => (
+            <MoviePosterCard
+              key={uuid()}
+              src={movie.data.poster}
+              alt={movie.data.title}
+            />
+          ))}
         </MovieListContainer>
       </Section>
     </Container>
