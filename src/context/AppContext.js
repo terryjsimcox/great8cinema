@@ -29,7 +29,8 @@ export const AppProvider = ({ children }) => {
         'https://us-central1-great8cinema-a8432.cloudfunctions.net/GetFilms',
         {
           headers: {
-            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Origin':
+              'us-central1-great8cinema-a8432.cloudfunctions.net',
           },
         }
       )

@@ -43,7 +43,8 @@ exports.OMDB = functions.https.onRequest(async (req, res) => {
 exports.GetFilms = functions.https.onRequest(async (req, res) => {
   try {
     const result = await getDocuments();
-    res.send(result);
+    res.header.set('Access-Control-Allow-Origin', '*');
+    send(result);
   } catch (error) {
     console.error(error);
   }

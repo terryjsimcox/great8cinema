@@ -10,6 +10,7 @@ import { colors, fonts } from '../containts/styles.defaults';
 
 export default function Home() {
   const { state } = useApp();
+  console.log(state);
   // const movieList = [
   //   {
   //     category: 'Now Showing',
