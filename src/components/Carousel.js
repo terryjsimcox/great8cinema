@@ -1,12 +1,15 @@
-import React from 'react';
-import Slider from 'react-slick';
-
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
-import styled from 'styled-components';
-import { colors, carouselHeight } from '../containts/styles.defaults';
+import React from "react";
+import Slider from "react-slick";
+import { useApp } from "../context/AppContext";
+import { v4 as uuid } from "uuid";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import styled from "styled-components";
+import { colors, carouselHeight } from "../containts/styles.defaults";
 
 export default function Carousel() {
+  const { state } = useApp();
+  console.log(state.films);
   const sliderSetting = {
     dots: true,
     fade: true,
@@ -22,29 +25,14 @@ export default function Carousel() {
     <Container>
       <Section>
         <StyledCarousel {...sliderSetting}>
-          <ImgContainer>
-            <Blackout />
-            <img src='/images/background/Ambulance.jpg' alt='placeholder1' />
-          </ImgContainer>
-          <ImgContainer>
-            <Blackout />
-            <img src='/images/background/Dog.jpg' alt='placeholder1' />
-          </ImgContainer>
-          <ImgContainer>
-            <Blackout />
-            <img
-              src='/images/background/FantasticBeasts.jpg'
-              alt='placeholder1'
-            />
-          </ImgContainer>
-          <ImgContainer>
-            <Blackout />
-            <img src='/images/Sonic.jpg' alt='placeholder1' />
-          </ImgContainer>
-          <ImgContainer>
-            <Blackout />
-            <img src='/images/background/Spider-Man.jpg' alt='placeholder1' />
-          </ImgContainer>
+          {state.films.map((film) => {
+            return (
+              <ImgContainer key={uuid()}>
+                <Blackout />
+                <img src={film.data.backdrop} alt={film.data.title} />
+              </ImgContainer>
+            );
+          })}
         </StyledCarousel>
       </Section>
     </Container>
