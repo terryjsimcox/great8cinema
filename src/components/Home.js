@@ -1,7 +1,6 @@
 import React from 'react';
 import { v4 as uuid } from 'uuid';
 import { useApp } from '../context/AppContext';
-// import axios from 'axios';
 import Carousel from './Carousel';
 import { MoviePosterCard } from './Card';
 
@@ -11,13 +10,6 @@ import { colors, fonts } from '../containts/styles.defaults';
 export default function Home() {
   const { state } = useApp();
   console.log(state);
-
-  // useEffect(() => {
-  //   axios
-  //     .get('https://us-central1-great8cinema-a8432.cloudfunctions.net/GetFilms')
-  //     .then((results) => updateState((s) => ({ ...s, films: results.data })))
-  //     .catch((err) => console.log(err));
-  // });
 
   return (
     <Container>
