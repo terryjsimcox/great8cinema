@@ -1,15 +1,27 @@
+<<<<<<< HEAD
 import React from "react";
 import { v4 as uuid } from "uuid";
 import { useApp } from "../context/AppContext";
 
 import Carousel from "./Carousel";
 import { MoviePosterCard } from "./Card";
+=======
+import React from 'react';
+import { v4 as uuid } from 'uuid';
+import { useApp } from '../context/AppContext';
+import Carousel from './Carousel';
+import { MoviePosterCard } from './Card';
+>>>>>>> origin
 
 import styled from "styled-components";
 import { colors, fonts } from "../containts/styles.defaults";
 
 export default function Home() {
   const { state } = useApp();
+<<<<<<< HEAD
+=======
+  console.log(state);
+>>>>>>> origin
 
   return (
     <Container>
