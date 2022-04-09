@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { v4 as uuid } from 'uuid';
 import { useApp } from '../context/AppContext';
 // import axios from 'axios';
@@ -9,7 +9,7 @@ import styled from 'styled-components';
 import { colors, fonts } from '../containts/styles.defaults';
 
 export default function Home() {
-  const { state, updateState } = useApp();
+  const { state } = useApp();
   console.log(state);
 
   // useEffect(() => {
