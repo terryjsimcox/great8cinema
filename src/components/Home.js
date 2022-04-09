@@ -15,7 +15,7 @@ export default function Home() {
   useEffect(() => {
     axios
       .get('https://us-central1-great8cinema-a8432.cloudfunctions.net/GetFilms')
-      .then((results) => updateState({ ...state, films: results.data }))
+      .then((results) => updateState((s) => ({ ...s, films: results.data })))
       .catch((err) => console.log(err));
   }, []);
 
