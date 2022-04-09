@@ -1,5 +1,5 @@
-import React, { useContext, useState } from 'react';
-
+import React, { useContext, useEffect, useState } from 'react';
+import axios from 'axios';
 const AppContext = React.createContext();
 
 const initialState = {
@@ -22,5 +22,12 @@ export const AppProvider = ({ children }) => {
     state,
     updateState,
   };
+
+  useEffect(() => {
+    axios
+      .get('https://us-central1-great8cinema-a8432.cloudfunctions.net/GetFilms')
+      .then((results) => setState({ ...state, films: results }))
+      .catch((err) => console.log(err));
+  }, []);
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 };

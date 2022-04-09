@@ -64,15 +64,13 @@ export default function Home() {
       <Section>
         <MovieListContainer>
           <Title>{state.current_page}</Title>
-          {movieList
-            .filter((movie) => movie.category === state.current_page)
-            .map((movie) => (
-              <MoviePosterCard
-                key={uuid()}
-                src={movie.poster}
-                alt={movie.title}
-              />
-            ))}
+          {state.films.map((movie) => (
+            <MoviePosterCard
+              key={uuid()}
+              src={movie.data.poster}
+              alt={movie.data.title}
+            />
+          ))}
         </MovieListContainer>
       </Section>
     </Container>
