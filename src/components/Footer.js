@@ -115,7 +115,7 @@ const LinkItem = styled.li`
 `;
 
 const TicketPricesContainer = styled.section`
-  display: grid
+  display: grid;
   flex-direction: column;
 `;
 
