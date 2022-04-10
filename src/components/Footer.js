@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { v4 as uuid } from 'uuid';
 import { Great8Logo } from './Logo';
+import TicketPrices from './TicketPrices';
 import styled from 'styled-components';
 import { colors, fonts } from '../containts/styles.defaults';
 
@@ -48,7 +49,9 @@ export default function Footer() {
             ))}
           </LinksList>
         </LinksContainer>
-        <TicketPricesContainer>Ticket Prices</TicketPricesContainer>
+        <TicketPricesContainer>
+          <TicketPrices />
+        </TicketPricesContainer>
       </TopContainer>
       <BottomContainer>
         <FBLogo
@@ -111,6 +114,9 @@ const LinkItem = styled.li`
   }
 `;
 
-const TicketPricesContainer = styled.section``;
+const TicketPricesContainer = styled.section`
+  display: grid;
+  flex-direction: column;
+`;
 
 const FBLogo = styled.a``;
