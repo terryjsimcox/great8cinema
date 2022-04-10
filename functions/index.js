@@ -1,5 +1,5 @@
 const functions = require('firebase-functions');
-
+const cors = require('cors');
 const { RTS, MovieDB, OMDB, Schedule, getDocuments } = require('./helpers');
 require('dotenv').config();
 
@@ -42,9 +42,16 @@ exports.OMDB = functions.https.onRequest(async (req, res) => {
 
 exports.GetFilms = functions.https.onRequest(async (req, res) => {
   try {
-    const result = await getDocuments();
-    res.send(result);
-  } catch (error) {
-    console.error(error);
+    const results = await getDocuments();
+    res.set('Access-Control-Allow-Origin', '*');
+    if (req.method === 'OPTIONS') {
+      res.set('Access-Control-Allow-Methods', 'GET');
+      res.set('Access-Control-Max-Age', '3600');
+      res.status(204).send('');
+    } else {
+      res.send(results);
+    }
+  } catch (err) {
+    console.log(err);
   }
 });

@@ -1,62 +1,14 @@
-import React from 'react';
-import { v4 as uuid } from 'uuid';
-import { useApp } from '../context/AppContext';
+import React from "react";
+import { v4 as uuid } from "uuid";
+import { useApp } from "../context/AppContext";
+import Carousel from "./Carousel";
+import { MoviePosterCard } from "./Card";
 
-import Carousel from './Carousel';
-import { MoviePosterCard } from './Card';
-
-import styled from 'styled-components';
-import { colors, fonts } from '../containts/styles.defaults';
+import styled from "styled-components";
+import { colors, fonts } from "../containts/styles.defaults";
 
 export default function Home() {
   const { state } = useApp();
-  // const movieList = [
-  //   {
-  //     category: 'Now Showing',
-  //     title: 'Father Stu',
-  //     poster: '/images/FatherStu.jpg',
-  //   },
-  //   {
-  //     category: 'Now Showing',
-  //     title: 'Fantastic Beasts',
-  //     poster: '/images/FantasticBeasts.jpg',
-  //   },
-  //   {
-  //     category: 'Now Showing',
-  //     title: 'Ambulance',
-  //     poster: '/images/Ambulance.jpg',
-  //   },
-  //   {
-  //     category: 'Now Showing',
-  //     title: 'Sonic the Hedgehog 2',
-  //     poster: '/images/SonictheHedgehog2.jpg',
-  //   },
-  //   {
-  //     category: 'Now Showing',
-  //     title: 'The Lost City',
-  //     poster: '/images/TheLostCity.jpg',
-  //   },
-  //   {
-  //     category: 'Now Showing',
-  //     title: 'Uncharted',
-  //     poster: '/images/Uncharted.jpg',
-  //   },
-  //   {
-  //     category: 'Now Showing',
-  //     title: 'Spider-Man',
-  //     poster: '/images/Spider-Man.jpg',
-  //   },
-  //   {
-  //     category: 'Now Showing',
-  //     title: 'Dog',
-  //     poster: '/images/Dog.jpg',
-  //   },
-  //   {
-  //     category: 'Coming Soon',
-  //     title: 'The Batman',
-  //     poster: '/images/TheBatman.jpg',
-  //   },
-  // ];
 
   return (
     <Container>

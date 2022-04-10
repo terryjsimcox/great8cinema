@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import axios from 'axios';
 import { HashRouter as Router, Route, Routes } from 'react-router-dom';
-
+import { useApp } from '../context/AppContext';
 import Navbar from './Navbar';
 import Home from './Home';
 import Footer from './Footer';
@@ -8,6 +9,19 @@ import Footer from './Footer';
 import styled from 'styled-components';
 
 export default function App() {
+  const { updateState } = useApp();
+
+  const getFilms = async () => {
+    const results = await axios.get(
+      'https://us-central1-great8cinema-a8432.cloudfunctions.net/GetFilms'
+    );
+    updateState('films', results.data);
+  };
+
+  useEffect(() => {
+    getFilms();
+  }, []);
+
   return (
     <Container>
       <Router>
