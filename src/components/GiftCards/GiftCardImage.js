@@ -1,7 +1,7 @@
-import React from "react";
-import { Great8Logo } from "../Logo";
-import styled from "styled-components";
-import { colors, fonts, borderRadius } from "../../containts/styles.defaults";
+import React from 'react';
+import { Great8Logo } from '../Logo';
+import styled from 'styled-components';
+import { colors, fonts, borderRadius } from '../../containts/styles.defaults';
 
 const GiftCardImage = () => {
   return (
@@ -20,7 +20,7 @@ const Container = styled.div`
   position: absolute;
   top: 25px;
   right: -325px;
-  @media only screen and (max-width: 960px) {
+  @media only screen and (max-width: 1200px) {
     position: relative;
     margin-top: 2rem;
     right: inherit;
