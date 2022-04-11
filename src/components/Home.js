@@ -29,7 +29,7 @@ export default function Home() {
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  overflow: hidden;
+  height: 100%;
 `;
 
 const Section = styled.section`
