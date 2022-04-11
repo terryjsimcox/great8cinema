@@ -1,6 +1,5 @@
 const functions = require('firebase-functions');
-const cors = require('cors');
-const { RTS, MovieDB, OMDB, Schedule, getDocuments } = require('./helpers');
+const { RTS, MovieDB, OMDB, getDocuments } = require('./helpers');
 require('dotenv').config();
 
 exports.rtsSchedule = functions.https.onRequest(async (req, res) => {

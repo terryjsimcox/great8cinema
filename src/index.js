@@ -1,15 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { App } from './components';
-import { AppProvider } from './context/AppContext';
+import { AppProvider, FirebaseProvider } from './context';
 
 import './index.css';
 
 ReactDOM.render(
   <React.StrictMode>
-    <AppProvider>
-      <App />
-    </AppProvider>
+    <FirebaseProvider>
+      <AppProvider>
+        <App />
+      </AppProvider>
+    </FirebaseProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

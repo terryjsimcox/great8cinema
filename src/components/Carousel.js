@@ -1,15 +1,14 @@
-import React from "react";
-import Slider from "react-slick";
-import { useApp } from "../context/AppContext";
-import { v4 as uuid } from "uuid";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import styled from "styled-components";
-import { colors, carouselHeight } from "../containts/styles.defaults";
+import React from 'react';
+import Slider from 'react-slick';
+import { useApp } from '../context/AppContext';
+import { v4 as uuid } from 'uuid';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+import styled from 'styled-components';
+import { colors, carouselHeight } from '../containts/styles.defaults';
 
 export default function Carousel() {
   const { state } = useApp();
-  console.log(state.films);
   const sliderSetting = {
     dots: true,
     fade: true,
