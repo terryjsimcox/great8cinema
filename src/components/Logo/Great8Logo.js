@@ -4,9 +4,9 @@ import { ReactComponent as Great8Svg } from '../../assets/images/great8cinema.sv
 import styled from 'styled-components';
 import { colors } from '../../containts/styles.defaults';
 
-export default function Great8Logo() {
+export default function Great8Logo({ handleClick }) {
   return (
-    <Container to='/'>
+    <Container to='/' onClick={(e) => handleClick(e, { name: 'Now Showing' })}>
       <Great8Svg />
     </Container>
   );

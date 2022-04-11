@@ -4,6 +4,7 @@ import { HashRouter as Router, Route, Routes } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 import Navbar from './Navbar';
 import Home from './Home';
+import GiftCards from './GiftCards';
 import Footer from './Footer';
 
 import styled from 'styled-components';
@@ -28,6 +29,7 @@ export default function App() {
         <Navbar />
         <Routes>
           <Route path='/' element={<Home />} />
+          <Route path='/Gift%20Cards' element={<GiftCards />}></Route>
         </Routes>
         <Footer />
       </Router>
@@ -39,5 +41,5 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  overflow: hidden;
+  min-height: 100vh;
 `;
