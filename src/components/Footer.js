@@ -24,7 +24,7 @@ export default function Footer() {
     },
     {
       name: 'Coming Soon',
-      url: '/Coming Soon',
+      url: '/#Coming Soon',
     },
     {
       name: 'Contact Us',
@@ -50,7 +50,9 @@ export default function Footer() {
           <LinksList>
             {navLinks.map((link) => (
               <LinkItem key={uuid()}>
-                <Link to={link.url}>{link.name}</Link>
+                <Link to={link.url} onClick={(e) => handleClick(e, link)}>
+                  {link.name}
+                </Link>
               </LinkItem>
             ))}
           </LinksList>
