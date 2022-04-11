@@ -1,7 +1,6 @@
 import React from 'react';
 import { v4 as uuid } from 'uuid';
 import { useApp } from '../context/AppContext';
-import { useFirebase } from '../context/FirebaseContext';
 import Carousel from './Carousel';
 import { MoviePosterCard } from './Card';
 import styled from 'styled-components';
@@ -9,27 +8,18 @@ import { colors, fonts } from '../containts/styles.defaults';
 
 export default function Home() {
   const { state } = useApp();
-  const { getUrl } = useFirebase();
 
-  const url = async () => {
-    const result = await getUrl('images', 'fb-button-icon.png');
-    console.log(result);
-  };
-
-  url();
   return (
     <Container>
       <Carousel />
       <Section>
         <MovieListContainer>
           <Title>{state.current_page}</Title>
-          {state.films.map((movie) => (
-            <MoviePosterCard
-              key={uuid()}
-              src={movie.data.poster}
-              alt={movie.data.title}
-            />
-          ))}
+          {state.films
+            .filter((movie) => movie.data.category === state.current_page)
+            .map((movie) => (
+              <MoviePosterCard key={uuid()} movie={movie} />
+            ))}
         </MovieListContainer>
       </Section>
     </Container>
