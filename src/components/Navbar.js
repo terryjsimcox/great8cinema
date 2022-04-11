@@ -51,7 +51,7 @@ export default function Navbar() {
   return (
     <Container>
       <Background opacity={scrollPos} />
-      <Great8Logo />
+      <Great8Logo handleClick={handleClick} />
       <NavList open={navOpen} className={navOpen && 'open'}>
         {defaultNavItems.map((item) => (
           <NavItem

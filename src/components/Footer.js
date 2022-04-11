@@ -2,11 +2,13 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { v4 as uuid } from 'uuid';
 import { Great8Logo } from './Logo';
+import { useApp } from '../context/AppContext';
 import TicketPrices from './TicketPrices';
 import styled from 'styled-components';
 import { colors, fonts } from '../containts/styles.defaults';
 
 export default function Footer() {
+  const { state, updateState } = useApp();
   const navLinks = [
     {
       name: 'Now Showing',
@@ -34,11 +36,15 @@ export default function Footer() {
     },
   ];
 
+  function handleClick(e, item) {
+    state.current_page === item.name && e.preventDefault();
+    updateState('current_page', item.name);
+  }
   return (
     <Container>
       <TopContainer>
         <Logo>
-          <Great8Logo />
+          <Great8Logo handleClick={handleClick} />
         </Logo>
         <LinksContainer>
           <LinksList>
