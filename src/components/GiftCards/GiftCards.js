@@ -1,13 +1,13 @@
-import React from 'react';
-
-import styled from 'styled-components';
-import { colors, fonts, borderRadius } from '../containts/styles.defaults';
+import React from "react";
+import GiftCardImage from "./GiftCardImage";
+import styled from "styled-components";
+import { colors, fonts, borderRadius } from "../../containts/styles.defaults";
 
 const giftCards = () => {
   return (
     <Container>
       <Card>
-        <Section>
+        <TopSection>
           <Title>
             Purchase a Gift Card
             <Emphasized>Today!</Emphasized>
@@ -19,8 +19,22 @@ const giftCards = () => {
             first link below. If you would like to check your gift card balance
             there is a link below.
           </Content>
-        </Section>
-        <ImageSection></ImageSection>
+          <GiftCardImage />
+        </TopSection>
+        <BottomSection>
+          <p>
+            Buying options are Virtual or Physical cards. They can be in any
+            dollar amount.
+          </p>
+          <p>
+            Virtual card: Delivery type would be email (It will be emailed to
+            you and you will present the email to an employee).
+          </p>
+          <p>
+            Physical card: Delivery type would be USPS (A physical card will be
+            mailed to you).
+          </p>
+        </BottomSection>
       </Card>
     </Container>
   );
@@ -45,8 +59,9 @@ const Container = styled.div`
 const Card = styled.div`
   position: relative;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  justify-content: center;
+
   width: 80%;
   margin-bottom: 2rem;
   padding: 2rem 4rem;
@@ -57,10 +72,22 @@ const Card = styled.div`
   }
 `;
 
-const Section = styled.section`
+const TopSection = styled.section`
+  position: relative;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  width: 70%;
+  @media only screen and (max-width: 960px) {
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+`;
+
+const BottomSection = styled.section`
+  display: flex;
+  flex-direction: column;
+  margin-top: 4rem;
 `;
 
 const Title = styled.h3`
@@ -88,5 +115,3 @@ const Content = styled.p`
   font-family: ${fonts.EncodeSans};
   line-height: 1.5rem;
 `;
-
-const ImageSection = styled.div``;
