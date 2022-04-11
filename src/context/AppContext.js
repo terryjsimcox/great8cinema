@@ -1,5 +1,4 @@
 import React, { useContext, useState } from 'react';
-
 const AppContext = React.createContext();
 
 const initialState = {
@@ -11,7 +10,7 @@ export const useApp = () => {
   return useContext(AppContext);
 };
 
-export const AppProvider = ({ children }) => {
+const AppProvider = ({ children }) => {
   const [state, setState] = useState(initialState);
 
   function updateState(key, value) {
@@ -25,3 +24,5 @@ export const AppProvider = ({ children }) => {
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 };
+
+export default AppProvider;

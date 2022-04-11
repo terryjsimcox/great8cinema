@@ -57,7 +57,10 @@ export default function Footer() {
         <FBLogo
           href='https://www.facebook.com/great8cinema/?ref=ts'
           target='_blank'>
-          <img src='/images/fb-button-icon.png' alt='Fb logo' />
+          <img
+            src='https://firebasestorage.googleapis.com/v0/b/great8cinema-a8432.appspot.com/o/images%2Ffb-button-icon.png?alt=media&token=75bae2ed-09a9-4601-b45f-d8215e7a0eff'
+            alt='Fb logo'
+          />
         </FBLogo>
         <p>&copy; Copyrights. All rights reserved.</p>
       </BottomContainer>
