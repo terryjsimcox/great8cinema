@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-
+import emailjs from 'emailjs-com';
 import styled from 'styled-components';
 import { colors, fonts, borderRadius } from '../../containts/styles.defaults';
 
@@ -13,8 +13,23 @@ const initialState = {
 };
 const ContactUsForm = () => {
   const [formState, setFormState] = useState(initialState);
+  const sendEmail = async (e) => {
+    e.preventDefault();
+    const result = await emailjs.send(
+      'service_k8q4ut5',
+      'template_eh4y1y8',
+      formState,
+      'agIAQlRAMiwNnacIq'
+    );
+
+    if (result.text === 'OK') {
+      e.target.reset();
+      return setFormState(initialState);
+    }
+    console.error(result);
+  };
   return (
-    <Form>
+    <Form onSubmit={sendEmail}>
       <Title>Contact Us</Title>
       <InputGroup>
         <label>First Name:</label>
