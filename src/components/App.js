@@ -1,22 +1,23 @@
-import React, { useEffect } from "react";
-import axios from "axios";
-import { HashRouter as Router, Route, Routes } from "react-router-dom";
-import { useApp } from "../context/AppContext";
-import Navbar from "./Navbar";
-import Home from "./Home";
-import GiftCards from "./GiftCards/GiftCards";
-import Footer from "./Footer";
+import React, { useEffect } from 'react';
+import axios from 'axios';
+import { HashRouter as Router, Route, Routes } from 'react-router-dom';
+import { useApp } from '../context/AppContext';
+import Navbar from './Navbar';
+import Home from './Home';
+import GiftCards from './GiftCards/GiftCards';
+import ContactUs from './ContactUs';
+import Footer from './Footer';
 
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export default function App() {
   const { updateState } = useApp();
 
   const getFilms = async () => {
     const results = await axios.get(
-      "https://us-central1-great8cinema-a8432.cloudfunctions.net/GetFilms"
+      'https://us-central1-great8cinema-a8432.cloudfunctions.net/GetFilms'
     );
-    updateState("films", results.data);
+    updateState('films', results.data);
   };
 
   useEffect(() => {
@@ -28,8 +29,9 @@ export default function App() {
       <Router>
         <Navbar />
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/Gift%20Cards" element={<GiftCards />}></Route>
+          <Route path='/' element={<Home />} />
+          <Route path='/Gift%20Cards' element={<GiftCards />}></Route>
+          <Route path='/Contact%20Us' element={<ContactUs />}></Route>
         </Routes>
         <Footer />
       </Router>
