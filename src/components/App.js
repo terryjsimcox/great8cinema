@@ -4,7 +4,8 @@ import { HashRouter as Router, Route, Routes } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 import Navbar from './Navbar';
 import Home from './Home';
-import GiftCards from './GiftCards';
+import GiftCards from './GiftCards/GiftCards';
+import ContactUs from './ContactUs';
 import Footer from './Footer';
 
 import styled from 'styled-components';
@@ -30,6 +31,7 @@ export default function App() {
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/Gift%20Cards' element={<GiftCards />}></Route>
+          <Route path='/Contact%20Us' element={<ContactUs />}></Route>
         </Routes>
         <Footer />
       </Router>
