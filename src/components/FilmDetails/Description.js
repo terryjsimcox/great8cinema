@@ -17,7 +17,7 @@ const Description = ({ movie }) => {
       <Section>
         <Genres genres={movie.data.genres} />
         <Plot plot={movie.data.plot} />
-        <Extra movie={movie} title='Dricetors' keys='director' />
+        <Extra movie={movie} title='Directors' keys='director' />
         <Extra movie={movie} title='Writers' keys='writer' />
         <Extra movie={movie} title='Cast' keys='actors' />
       </Section>

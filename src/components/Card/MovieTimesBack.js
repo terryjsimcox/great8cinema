@@ -3,10 +3,12 @@ import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
 import { v4 as uuid } from 'uuid';
 import { CountDownTimer } from '../Timer';
+import { useApp } from '../../context/AppContext';
 import styled from 'styled-components';
 import { colors, fonts, borderRadius } from '../../containts/styles.defaults';
 
 const MovieTimesBack = ({ movie }) => {
+  const { updateState } = useApp();
   const findNextShow = (shows) => {
     const dateFormat = 'YYYYMMDD';
     let nextShow;
@@ -47,7 +49,13 @@ const MovieTimesBack = ({ movie }) => {
             );
         })}
         <ShowItem>
-          <MovieDetails to={`film/${movie.id}`}>More Details</MovieDetails>
+          <MovieDetails
+            to={`film/${movie.id}`}
+            onClick={() => {
+              updateState('current_page', 'Details');
+            }}>
+            More Details
+          </MovieDetails>
         </ShowItem>
       </ShowLinks>
     </Container>

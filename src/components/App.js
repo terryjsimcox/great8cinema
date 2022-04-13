@@ -4,6 +4,7 @@ import { HashRouter as Router, Route, Routes } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 
 //***** Components *****/
+import ScrollToTop from './ScrollToTop';
 import Navbar from './Navbar';
 import Home from './Home';
 import GiftCards from './GiftCards/GiftCards';
@@ -30,6 +31,7 @@ export default function App() {
   return (
     <Container>
       <Router>
+        <ScrollToTop />
         <Navbar />
         <Routes>
           <Route path='/' element={<Home />} />
