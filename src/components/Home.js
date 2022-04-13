@@ -4,7 +4,7 @@ import { useApp } from '../context/AppContext';
 import Carousel from './Carousel';
 import { MoviePosterCard } from './Card';
 import styled from 'styled-components';
-import { colors, fonts } from '../containts/styles.defaults';
+import { colors, fonts, borderRadius } from '../containts/styles.defaults';
 
 export default function Home() {
   const { state } = useApp();
@@ -36,16 +36,25 @@ const Section = styled.section`
   display: flex;
   justify-content: center;
   margin-bottom: 4rem;
+  background-color: hsla(0, 0%, 5%, 1);
 `;
 
 const MovieListContainer = styled.div`
+  position: relative;
+  z-index: 2;
+  top: 0;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 4rem;
   width: fit-content;
-  margin-top: 4rem;
+  margin-bottom: 0;
+  padding: 2rem;
+  background-color: hsla(0, 0%, 5%, 0.8);
+  /* border: 2px solid ${colors.white[700]}; */
+  border-radius: ${borderRadius.sm};
   @media only screen and (max-width: 760px) {
     grid-template-columns: 1fr;
+    top: 7rem;
     & h2 {
       grid-column: 1/2;
     }

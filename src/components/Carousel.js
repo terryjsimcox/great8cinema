@@ -10,7 +10,7 @@ import { colors, carouselHeight } from '../containts/styles.defaults';
 export default function Carousel() {
   const { state } = useApp();
   const sliderSetting = {
-    dots: true,
+    dots: false,
     fade: true,
     infinite: true,
     autoplay: true,
@@ -29,12 +29,12 @@ export default function Carousel() {
             .map((film) => {
               return (
                 <ImgContainer key={uuid()}>
-                  <Blackout />
                   <img src={film.data.backdrop} alt={film.data.title} />
                 </ImgContainer>
               );
             })}
         </StyledCarousel>
+        <Gradient />
       </Section>
     </Container>
   );
@@ -50,15 +50,16 @@ const Container = styled.div`
     display: none;
   }
   @media only screen and (min-width: 761px) and (max-width: 1100px) {
-    height: 400px;
+    height: 500px;
   }
   @media only screen and (min-width: 1101px) and (max-width: 1400px) {
-    height: 500px;
+    height: 600px;
   }
 `;
 
 const StyledCarousel = styled(Slider)`
   position: relative;
+  z-index: -1;
   display: block;
   width: 100vw;
   height: ${carouselHeight}px;
@@ -69,12 +70,20 @@ const StyledCarousel = styled(Slider)`
     font-size: 2rem;
   }
   & > .slick-prev {
-    z-index: 2;
+    display: none;
+    z-index: 5;
     left: 1rem;
+    &::before {
+      display: none;
+      z-index: 5;
+    }
   }
   & > .slick-next {
-    z-index: 2;
+    z-index: 5;
     right: 2rem;
+    &::before {
+      display: none;
+    }
   }
   & > .slick-dots {
     bottom: 1rem;
@@ -115,6 +124,17 @@ const Section = styled.section`
   }
 `;
 
+const Gradient = styled.div`
+  content: '';
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: linear-gradient(to top, hsla(0, 0%, 5%, 1) 5%, transparent);
+`;
+
 const ImgContainer = styled.div`
   position: relative;
   width: 100vw;
@@ -131,23 +151,8 @@ const ImgContainer = styled.div`
   }
   @media only screen and (min-width: 761px) and (max-width: 1100px) {
     height: 500px;
-    & img {
-      left: 10rem;
-    }
   }
   @media only screen and (min-width: 1101px) and (max-width: 1400px) {
     height: 600px;
-    & img {
-      left: 8rem;
-    }
   }
-`;
-
-const Blackout = styled.div`
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  background: linear-gradient(to right, hsla(0, 0%, 0%, 0.8) 10%, transparent);
 `;
