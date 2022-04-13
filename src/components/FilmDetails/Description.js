@@ -33,6 +33,10 @@ const Container = styled.div`
   grid-template-columns: 0.5fr 2fr 1fr;
   gap: 1rem;
   margin-top: 2rem;
+  @media only screen and (max-width: 1200px) {
+    display: flex;
+    flex-direction: column;
+  }
 `;
 
 const Section = styled.div`
