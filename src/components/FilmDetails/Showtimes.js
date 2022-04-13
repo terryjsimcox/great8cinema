@@ -84,9 +84,10 @@ const Container = styled.div`
     & ul {
       display: flex;
       flex-wrap: wrap;
-      margin-bottom: 4rem;
+      margin-bottom: 2rem;
       & li {
         margin-right: 1rem;
+        margin-bottom: 2rem;
         & a {
           padding: 0.5rem 1rem;
           color: ${colors.white[200]};
