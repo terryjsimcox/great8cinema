@@ -10,6 +10,7 @@ const { initializeApp } = require('firebase/app');
 const {
   collection,
   addDoc,
+  updateDoc,
   getFirestore,
   getDocs,
   doc,
@@ -149,7 +150,7 @@ const MakeFilmDocument = async (title, film) => {
 
     temp._id = uuid();
     temp.backdrop = `https://image.tmdb.org/t/p/original${MDBfilm.backdrop_path}`;
-    temp.category = null;
+    temp.category = 'Coming Soon';
     temp.filmCode = film.FilmCode[0];
     temp.genres = getGenres(genresList, MDBfilm.genre_ids);
     temp.length = film.Length[0];
@@ -209,6 +210,23 @@ const getGenres = (genresList, filmGenres) => {
 
 const addDocument = async (document) => {
   const docRef = await addDoc(collection(db, 'films'), document);
+  return docRef;
+};
+
+const updateDocument = async (docID, field, data) => {
+  const dbDoc = doc(db, 'films', docID);
+  await updateDoc(dbDoc, { [field]: data });
+};
+
+const archiveFilms = async (db, rts) => {
+  db.forEach(async (document) => {
+    if (
+      rts.filter((film) => film.FilmCode[0] === document.data.filmCode).length >
+      0
+    )
+      return;
+    await updateDocument(document.id, 'category', 'Archived');
+  });
 };
 
 const checkDocument = async (query) => {};
@@ -226,12 +244,24 @@ const getDocuments = async () => {
 const Schedule = async () => {
   const rts = await RTS();
   const dbFilms = await getDocuments();
-
   rts.forEach(async (film) => {
     const temp = await MakeFilmDocument(film.Title[0], film);
-    const filter = dbFilms.filter((film) => film.data.title === temp.title);
-    if (filter.length === 0) await addDocument(temp);
+    const document = dbFilms.filter(
+      (film) => film.data.title === temp.title
+    )[0];
+    if (document.length === 0) await addDocument(temp);
+    if (document.length > 0) {
+      await updateDocument(document.id, 'shows', temp.shows);
+      if (
+        dayjs(document.data.released, 'DD ddd YYYY').format('dddd MMM D') <=
+          dayjs().format('dddd MMM D') &&
+        temp.shows.length > 0
+      ) {
+        await updateDocument(document.id, 'category', 'Now Showing');
+      }
+    }
   });
+  await archiveFilms(dbFilms, rts);
 };
 
 module.exports = { MovieDB, RTS, OMDB, Schedule, getDocuments };

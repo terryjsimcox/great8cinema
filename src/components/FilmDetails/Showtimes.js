@@ -6,29 +6,32 @@ import styled from 'styled-components';
 import { colors, fonts } from '../../containts/styles.defaults';
 
 const fixShows = (shows) => {
-  let sameDay = [];
-  let newShowsArray = [];
+  let tempShow = [];
+  let newShows = [];
+  let currentDate = '';
 
   shows.forEach((show, index) => {
-    if (sameDay.length === 0) {
-      return sameDay.push({ date: show.date, shows: [{ ...show }] });
+    if (index === 0 || currentDate === show.date) {
+      currentDate = show.date;
+      tempShow.push(show);
     }
-    if (sameDay[0].date === show.date) {
-      return sameDay[0].shows.push({ ...show });
+    if (currentDate !== show.date) {
+      newShows.push({ date: currentDate, shows: tempShow });
+      currentDate = show.date;
+      tempShow = [show];
     }
-    if (sameDay[0].date !== show.date) {
-      newShowsArray.push({ ...sameDay[0] });
-      sameDay = [];
-      sameDay.push({ date: show.date, shows: [{ ...show }] });
+    if (index === shows.length - 1) {
+      newShows.push({ date: currentDate, shows: tempShow });
     }
   });
-  return newShowsArray;
+
+  return newShows;
 };
 
 const Shows = ({ shows }) => {
   return (
     <ul>
-      {shows.map((show) => (
+      {shows?.map((show) => (
         <li key={uuid()}>
           <a
             target='_blank'
@@ -45,13 +48,14 @@ const Shows = ({ shows }) => {
 
 const Showtimes = ({ shows }) => {
   const newShows = fixShows(shows);
+  console.log(newShows);
   return (
     <Container>
-      {newShows.map(
+      {newShows?.map(
         (show) =>
           dayjs().format('YYYYMMDD') <=
             dayjs(show.date, 'YYYYMMDD').format('YYYYMMDD') && (
-            <div>
+            <div key={uuid()}>
               <h4>{dayjs(show.date, 'YYYYMMDD').format('dddd MMM D ')}</h4>
               <Shows shows={show.shows} />
             </div>

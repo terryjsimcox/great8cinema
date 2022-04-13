@@ -24,14 +24,16 @@ export default function Carousel() {
     <Container>
       <Section>
         <StyledCarousel {...sliderSetting}>
-          {state.films.map((film) => {
-            return (
-              <ImgContainer key={uuid()}>
-                <Blackout />
-                <img src={film.data.backdrop} alt={film.data.title} />
-              </ImgContainer>
-            );
-          })}
+          {state.films
+            .filter((query) => query.data.category !== 'Archived')
+            .map((film) => {
+              return (
+                <ImgContainer key={uuid()}>
+                  <Blackout />
+                  <img src={film.data.backdrop} alt={film.data.title} />
+                </ImgContainer>
+              );
+            })}
         </StyledCarousel>
       </Section>
     </Container>
@@ -58,8 +60,8 @@ const Container = styled.div`
 const StyledCarousel = styled(Slider)`
   position: relative;
   display: block;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: ${carouselHeight}px;
   margin: 0 auto;
   overflow: hidden;
   & > .slick-prev::before,
@@ -115,17 +117,17 @@ const Section = styled.section`
 
 const ImgContainer = styled.div`
   position: relative;
-  width: 100%;
+  width: 100vw;
   height: ${carouselHeight}px;
   & img {
     position: absolute;
+    top: 0;
     right: 0;
     bottom: 0;
-    left: 22.5rem;
-    z-index: -1;
+    left: 0;
     width: 100%;
-    height: 100%;
-    object-fit: contain;
+    height: ${carouselHeight}px;
+    z-index: -1;
   }
   @media only screen and (min-width: 761px) and (max-width: 1100px) {
     height: 500px;
@@ -147,7 +149,5 @@ const Blackout = styled.div`
   right: 0;
   bottom: 0;
   left: 0;
-  background: linear-gradient(to right, hsla(0, 0%, 0%, 1) 10%, transparent),
-    linear-gradient(to right, hsla(0, 0%, 0%, 0.8) 10%, transparent),
-    linear-gradient(to right, hsla(0, 0%, 0%, 1) 5%, transparent);
+  background: linear-gradient(to right, hsla(0, 0%, 0%, 0.8) 10%, transparent);
 `;
