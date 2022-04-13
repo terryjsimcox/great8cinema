@@ -229,7 +229,7 @@ const Schedule = async () => {
 
   rts.forEach(async (film) => {
     const temp = await MakeFilmDocument(film.Title[0], film);
-    const filter = dbFilms.filter((film) => film.data.title === 'Dog');
+    const filter = dbFilms.filter((film) => film.data.title === temp.title);
     if (filter.length === 0) await addDocument(temp);
   });
 };
