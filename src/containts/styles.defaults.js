@@ -60,4 +60,4 @@ export const borderRadius = {
   lg: '1.5rem',
 };
 
-export const carouselHeight = 700;
+export const carouselHeight = 900;

@@ -49,10 +49,12 @@ const Container = styled.div`
 `;
 
 const Section = styled.section`
+  position: relative;
+  top: -15rem;
   display: flex;
   justify-content: center;
   margin-bottom: 4rem;
-  background-color: hsla(0, 0%, 5%, 1);
+  background: linear-gradient(to top, hsla(0, 0%, 5%, 1) 90%, transparent);
 `;
 
 const MovieListContainer = styled.div`
@@ -65,8 +67,8 @@ const MovieListContainer = styled.div`
   width: fit-content;
   margin-bottom: 0;
   padding: 2rem;
-  background-color: hsla(0, 0%, 5%, 0.8);
-  /* border: 2px solid ${colors.white[700]}; */
+  background: hsla(0, 0%, 5%, 0.5);
+  border: 2px solid ${colors.white[700]};
   border-radius: ${borderRadius.sm};
   @media only screen and (max-width: 760px) {
     grid-template-columns: 1fr;

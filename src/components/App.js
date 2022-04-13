@@ -7,6 +7,7 @@ import { useApp } from '../context/AppContext';
 import ScrollToTop from './ScrollToTop';
 import Navbar from './Navbar';
 import Home from './Home';
+import AboutUs from './AboutUs';
 import GiftCards from './GiftCards/GiftCards';
 import ContactUs from './ContactUs';
 import { FilmDetails } from './FilmDetails';
@@ -37,6 +38,7 @@ export default function App() {
           <Route path='/' element={<Home />} />
           <Route path='/Gift%20Cards' element={<GiftCards />}></Route>
           <Route path='/Contact%20Us' element={<ContactUs />}></Route>
+          <Route path='/About%20Us' element={<AboutUs />}></Route>
           <Route path='/film/:id' element={<FilmDetails />}></Route>
         </Routes>
         <Footer />
