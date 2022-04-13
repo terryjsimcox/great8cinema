@@ -64,6 +64,7 @@ const Title = styled.h3`
   color: ${colors.white[200]};
   font-family: ${fonts.EncodeSans};
   font-size: 2.5rem;
+  letter-spacing: 0.04rem;
 `;
 const Details = styled.div`
   position: relative;
@@ -87,8 +88,12 @@ const MovieDetails = styled.div`
 const Subtitle = styled.section`
   display: flex;
   align-items: center;
-  margin-top: 1rem;
+  margin-top: 0.5rem;
   color: ${colors.white[200]};
+  & p {
+    font-family: ${fonts.EncodeSans};
+    letter-spacing: 0.04rem;
+  }
   & div {
     position: relative;
     top: 0;

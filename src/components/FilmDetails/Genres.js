@@ -22,6 +22,8 @@ const Container = styled.ul`
     margin-right: 1rem;
     padding: 0.5rem 1rem;
     color: ${colors.white[200]};
+    font-family: ${fonts.EncodeSans};
+    letter-spacing: 0.04rem;
     border: 2px solid ${colors.white[200]};
     border-radius: 1.5rem;
   }

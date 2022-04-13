@@ -76,8 +76,10 @@ const Container = styled.div`
     width: 100%;
     & h4 {
       color: ${colors.secondary[400]};
+      font-family: ${fonts.EncodeSans};
       font-size: 1.2rem;
       margin-bottom: 2rem;
+      user-select: none;
     }
     & ul {
       display: flex;
@@ -88,8 +90,11 @@ const Container = styled.div`
         & a {
           padding: 0.5rem 1rem;
           color: ${colors.white[200]};
+          font-family: ${fonts.EncodeSans};
+          letter-spacing: 0.04rem;
           border: 2px solid ${colors.white[200]};
           border-radius: 2rem;
+          user-select: none;
           &:hover {
             background-color: ${colors.secondary[400]};
             border-color: ${colors.secondary[400]};

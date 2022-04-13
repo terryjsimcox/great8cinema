@@ -28,6 +28,7 @@ const Container = styled.div`
     margin-right: 1rem;
     color: ${colors.white[200]};
     font-family: ${fonts.EncodeSans};
+    letter-spacing: 0.04rem;
     font-size: 1.2rem;
   }
   & ul {
@@ -37,6 +38,7 @@ const Container = styled.div`
       margin-right: 1rem;
       color: ${colors.white[200]};
       font-family: ${fonts.EncodeSans};
+      letter-spacing: 0.04rem;
       font-size: 1.2rem;
       letter-spacing: 0.04rem;
     }
