@@ -10,7 +10,7 @@ export default function Home() {
   const { state, updateState } = useApp();
   const page = state.current_page
     ? state.current_page
-    : JSON.parse(localStorage.getItem('state')).current_page;
+    : JSON.parse(localStorage.getItem('state'))?.current_page;
   const movies = state.films
     ? state.films
     : JSON.parse(localStorage.getItem('state')).films;
