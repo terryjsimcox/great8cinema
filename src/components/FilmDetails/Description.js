@@ -15,13 +15,13 @@ const Description = ({ movie }) => {
     <Container>
       <Poster movie={movie} />
       <Section>
-        <Genres genres={movie.data.genres} />
-        <Plot plot={movie.data.plot} />
+        <Genres genres={movie?.data.genres} />
+        <Plot plot={movie?.data.plot} />
         <Extra movie={movie} title='Directors' keys='director' />
         <Extra movie={movie} title='Writers' keys='writer' />
         <Extra movie={movie} title='Cast' keys='actors' />
       </Section>
-      <Showtimes shows={movie.data.shows} />
+      <Showtimes shows={movie?.data.shows} />
     </Container>
   );
 };

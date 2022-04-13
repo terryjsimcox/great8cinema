@@ -10,7 +10,7 @@ const fixShows = (shows) => {
   let newShows = [];
   let currentDate = '';
 
-  shows.forEach((show, index) => {
+  shows?.forEach((show, index) => {
     if (index === 0 || currentDate === show.date) {
       currentDate = show.date;
       tempShow.push(show);
@@ -48,7 +48,7 @@ const Shows = ({ shows }) => {
 
 const Showtimes = ({ shows }) => {
   const newShows = fixShows(shows);
-  console.log(newShows);
+
   return (
     <Container>
       {newShows?.map(

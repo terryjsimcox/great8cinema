@@ -4,7 +4,7 @@ import styled from 'styled-components';
 const Poster = ({ movie }) => {
   return (
     <Container>
-      <img src={movie.data.poster} alt={movie.data.title} />
+      <img src={movie?.data.poster} alt={movie?.data.title} />
     </Container>
   );
 };

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useApp } from '../../context/AppContext';
 import { useParams } from 'react-router-dom';
-import dayjs from 'dayjs';
 import Hero from './Hero';
 import Description from './Description';
 import styled from 'styled-components';
@@ -10,8 +9,19 @@ import { colors, fonts, borderRadius } from '../../containts/styles.defaults';
 const FilmDetails = () => {
   const { id } = useParams();
   const { state } = useApp();
-  const movie = state.films.filter((query) => query.id === id)[0];
+  const movie =
+    state.films.length > 0
+      ? state.films.filter((query) => query.id === id)[0]
+      : JSON.parse(localStorage.getItem('state')).films.filter(
+          (query) => query.id === id
+        )[0];
 
+  useEffect(() => {
+    localStorage.setItem(
+      'state',
+      JSON.stringify({ ...state, current_page: 'Details' })
+    );
+  }, [state]);
   const convertMinutes = (time) => {
     const hours = Math.floor(time / 60);
     const minutes = Math.floor(time % 60);
@@ -25,13 +35,13 @@ const FilmDetails = () => {
         <Section>
           <Details>
             <MovieDetails>
-              <Title>{movie.data.title}</Title>
+              <Title>{movie?.data.title}</Title>
               <Subtitle>
-                <p>{movie.data.year}</p>
+                <p>{movie?.data.year}</p>
                 <div></div>
-                <p>{movie.data.rating}</p>
+                <p>{movie?.data.rating}</p>
                 <div></div>
-                <p>{convertMinutes(movie.data.length)}</p>
+                <p>{convertMinutes(movie?.data.length)}</p>
               </Subtitle>
               <Description movie={movie} />
             </MovieDetails>

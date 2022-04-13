@@ -8,7 +8,7 @@ const Extras = ({ movie, title, keys }) => {
     <Container>
       <h4>{title}</h4>
       <ul>
-        {movie.data[keys].map((value) => (
+        {movie?.data[keys].map((value) => (
           <li key={uuid()}>{value}</li>
         ))}
       </ul>

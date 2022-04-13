@@ -5,7 +5,7 @@ import styled from 'styled-components';
 const Hero = ({ movie }) => {
   return (
     <Container>
-      <HeroImage src={movie.data.backdrop} alt={movie.data.title} />
+      <HeroImage src={movie?.data.backdrop} alt={movie?.data.title} />
       <div />
     </Container>
   );

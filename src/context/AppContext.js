@@ -3,7 +3,7 @@ const AppContext = React.createContext();
 
 const initialState = {
   films: [],
-  current_page: 'Now Showing',
+  current_page: '',
 };
 
 export const useApp = () => {

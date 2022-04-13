@@ -6,7 +6,7 @@ import { colors, fonts } from '../../containts/styles.defaults';
 const Genres = ({ genres }) => {
   return (
     <Container>
-      {genres.map((genre) => (
+      {genres?.map((genre) => (
         <li key={uuid()}>{genre}</li>
       ))}
     </Container>

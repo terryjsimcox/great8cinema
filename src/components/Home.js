@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { v4 as uuid } from 'uuid';
 import { useApp } from '../context/AppContext';
 import Carousel from './Carousel';
@@ -7,17 +7,33 @@ import styled from 'styled-components';
 import { colors, fonts, borderRadius } from '../containts/styles.defaults';
 
 export default function Home() {
-  const { state } = useApp();
+  const { state, updateState } = useApp();
+  const page = state.current_page
+    ? state.current_page
+    : JSON.parse(localStorage.getItem('state')).current_page;
+  const movies = state.films
+    ? state.films
+    : JSON.parse(localStorage.getItem('state')).films;
 
+  useEffect(() => {
+    if (state.current_page === '') updateState('current_page', 'Now Showing');
+  }, [state.current_page]);
+
+  useEffect(() => {
+    localStorage.setItem(
+      'state',
+      JSON.stringify({ ...state, current_page: 'Now Showing' })
+    );
+  }, [state]);
   return (
     <Container>
       <Carousel />
       <Section>
         <MovieListContainer>
-          <Title>{state.current_page}</Title>
-          {state.films
-            .filter((movie) => movie.data.category === state.current_page)
-            .map((movie) => (
+          <Title>{page}</Title>
+          {movies
+            ?.filter((movie) => movie.data.category === page)
+            ?.map((movie) => (
               <MoviePosterCard key={uuid()} movie={movie} />
             ))}
         </MovieListContainer>
