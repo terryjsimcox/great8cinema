@@ -30,9 +30,6 @@ export default function Navbar() {
   const [scrollPos, setScrollPos] = useState(0);
   const [navOpen, setNavOpen] = useState(false);
   const { state, updateState } = useApp();
-  function checkScrollPos() {
-    window.scrollY > 150 ? setScrollPos(1) : setScrollPos(0);
-  }
 
   function handleClick(e, item) {
     state.current_page === item.name && e.preventDefault();
@@ -40,18 +37,14 @@ export default function Navbar() {
     setNavOpen(!navOpen);
   }
 
-  useEffect(() => {
-    document.addEventListener('scroll', checkScrollPos);
-
-    return () => {
-      document.removeEventListener('scroll', checkScrollPos);
-    };
-  }, []);
-
   return (
     <Container>
       <Background opacity={scrollPos} />
-      <Great8Logo handleClick={handleClick} />
+      <Great8Logo
+        handleClick={() =>
+          updateState({ ...state, current_page: 'Now Showing' })
+        }
+      />
       <NavList open={navOpen} className={navOpen && 'open'}>
         {defaultNavItems.map((item) => (
           <NavItem

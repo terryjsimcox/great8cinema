@@ -1,9 +1,7 @@
 import React, { useContext, useEffect, useEfffect, useState } from 'react';
-import axios from 'axios';
 const AppContext = React.createContext();
 
 const initialState = {
-  isLoading: true,
   films: [],
   current_page: '',
 };

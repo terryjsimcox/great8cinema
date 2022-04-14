@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { v4 as uuid } from 'uuid';
 import { useApp } from '../context/AppContext';
-import { useParams, useLocation } from 'react-router-dom';
 import Carousel from './Carousel';
 import { MoviePosterCard } from './Card';
 import styled from 'styled-components';
@@ -9,21 +8,7 @@ import { colors, fonts, borderRadius } from '../containts/styles.defaults';
 
 export default function Home() {
   const { state, updateState } = useApp();
-  const location = useLocation();
-  const [isLoading, setIsLoading] = useState(state.isLoading);
-
-  const stateCheck = () => {
-    if (document.readyState === 'complete') {
-      console.log('Document is ready...');
-      setIsLoading(false);
-      document.removeEventListener('readystatechange', stateCheck);
-    }
-  };
-
-  useEffect(() => {
-    const data = window.localStorage.getItem('state');
-    updateState(JSON.parse(data));
-  }, []);
+  console.log('Home', state);
 
   useEffect(() => {
     if (state.current_page === '')
@@ -31,50 +16,30 @@ export default function Home() {
   }, [state.current_page]);
 
   useEffect(() => {
-    if (!state.isLoading)
-      localStorage.setItem(
-        'state',
-        JSON.stringify({
-          ...state,
-          current_page: 'Now Showing',
-          isLoading: false,
-        })
-      );
+    localStorage.setItem(
+      'state',
+      JSON.stringify({
+        ...state,
+        current_page: 'Now Showing',
+      })
+    );
   }, [state]);
 
-  useEffect(() => {
-    document.addEventListener('readystatechange', stateCheck);
-  }, [state.isLoading]);
-
-  useEffect(() => {
-    const hash = location?.hash?.split('#')[1]?.split('%20');
-    const page = hash?.length > 0 ? `${hash[0]} ${hash[1]}` : 'Now Showing';
-    console.log(hash);
-    updateState({
-      ...state,
-      isLoading: false,
-      current_page: page || 'Now Showing',
-    });
-  }, [isLoading]);
-
-  if (!state.isLoading)
-    return (
-      <Container>
-        <Carousel />
-        <Section>
-          <MovieListContainer>
-            <Title>{state?.current_page}</Title>
-            {state.films
-              ?.filter((movie) => movie.data.category === state.current_page)
-              ?.map((movie) => (
-                <MoviePosterCard key={uuid()} movie={movie} />
-              ))}
-          </MovieListContainer>
-        </Section>
-      </Container>
-    );
-
-  return <div>Loading...</div>;
+  return (
+    <Container>
+      <Carousel />
+      <Section>
+        <MovieListContainer>
+          <Title>{state?.current_page}</Title>
+          {state.films
+            ?.filter((movie) => movie.data.category === state.current_page)
+            ?.map((movie) => (
+              <MoviePosterCard key={uuid()} movie={movie} />
+            ))}
+        </MovieListContainer>
+      </Section>
+    </Container>
+  );
 }
 
 const Container = styled.div`

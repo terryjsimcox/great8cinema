@@ -6,7 +6,7 @@ import { colors } from '../../containts/styles.defaults';
 
 export default function Great8Logo({ handleClick }) {
   return (
-    <Container to='/' onClick={(e) => handleClick}>
+    <Container to='/' onClick={handleClick}>
       <Great8Svg />
     </Container>
   );
