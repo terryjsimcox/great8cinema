@@ -214,6 +214,7 @@ const addDocument = async (document) => {
 };
 
 const updateDocument = async (docID, field, data) => {
+  console.log('UpdateDocument:', field);
   const dbDoc = doc(db, 'films', docID);
   await updateDoc(dbDoc, { [field]: data });
 };
@@ -244,22 +245,37 @@ const getDocuments = async () => {
 const Schedule = async () => {
   const rts = await RTS();
   const dbFilms = await getDocuments();
+  console.log('Checking RTS Schedule...');
   rts.forEach(async (film) => {
     const temp = await MakeFilmDocument(film.Title[0], film);
-    const document = dbFilms.filter(
-      (film) => film.data.title === temp.title
-    )[0];
-    if (document.length === 0) await addDocument(temp);
-    if (document.length > 0) {
-      await updateDocument(document.id, 'shows', temp.shows);
-      if (
-        dayjs(document.data.released, 'DD ddd YYYY').format('dddd MMM D') <=
-          dayjs().format('dddd MMM D') &&
-        dayjs().format('YYYYMMDD') >=
-          dayjs(temp.shows[0].date, 'YYYYMMDD').format('YYYYMMDD') &&
-        temp.shows.length > 0
-      ) {
-        await updateDocument(document.id, 'category', 'Now Showing');
+    const document = dbFilms.filter((film) => film.data.title === temp.title);
+
+    if (document.length === 0) {
+      console.log(`Adding ${temp.title} to the database.`);
+      await addDocument(temp);
+    }
+    if (document.length > 0 && temp.shows.length > 0) {
+      try {
+        console.log(`Updating the shows for ${temp.title}`);
+        await updateDocument(document[0].id, 'shows', temp.shows);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    // console.log(
+    //   dayjs(document[0]?.data?.released, 'DD ddd YYYY') <= dayjs() ||
+    //     dayjs(temp.shows[0].date, 'YYYYMMDD') <= dayjs()
+    // );
+    if (
+      dayjs(document[0]?.data?.released, 'DD ddd YYYY') <= dayjs() ||
+      dayjs(temp.shows[0].date, 'YYYYMMDD') <= dayjs()
+    ) {
+      try {
+        console.log(`Document Release Date: ${document[0].data.released}`);
+        console.log(`Updating the Category for ${temp.title}`);
+        await updateDocument(document[0].id, 'category', 'Now Showing');
+      } catch (error) {
+        console.error(error);
       }
     }
   });

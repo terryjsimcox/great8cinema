@@ -63,8 +63,6 @@ const MovieListContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 4rem;
-  width: 1412px;
-  height: 1152px;
   margin-bottom: 0;
   padding: 2rem;
   background: hsla(0, 0%, 5%, 0.5);
