@@ -38,13 +38,17 @@ export default function Footer() {
 
   function handleClick(e, item) {
     state.current_page === item.name && e.preventDefault();
-    updateState('current_page', item.name);
+    updateState({ ...state, current_page: item.name });
   }
   return (
     <Container>
       <TopContainer>
         <Logo>
-          <Great8Logo handleClick={handleClick} />
+          <Great8Logo
+            handleClick={() =>
+              updateState({ ...state, current_page: 'Now Showing' })
+            }
+          />
         </Logo>
         <LinksContainer>
           <LinksList>

@@ -10,16 +10,16 @@ const FilmDetails = () => {
   const { id } = useParams();
   const { state } = useApp();
   const movie =
-    state.films.length > 0
-      ? state.films.filter((query) => query.id === id)[0]
-      : JSON.parse(localStorage.getItem('state')).films.filter(
+    state?.films?.length > 0
+      ? state?.films?.filter((query) => query.id === id)[0]
+      : JSON.parse(localStorage.getItem('state'))?.films?.filter(
           (query) => query.id === id
         )[0];
 
   useEffect(() => {
     localStorage.setItem(
       'state',
-      JSON.stringify({ ...state, current_page: 'Details' })
+      JSON.stringify({ ...state, current_page: 'Details', isLoading: false })
     );
   }, [state]);
   const convertMinutes = (time) => {

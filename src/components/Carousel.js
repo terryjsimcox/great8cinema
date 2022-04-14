@@ -24,9 +24,9 @@ export default function Carousel() {
     <Container>
       <Section>
         <StyledCarousel {...sliderSetting}>
-          {state.films
-            .filter((query) => query.data.category !== 'Archived')
-            .map((film) => {
+          {state?.films
+            ?.filter((query) => query.data.category !== 'Archived')
+            ?.map((film) => {
               return (
                 <ImgContainer key={uuid()}>
                   <img src={film.data.backdrop} alt={film.data.title} />

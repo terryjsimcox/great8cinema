@@ -20,7 +20,7 @@ const AboutUs = () => {
               theater facility.
             </CardP>
             <CardP>
-              Our theater features six individual auditoriums with stadium
+              Our theater features eight individual auditoriums with stadium
               seating, state of the art projection equipment, stereo surround
               sound in all of the auditoriums, and many other amenities. DTS
               Digital Sound for selected movies is also available.

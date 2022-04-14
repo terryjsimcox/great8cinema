@@ -36,7 +36,7 @@ export default function Navbar() {
 
   function handleClick(e, item) {
     state.current_page === item.name && e.preventDefault();
-    updateState('current_page', item.name);
+    updateState({ ...state, current_page: item.name });
     setNavOpen(!navOpen);
   }
 

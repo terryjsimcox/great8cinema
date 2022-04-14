@@ -8,7 +8,7 @@ import styled from 'styled-components';
 import { colors, fonts, borderRadius } from '../../containts/styles.defaults';
 
 const MovieTimesBack = ({ movie }) => {
-  const { updateState } = useApp();
+  const { state, updateState } = useApp();
   const findNextShow = (shows) => {
     const dateFormat = 'YYYYMMDD';
     let nextShow;
@@ -52,7 +52,7 @@ const MovieTimesBack = ({ movie }) => {
           <MovieDetails
             to={`film/${movie.id}`}
             onClick={() => {
-              updateState('current_page', 'Details');
+              updateState({ ...state, current_page: 'Details' });
             }}>
             More Details
           </MovieDetails>

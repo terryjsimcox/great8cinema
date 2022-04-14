@@ -255,6 +255,8 @@ const Schedule = async () => {
       if (
         dayjs(document.data.released, 'DD ddd YYYY').format('dddd MMM D') <=
           dayjs().format('dddd MMM D') &&
+        dayjs().format('YYYYMMDD') >=
+          dayjs(temp.shows[0].date, 'YYYYMMDD').format('YYYYMMDD') &&
         temp.shows.length > 0
       ) {
         await updateDocument(document.id, 'category', 'Now Showing');

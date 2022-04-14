@@ -16,13 +16,13 @@ import Footer from './Footer';
 import styled from 'styled-components';
 
 export default function App() {
-  const { updateState } = useApp();
+  const { state, updateState } = useApp();
 
   const getFilms = async () => {
     const results = await axios.get(
       'https://us-central1-great8cinema-a8432.cloudfunctions.net/GetFilms'
     );
-    updateState('films', results.data);
+    updateState({ ...state, films: results.data });
   };
 
   useEffect(() => {
