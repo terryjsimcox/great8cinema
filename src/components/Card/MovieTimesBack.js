@@ -7,7 +7,7 @@ import { useApp } from '../../context/AppContext';
 import styled from 'styled-components';
 import { colors, fonts, borderRadius } from '../../containts/styles.defaults';
 
-const MovieTimesBack = ({ movie }) => {
+const MovieTimesBack = ({ isLoaded, movie }) => {
   const { state, updateState } = useApp();
   const findNextShow = (shows) => {
     const dateFormat = 'YYYYMMDD';
@@ -27,7 +27,7 @@ const MovieTimesBack = ({ movie }) => {
   };
 
   return (
-    <Container>
+    <Container loaded={isLoaded ? 1 : 0}>
       <Title>{dayjs().format('dddd, MMMM D')}</Title>
       {findNextShow(movie.data.shows)}
       <ShowLinks>
@@ -71,6 +71,7 @@ const Container = styled.div`
   bottom: 0;
   left: 0;
   z-index: 2;
+  opacity: ${({ loaded }) => loaded};
   display: flex;
   flex-direction: column;
   align-items: center;

@@ -8,7 +8,6 @@ import { colors, fonts, borderRadius } from '../containts/styles.defaults';
 
 export default function Home() {
   const { state, updateState } = useApp();
-  console.log('Home', state);
 
   useEffect(() => {
     if (state.current_page === '')
@@ -34,7 +33,7 @@ export default function Home() {
           {state.films
             ?.filter((movie) => movie.data.category === state.current_page)
             ?.map((movie) => (
-              <MoviePosterCard key={uuid()} movie={movie} />
+              <MoviePosterCard key={uuid()} id={uuid()} movie={movie} />
             ))}
         </MovieListContainer>
       </Section>
@@ -64,7 +63,8 @@ const MovieListContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 4rem;
-  width: fit-content;
+  width: 1412px;
+  height: 1152px;
   margin-bottom: 0;
   padding: 2rem;
   background: hsla(0, 0%, 5%, 0.5);
