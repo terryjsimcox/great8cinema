@@ -151,7 +151,7 @@ const Title = styled.h3`
   font-family: ${fonts.EncodeSans};
   letter-spacing: 0.04rem;
 `;
-const Emphasized = styled.h3`
+const Emphasized = styled.span`
   margin-left: 1rem;
   font-size: 3rem;
   color: ${colors.secondary[300]};

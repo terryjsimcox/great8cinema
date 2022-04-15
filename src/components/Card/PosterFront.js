@@ -6,7 +6,6 @@ const PosterFront = ({ isLoaded, setIsLoaded, src, alt }) => {
   const imgRef = useRef();
 
   const imgLoaded = (e) => {
-    console.log(e, e.type);
     if (e.type === 'load') setIsLoaded(true);
   };
 

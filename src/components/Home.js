@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { v4 as uuid } from 'uuid';
 import { useApp } from '../context/AppContext';
+import { useLocation } from 'react-router-dom';
 import Carousel from './Carousel';
 import { MoviePosterCard } from './Card';
 import styled from 'styled-components';
@@ -8,10 +9,14 @@ import { colors, fonts, borderRadius } from '../containts/styles.defaults';
 
 export default function Home() {
   const { state, updateState } = useApp();
-
+  const location = useLocation();
+  const page =
+    location?.hash === ''
+      ? ['Now', 'Showing']
+      : location?.hash?.split('#')[1]?.split('%20');
   useEffect(() => {
     if (state.current_page === '')
-      updateState({ ...state, current_page: 'Now Showing' });
+      updateState({ ...state, current_page: `${page[0]} ${page[1]}` });
   }, [state.current_page]);
 
   useEffect(() => {
@@ -19,7 +24,7 @@ export default function Home() {
       'state',
       JSON.stringify({
         ...state,
-        current_page: 'Now Showing',
+        current_page: `${page[0]} ${page[1]}`,
       })
     );
   }, [state]);

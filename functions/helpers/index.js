@@ -262,10 +262,7 @@ const Schedule = async () => {
         console.error(error);
       }
     }
-    // console.log(
-    //   dayjs(document[0]?.data?.released, 'DD ddd YYYY') <= dayjs() ||
-    //     dayjs(temp.shows[0].date, 'YYYYMMDD') <= dayjs()
-    // );
+
     if (
       dayjs(document[0]?.data?.released, 'DD ddd YYYY') <= dayjs() ||
       dayjs(temp.shows[0].date, 'YYYYMMDD') <= dayjs()
