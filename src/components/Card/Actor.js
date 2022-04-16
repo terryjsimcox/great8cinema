@@ -24,23 +24,28 @@ export default Actor;
 const Container = styled.div`
   display: flex;
   align-items: center;
+  @media only screen and (max-width: 1550px) {
+    flex-direction: column;
+  }
 `;
+
 const Image = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
   margin-right: 1rem;
   width: 100px;
-  height: 100px;
+  aspect-ratio: 1 / 1;
   background-color: ${colors.dark[400]};
   border-radius: 50%;
+  overflow: hidden;
   & svg {
     font-size: 5rem;
   }
   & img {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
+    width: 110px;
+    aspect-ratio: 1 / 1;
+    /* border-radius: 50%; */
   }
 `;
 const Content = styled.div``;
