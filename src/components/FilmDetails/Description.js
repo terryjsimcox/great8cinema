@@ -6,6 +6,7 @@ import Plot from './Plot';
 import Genres from './Genres';
 import Extra from './Extras';
 import Showtimes from './Showtimes';
+import Cast from './Cast';
 
 import styled from 'styled-components';
 import { colors, fonts } from '../../containts/styles.defaults';
@@ -19,7 +20,7 @@ const Description = ({ movie }) => {
         <Plot plot={movie?.data.plot} />
         <Extra movie={movie} title='Directors' keys='director' />
         <Extra movie={movie} title='Writers' keys='writer' />
-        {/* <Extra movie={movie} title='Cast' keys='actors' /> */}
+        <Cast cast={movie.data.actors} />
       </Section>
       <Showtimes shows={movie?.data.shows} />
     </Container>
@@ -47,5 +48,8 @@ const Section = styled.div`
     font-size: 1.2rem;
     letter-spacing: 0.04rem;
     border-bottom: 1px solid ${colors.white[600]};
+    &:last-child {
+      border: none;
+    }
   }
 `;

@@ -55,7 +55,6 @@ const MakeFilmDocument = async (title, film) => {
     temp.shows = reconstructFilmShows(film.Shows);
     temp.year = OMDBfilm.Year ? OMDBfilm.Year : null;
 
-    OMDBfilm?.Actors?.split(',')?.map((actor) => temp.actors.push(actor));
     OMDBfilm?.Writer?.split(',')?.map((writer) => temp.writer.push(writer));
     OMDBfilm?.Director?.split(',')?.map((director) =>
       temp.director.push(director)
@@ -73,7 +72,10 @@ const reconstructActors = (cast) => {
   cast.forEach((actor) => {
     const tempActor = {
       name: actor.name,
-      profile: `https://image.tmdb.org/t/p/original${actor.profile_path}`,
+      profile:
+        actor.profile_path === null
+          ? null
+          : `https://image.tmdb.org/t/p/original${actor.profile_path}`,
       character: actor.character.split('/'),
       popularity: actor.popularity,
     };

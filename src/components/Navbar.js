@@ -36,6 +36,14 @@ export default function Navbar() {
     updateState({ ...state, current_page: item.name });
     setNavOpen(!navOpen);
   }
+  const checkScrollY = (e) => {
+    window.scrollY > 150 ? setScrollPos(1) : setScrollPos(0);
+  };
+  useEffect(() => {
+    window.addEventListener('scroll', checkScrollY);
+
+    return () => window.removeEventListener('scrollY', checkScrollY);
+  }, []);
 
   return (
     <Container>
