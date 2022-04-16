@@ -66,7 +66,6 @@ const MakeFilmDocument = async (title, film) => {
 };
 
 const reconstructActors = (cast) => {
-  console.log(cast);
   let tempCast = [];
 
   cast.forEach((actor) => {
@@ -122,8 +121,6 @@ const Schedule = async () => {
   const rts = await RTS();
   const dbFilms = await Storage.getDocuments();
 
-  console.log('Checking RTS Schedule...');
-
   rts.forEach(async (rtsFilm) => {
     const document = dbFilms.filter(
       (film) => film.data.rtsTitle === rtsFilm.Title[0]
@@ -131,16 +128,13 @@ const Schedule = async () => {
 
     if (document.length === 0) {
       const temp = await MakeFilmDocument(rtsFilm.Title[0], rtsFilm);
-      console.log(`Adding ${temp.title} to the database.`);
       await Storage.addDocument(temp);
     }
 
     if (document.length > 0) {
       const tempShows = reconstructFilmShows(rtsFilm.Shows[0].Show);
-      console.log(tempShows);
       if (document.length > 0 && tempShows.length > 0) {
         try {
-          console.log(`Updating the shows for ${document[0].data.title}`);
           await Storage.updateDocument(document[0].id, 'shows', tempShows);
         } catch (error) {
           console.error(error);
@@ -157,8 +151,6 @@ const Schedule = async () => {
         dayjs(tempShows[0]?.date, 'YYYYMMDD') <= dayjs()
       ) {
         try {
-          console.log(`Document Release Date: ${document[0].data.released}`);
-          console.log(`Updating the Category for ${document[0].data.title}`);
           await Storage.updateDocument(
             document[0].id,
             'category',
