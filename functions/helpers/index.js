@@ -1,129 +1,18 @@
-const parseString = require('xml2js').parseString;
-const axios = require('axios');
 const _ = require('lodash');
 const dayjs = require('dayjs');
-const filmTemplate = require('../models/film');
 const genresList = require('../models/genres');
+const TMDB = require('./TMDB/TMDB');
+const OMDB = require('./OMDB/OMDB');
+const RTS = require('./RTS/RTS');
+const Storage = require('./Storage/Storage');
 const { v4: uuid } = require('uuid');
 
-const { initializeApp } = require('firebase/app');
-const {
-  collection,
-  addDoc,
-  updateDoc,
-  getFirestore,
-  getDocs,
-  doc,
-  query,
-  where,
-} = require('firebase/firestore');
-
 require('dotenv').config();
-
-const firebaseConfig = {
-  apiKey: 'AIzaSyDQey7E2am5XJ4e1KKCCXbygiZzADx--MY',
-  authDomain: 'great8cinema-a8432.firebaseapp.com',
-  projectId: 'great8cinema-a8432',
-  storageBucket: 'great8cinema-a8432.appspot.com',
-  messagingSenderId: '400071885471',
-  appId: '1:400071885471:web:414330935a146c5cd6d8aa',
-  measurementId: 'G-KLNJLJWFTS',
-};
-
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-
-const parseXML = async (data) => {
-  return new Promise((resolve, reject) => {
-    return parseString(data, (error, response) => {
-      if (error) {
-        reject(error);
-        return {
-          error: true,
-          errorMessage: error,
-          message: 'There was an issue with parse the XML file.',
-        };
-      } else {
-        return resolve(response);
-      }
-    });
-  });
-};
-
-const MovieDB = async (filmTitle, year = new Date().getFullYear()) => {
-  const title = convertTitleToHTTPUrlFriendly(filmTitle);
-
-  try {
-    const results = await axios.get(
-      `https://api.themoviedb.org/3/search/movie\?api_key\=${process.env.TMDB_API_KEY}\&language\=en-US\&query\=${title}\&page\=1\&include_adult\=false\&year\=${year}`
-    );
-    return results.data.results[0];
-  } catch (error) {
-    console.error(error);
-  }
-};
-
-const convertTitleToHTTPUrlFriendly = (title, noSpaces) => {
-  const tempTitle = title.split(' ');
-  let newTitleWithSpaces = '';
-
-  if (noSpaces) {
-    tempTitle.forEach((word) => {
-      if (_.indexOf(tempTitle, word) === 0) {
-        newTitleWithSpaces += word;
-      } else {
-        newTitleWithSpaces += word;
-      }
-    });
-    return newTitleWithSpaces;
-  }
-
-  tempTitle.forEach((word) => {
-    if (_.indexOf(tempTitle, word) === 0) {
-      newTitleWithSpaces += word;
-    } else {
-      newTitleWithSpaces += `%20${word}`;
-    }
-  });
-
-  return newTitleWithSpaces;
-};
-
-const RTS = async () => {
-  const URI = process.env.RTS_GREAT8_URI;
-  const body = process.env.RTS_REQUEST;
-
-  try {
-    const results = await axios.post(URI, body, {
-      auth: {
-        username: process.env.RTS_GREAT8_USERNAME,
-        password: process.env.RTS_PASSWORD,
-      },
-      headers: {
-        Accept: 'application/json, text/plain, text/html',
-        'X-Requested-With': 'XMLHttpRequest',
-        'Accept-Encoding': 'gzip',
-      },
-    });
-    if (results.status === 200) {
-      const schedule = await parseXML(results.data);
-      return schedule.Response.ShowSchedule[0].Films[0].Film;
-    }
-  } catch (error) {
-    return error;
-  }
-};
-
-const OMDB = async (title, year = dayjs().year()) => {
-  const result = await axios.get(
-    `${process.env.OMDB_URI}t=${title}&y=${year}&p=full${process.env.OMDB_API_KEY}`
-  );
-  return result.data;
-};
 
 const MakeFilmDocument = async (title, film) => {
   let temp = {
     _id: '',
+    TMDB_id: '',
     actors: [],
     backdrop: '',
     category: null,
@@ -145,10 +34,13 @@ const MakeFilmDocument = async (title, film) => {
   };
 
   try {
-    const MDBfilm = await MovieDB(title);
+    const MDBfilm = await TMDB.movie(title);
+    const actors = await TMDB.actors(MDBfilm.id);
     const OMDBfilm = MDBfilm.title && (await OMDB(MDBfilm.title));
 
     temp._id = uuid();
+    temp.TMDB_id = MDBfilm.id;
+    temp.actors = reconstructActors(actors.cast);
     temp.backdrop = `https://image.tmdb.org/t/p/original${MDBfilm.backdrop_path}`;
     temp.category = 'Coming Soon';
     temp.filmCode = film.FilmCode[0];
@@ -174,10 +66,26 @@ const MakeFilmDocument = async (title, film) => {
   }
 };
 
+const reconstructActors = (cast) => {
+  console.log(cast);
+  let tempCast = [];
+
+  cast.forEach((actor) => {
+    const tempActor = {
+      name: actor.name,
+      profile: `https://image.tmdb.org/t/p/original${actor.profile_path}`,
+      character: actor.character.split('/'),
+      popularity: actor.popularity,
+    };
+    tempCast.push(tempActor);
+  });
+  return tempCast;
+};
+
 const reconstructFilmShows = (shows) => {
   let tempShows = [];
-  shows.forEach(({ Show }) => {
-    Show.forEach((time) => {
+  shows?.forEach(({ Show }) => {
+    Show?.forEach((time) => {
       tempShows.push({
         actual: time.DT[0],
         date: dayjs(time.DT[0], 'YYYYMMDDhhmm').format('YYYYMMDD'),
@@ -208,75 +116,65 @@ const getGenres = (genresList, filmGenres) => {
   return tempGenres;
 };
 
-const addDocument = async (document) => {
-  const docRef = await addDoc(collection(db, 'films'), document);
-  return docRef;
-};
-
-const updateDocument = async (docID, field, data) => {
-  console.log('UpdateDocument:', field);
-  const dbDoc = doc(db, 'films', docID);
-  await updateDoc(dbDoc, { [field]: data });
-};
-
-const archiveFilms = async (db, rts) => {
-  db.forEach(async (document) => {
-    if (
-      rts.filter((film) => film.FilmCode[0] === document.data.filmCode).length >
-      0
-    )
-      return;
-    await updateDocument(document.id, 'category', 'Archived');
-  });
-};
-
-const checkDocument = async (query) => {};
-
-const getDocuments = async () => {
-  let documents = [];
-  const docSnap = await getDocs(collection(db, 'films'));
-  docSnap.forEach((doc) => {
-    documents.push({ id: doc.id, data: doc.data() });
-  });
-
-  return documents;
-};
-
 const Schedule = async () => {
   const rts = await RTS();
-  const dbFilms = await getDocuments();
+  const dbFilms = await Storage.getDocuments();
+
   console.log('Checking RTS Schedule...');
-  rts.forEach(async (film) => {
-    const temp = await MakeFilmDocument(film.Title[0], film);
-    const document = dbFilms.filter((film) => film.data.title === temp.title);
+
+  rts.forEach(async (rtsFilm) => {
+    const document = dbFilms.filter(
+      (film) => film.data.rtsTitle === rtsFilm.Title[0]
+    );
 
     if (document.length === 0) {
+      const temp = await MakeFilmDocument(rtsFilm.Title[0], rtsFilm);
       console.log(`Adding ${temp.title} to the database.`);
-      await addDocument(temp);
-    }
-    if (document.length > 0 && temp.shows.length > 0) {
-      try {
-        console.log(`Updating the shows for ${temp.title}`);
-        await updateDocument(document[0].id, 'shows', temp.shows);
-      } catch (error) {
-        console.error(error);
-      }
+      await Storage.addDocument(temp);
     }
 
-    if (
-      dayjs(document[0]?.data?.released, 'DD ddd YYYY') <= dayjs() ||
-      dayjs(temp.shows[0].date, 'YYYYMMDD') <= dayjs()
-    ) {
-      try {
-        console.log(`Document Release Date: ${document[0].data.released}`);
-        console.log(`Updating the Category for ${temp.title}`);
-        await updateDocument(document[0].id, 'category', 'Now Showing');
-      } catch (error) {
-        console.error(error);
+    if (document.length > 0) {
+      const tempShows = reconstructFilmShows(rtsFilm.Shows[0].Show);
+      console.log(tempShows);
+      if (document.length > 0 && tempShows.length > 0) {
+        try {
+          console.log(`Updating the shows for ${document[0].data.title}`);
+          await Storage.updateDocument(document[0].id, 'shows', tempShows);
+        } catch (error) {
+          console.error(error);
+        }
+      }
+
+      console.log(
+        dayjs(tempShows[0]?.date, 'YYYYMMDD') <= dayjs(),
+        dayjs(document[0]?.data?.released, 'DD ddd YYYY') <= dayjs()
+      );
+
+      if (
+        dayjs(document[0]?.data?.released, 'DD ddd YYYY') <= dayjs() &&
+        dayjs(tempShows[0]?.date, 'YYYYMMDD') <= dayjs()
+      ) {
+        try {
+          console.log(`Document Release Date: ${document[0].data.released}`);
+          console.log(`Updating the Category for ${document[0].data.title}`);
+          await Storage.updateDocument(
+            document[0].id,
+            'category',
+            'Now Showing'
+          );
+        } catch (error) {
+          console.error(error);
+        }
       }
     }
   });
-  await archiveFilms(dbFilms, rts);
+  await Storage.archiveDocument(dbFilms, rts);
 };
 
-module.exports = { MovieDB, RTS, OMDB, Schedule, getDocuments };
+module.exports = {
+  TMDB,
+  RTS,
+  OMDB,
+  Schedule,
+  Storage,
+};

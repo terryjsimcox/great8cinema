@@ -19,7 +19,7 @@ const Description = ({ movie }) => {
         <Plot plot={movie?.data.plot} />
         <Extra movie={movie} title='Directors' keys='director' />
         <Extra movie={movie} title='Writers' keys='writer' />
-        <Extra movie={movie} title='Cast' keys='actors' />
+        {/* <Extra movie={movie} title='Cast' keys='actors' /> */}
       </Section>
       <Showtimes shows={movie?.data.shows} />
     </Container>

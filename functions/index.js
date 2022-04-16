@@ -1,5 +1,5 @@
 const functions = require('firebase-functions');
-const { RTS, MovieDB, OMDB, getDocuments, Schedule } = require('./helpers');
+const { RTS, TMDB, OMDB, Storage, Schedule } = require('./helpers');
 require('dotenv').config();
 
 exports.rtsSchedule = functions.https.onRequest(async (req, res) => {
@@ -12,16 +12,33 @@ exports.MovieDB = functions.https.onRequest(async (req, res) => {
   let results;
   switch (req.method) {
     case 'POST':
-      results = await MovieDB(req.body.title, req.body.year);
+      results = await TMDB.movie(req.body.title, req.body.year);
       res.send(results);
       break;
     case 'GET':
-      results = await MovieDB(req.query.title, req.query.year);
+      results = await TMDB.movie(req.query.title, req.query.year);
       res.send(results);
       break;
     default:
       res.send({ message: 'You use the wrong method' });
   }
+});
+
+exports.MovieDBActors = functions.https.onRequest(async (req, res) => {
+  let results;
+  switch (req.method) {
+    case 'POST':
+      results = await TMDB.actors(req.query.id);
+      res.send(results);
+      break;
+    case 'GET':
+      results = await TMDB.actors(req.query.id);
+      res.send(results);
+      break;
+    default:
+      res.send({ message: 'Use the wrong method. Please try agin.' });
+  }
+  res.send(req.query);
 });
 
 exports.OMDB = functions.https.onRequest(async (req, res) => {
@@ -42,7 +59,7 @@ exports.OMDB = functions.https.onRequest(async (req, res) => {
 
 exports.GetFilms = functions.https.onRequest(async (req, res) => {
   try {
-    const results = await getDocuments();
+    const results = await Storage.getDocuments();
     res.set('Access-Control-Allow-Origin', '*');
     if (req.method === 'OPTIONS') {
       res.set('Access-Control-Allow-Methods', 'GET');
