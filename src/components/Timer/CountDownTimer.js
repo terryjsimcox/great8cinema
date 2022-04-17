@@ -74,7 +74,7 @@ const Container = styled.div`
 
 const Title = styled.h4`
   color: ${colors.white[200]};
-  font-family: ${fonts.EncodeSans};
+  font-family: ${fonts.EncodeSans}, sans-serif;
 `;
 
 const Timer = styled.div`
@@ -82,7 +82,7 @@ const Timer = styled.div`
   & p {
     margin-right: 1rem;
     color: ${colors.white[200]};
-    font-family: ${fonts.EncodeSans};
+    font-family: ${fonts.EncodeSans}, sans-serif;
     font-size: 1.5rem;
   }
   & p:last-child {

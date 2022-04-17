@@ -5,7 +5,7 @@ import MovieTimesBack from './MovieTimesBack';
 
 import styled from 'styled-components';
 
-const MoviePosterCard = ({ movie }) => {
+const MoviePosterCard = ({ movie, state, updateState }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   return (
     <Container>
@@ -15,7 +15,13 @@ const MoviePosterCard = ({ movie }) => {
         src={movie.data.poster}
         alt={movie.data.title}
       />
-      <MovieTimesBack isLoaded={isLoaded} movie={movie} />
+      <MovieTimesBack
+        isLoaded={isLoaded}
+        id={movie.id}
+        shows={movie.data.shows}
+        state={state}
+        updateState={updateState}
+      />
     </Container>
   );
 };
@@ -35,7 +41,7 @@ const Container = styled.div`
       background-color: hsl(0, 0%, 15%);
     }
     100% {
-      background-color: hsl(0, 0%, 25%);
+      background-color: hsl(0, 0%, 50%);
     }
   }
   &:hover {

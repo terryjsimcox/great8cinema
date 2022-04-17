@@ -3,12 +3,18 @@ import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
 import { v4 as uuid } from 'uuid';
 import { CountDownTimer } from '../Timer';
-import { useApp } from '../../context/AppContext';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { colors, fonts, borderRadius } from '../../containts/styles.defaults';
 
-const MovieTimesBack = ({ isLoaded, movie }) => {
-  const { state, updateState } = useApp();
+const MovieTimesBack = ({
+  isLoaded = false,
+  id = '',
+  shows = [],
+  state = {},
+  updateState = null,
+  testing = false,
+}) => {
   const findNextShow = (shows) => {
     const dateFormat = 'YYYYMMDD';
     let nextShow;
@@ -27,11 +33,12 @@ const MovieTimesBack = ({ isLoaded, movie }) => {
   };
 
   return (
-    <Container loaded={isLoaded ? 1 : 0}>
+    <Container testing={testing} loaded={isLoaded ? 1 : 1}>
       <Title>{dayjs().format('dddd, MMMM D')}</Title>
-      {findNextShow(movie.data.shows)}
+      {findNextShow(shows)}
       <ShowLinks>
-        {movie?.data.shows.map((show) => {
+        {shows?.map((show) => {
+          console.log(show);
           if (
             dayjs(show.actual) > dayjs() &&
             dayjs(show.date).format('YYYYMMDD') === dayjs().format('YYYYMMDD')
@@ -50,7 +57,7 @@ const MovieTimesBack = ({ isLoaded, movie }) => {
         })}
         <ShowItem>
           <MovieDetails
-            to={`film/${movie.id}`}
+            to={`film/${id}`}
             onClick={() => {
               updateState({ ...state, current_page: 'Details' });
             }}>
@@ -60,6 +67,15 @@ const MovieTimesBack = ({ isLoaded, movie }) => {
       </ShowLinks>
     </Container>
   );
+};
+
+MovieTimesBack.propTypes = {
+  isLoaded: PropTypes.bool,
+  id: PropTypes.string,
+  shows: PropTypes.array,
+  state: PropTypes.object,
+  updateState: PropTypes.func,
+  testing: PropTypes.bool,
 };
 
 export default MovieTimesBack;
@@ -76,9 +92,10 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
+  font-family: ${fonts.EncodeSans}, EncodeSans, sans-serif;
   background-color: rgba(0, 0, 0, 0.8);
   border-radius: ${borderRadius.md};
-  transform: scale(0);
+  transform: ${({ testing }) => (testing ? 'scale(1)' : 'scale(0)')};
   transform-origin: center;
   transition: transform 0.4s ease-in-out;
   user-select: none;
@@ -89,12 +106,6 @@ const Title = styled.h3`
   color: ${colors.white[200]};
   letter-spacing: 0.04rem;
 `;
-const Timer = styled.div`
-  display: flex;
-  & > div p {
-    color: ${colors.white[200]};
-  }
-`;
 
 const ShowLinks = styled.ul`
   display: flex;
@@ -102,6 +113,7 @@ const ShowLinks = styled.ul`
   align-items: center;
   width: 80%;
   margin-bottom: 1rem;
+  padding-left: 0;
 `;
 
 const ShowItem = styled.li`
@@ -115,11 +127,15 @@ const ShowItem = styled.li`
     padding: 0.5rem 1rem;
     color: ${colors.white[200]};
     font-size: 1.2rem;
-    font-family: ${fonts.EncodeSans};
+    font-family: ${fonts.EncodeSans}, Encode Sans, sans-serif;
     text-align: center;
     background-color: ${colors.secondary[400]};
     border-radius: ${borderRadius.sm};
+    text-decoration: none;
   }
 `;
 
-const MovieDetails = styled(Link)``;
+const MovieDetails = styled(Link)`
+  & > a {
+  }
+`;

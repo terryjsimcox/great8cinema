@@ -38,7 +38,13 @@ export default function Home() {
           {state.films
             ?.filter((movie) => movie.data.category === state.current_page)
             ?.map((movie) => (
-              <MoviePosterCard key={uuid()} id={uuid()} movie={movie} />
+              <MoviePosterCard
+                key={uuid()}
+                id={uuid()}
+                movie={movie}
+                state={state}
+                updateState={updateState}
+              />
             ))}
         </MovieListContainer>
       </Section>
