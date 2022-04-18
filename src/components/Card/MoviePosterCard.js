@@ -1,29 +1,41 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
+import PropTypes from "prop-types";
+import PosterFront from "./PosterFront";
+import MovieTimesBack from "./MovieTimesBack";
 
-import PosterFront from './PosterFront';
-import MovieTimesBack from './MovieTimesBack';
+import styled from "styled-components";
 
-import styled from 'styled-components';
-
-const MoviePosterCard = ({ movie, state, updateState }) => {
+const MoviePosterCard = ({
+  id = null,
+  movie = {},
+  state = {},
+  updateState = null,
+  testing = false,
+}) => {
   const [isLoaded, setIsLoaded] = useState(false);
   return (
     <Container>
       <PosterFront
-        isLoaded={isLoaded}
+        isLoaded={isLoaded || testing}
         setIsLoaded={setIsLoaded}
-        src={movie.data.poster}
-        alt={movie.data.title}
+        src={movie.poster}
+        alt={movie.title}
       />
       <MovieTimesBack
         isLoaded={isLoaded}
-        id={movie.id}
-        shows={movie.data.shows}
+        id={id}
+        shows={movie.shows}
         state={state}
         updateState={updateState}
       />
     </Container>
   );
+};
+
+MoviePosterCard.propTypes = {
+  movie: PropTypes.object,
+  state: PropTypes.object,
+  updateState: PropTypes.func,
 };
 
 export default MoviePosterCard;
@@ -34,11 +46,11 @@ const Container = styled.div`
   height: 27rem;
   border-radius: 1rem;
   background-color: white;
-  animation: skeletion-loading 1s linear infinite alternate;
+  animation: skeletion-loading 2s linear infinite alternate;
 
   @keyframes skeletion-loading {
     0% {
-      background-color: hsl(0, 0%, 15%);
+      background-color: hsl(0, 0%, 25%);
     }
     100% {
       background-color: hsl(0, 0%, 50%);
