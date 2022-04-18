@@ -1,37 +1,20 @@
-import React from 'react';
-
-import styled from 'styled-components';
-import { colors } from '../containts/styles.defaults';
+import React from "react";
+import { v4 as uuid } from "uuid";
+import { Tickets } from "../containts/TicketPrices";
+import styled from "styled-components";
+import { colors, fonts } from "../containts/styles.defaults";
 
 export default function TicketPrices() {
   return (
     <Container>
       <Title>Ticket Prices</Title>
       <Table>
-        <TableItem>
-          <p>Adults</p>
-        </TableItem>
-        <TableItem>
-          <p>$8.00</p>
-        </TableItem>
-        <TableItem>
-          <p>Children (3-11)</p>
-        </TableItem>
-        <TableItem>
-          <p>$6.50</p>
-        </TableItem>
-        <TableItem>
-          <p>Seniors (62+)</p>
-        </TableItem>
-        <TableItem>
-          <p>$6.25</p>
-        </TableItem>
-        <TableItem>
-          <p>Matinee</p>
-        </TableItem>
-        <TableItem>
-          <p>$6.50</p>
-        </TableItem>
+        {Tickets?.map((ticket) => (
+          <TableItem key={uuid()}>
+            <p>{ticket.name}</p>
+            <p>{`$${ticket.price}`}</p>
+          </TableItem>
+        ))}
         <TableItem>
           <p>* All tickets subject to applicable tax.</p>
         </TableItem>
@@ -52,21 +35,31 @@ const Title = styled.h3`
 `;
 
 const Table = styled.ul`
-  display: grid;
-  grid-template-columns: 3fr 1fr;
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  margin: 0;
+  padding: 0;
 `;
 const TableItem = styled.li`
-  &:nth-child(even) > p {
-    text-align: center;
-    font-weight: bold;
-  }
+  display: flex;
+
   & > p {
+    margin: 0;
     padding: 0.5rem;
     color: ${colors.white[200]};
+    font-family: ${fonts.EncodeSans}, sans-serif;
     font-size: 0.9rem;
     border: 1px solid ${colors.white[200]};
+    &:nth-child(even) {
+      font-weight: bold;
+    }
   }
-  &:last-child {
-    grid-column: 1/3;
+  & > p:first-child {
+    width: 150px;
+    justify-content: flex-start;
+  }
+  & > p:last-child {
+    flex: 2;
   }
 `;
