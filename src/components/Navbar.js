@@ -1,32 +1,31 @@
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { v4 as uuid } from 'uuid';
-import { useApp } from '../context/AppContext';
-import { HiMenuAlt4, HiX } from 'react-icons/hi';
-import styled from 'styled-components';
-import { colors, fonts, borderRadius } from '../containts/styles.defaults';
-import { Great8Logo } from './Logo';
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { v4 as uuid } from "uuid";
+import { HiMenuAlt4, HiX } from "react-icons/hi";
+import styled from "styled-components";
+import { colors, fonts, borderRadius } from "../containts/styles.defaults";
+import { Great8Logo } from "./Logo";
 
 const defaultNavItems = [
   {
-    name: 'Now Showing',
-    url: '/#Now Showing',
-    description: 'Navigate to Now Showing page.',
+    name: "Now Showing",
+    url: "/#Now Showing",
+    description: "Navigate to Now Showing page.",
   },
   {
-    name: 'Coming Soon',
-    url: '/#Coming Soon',
-    description: 'Navigate to Coming Soon page.',
+    name: "Coming Soon",
+    url: "/#Coming Soon",
+    description: "Navigate to Coming Soon page.",
   },
   {
-    name: 'Gift Cards',
-    url: '/Gift Cards',
-    description: 'Navigate to Gift Cards page.',
+    name: "Gift Cards",
+    url: "/Gift Cards",
+    description: "Navigate to Gift Cards page.",
   },
   {
-    name: 'Contact Us',
-    url: '/Contact Us',
-    description: 'Navigate to Contact Us page.',
+    name: "Contact Us",
+    url: "/Contact Us",
+    description: "Navigate to Contact Us page.",
   },
 ];
 
@@ -43,9 +42,9 @@ export default function Navbar({ state = null, updateState = null }) {
     window.scrollY > 150 ? setScrollPos(1) : setScrollPos(0);
   };
   useEffect(() => {
-    window.addEventListener('scroll', checkScrollY);
+    window.addEventListener("scroll", checkScrollY);
 
-    return () => window.removeEventListener('scrollY', checkScrollY);
+    return () => window.removeEventListener("scrollY", checkScrollY);
   }, []);
 
   return (
@@ -53,19 +52,20 @@ export default function Navbar({ state = null, updateState = null }) {
       <Background opacity={scrollPos} />
       <Great8Logo
         handleClick={() =>
-          updateState({ ...state, current_page: 'Now Showing' })
+          updateState({ ...state, current_page: "Now Showing" })
         }
       />
-      <NavList open={navOpen} className={navOpen && 'open'}>
+      <NavList open={navOpen} className={navOpen && "open"}>
         {defaultNavItems.map((item) => (
           <NavItem
             open={navOpen}
             active={state.current_page === item.name ? true : false}
             key={uuid()}
-            className={navOpen && 'open'}
+            className={navOpen && "open"}
             onClick={(e) => handleClick(e, item)}
             title={item.name}
-            aria-label={item.description}>
+            aria-label={item.description}
+          >
             <Link to={item.url} title={item.name}>
               {item.name}
             </Link>
@@ -153,7 +153,7 @@ const NavList = styled.ul`
 const NavItem = styled.li`
   position: relative;
   margin-right: 2rem;
-  cursor: ${({ active }) => (active ? 'pointer' : 'default')};
+  cursor: ${({ active }) => (active ? "pointer" : "default")};
   &:last-child {
     margin-right: 0;
   }
@@ -165,7 +165,7 @@ const NavItem = styled.li`
   }
   &::after {
     position: absolute;
-    content: '';
+    content: "";
     display: block;
     left: 0;
     right: 0;
@@ -192,7 +192,7 @@ const NavItem = styled.li`
     transition-delay: 1s;
     background-color: ${({ active }) =>
       active ? colors.dark[500] : colors.dark[700]};
-    cursor: ${({ active }) => (active ? 'default' : 'pointer')};
+    cursor: ${({ active }) => (active ? "default" : "pointer")};
     & > a {
       display: block;
       padding: 2rem;
