@@ -6,7 +6,11 @@ import { colors } from '../../containts/styles.defaults';
 
 export default function Great8Logo({ handleClick }) {
   return (
-    <Container to='/' onClick={handleClick}>
+    <Container
+      to='/'
+      onClick={handleClick}
+      title='Great 8 Cinema Logo'
+      aria-label='Navigate to the home page.'>
       <Great8Svg />
     </Container>
   );

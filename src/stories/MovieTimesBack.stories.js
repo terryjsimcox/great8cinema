@@ -24,7 +24,7 @@ const Container = styled.div`
   position: relative;
   width: 18rem;
   height: 27rem;
-  margin-left: 0.5rem;
+  margin: 1rem auto;
 `;
 
 export const Default = Template.bind({});

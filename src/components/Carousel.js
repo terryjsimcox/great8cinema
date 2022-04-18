@@ -7,8 +7,8 @@ import 'slick-carousel/slick/slick-theme.css';
 import styled from 'styled-components';
 import { colors, carouselHeight } from '../containts/styles.defaults';
 
-export default function Carousel() {
-  const { state } = useApp();
+export default function Carousel({ films }) {
+  console.log(films);
   const sliderSetting = {
     dots: false,
     fade: true,
@@ -24,9 +24,10 @@ export default function Carousel() {
     <Container>
       <Section>
         <StyledCarousel {...sliderSetting}>
-          {state?.films
+          {films
             ?.filter((query) => query.data.category !== 'Archived')
             ?.map((film) => {
+              console.log(film);
               return (
                 <ImgContainer key={uuid()}>
                   <img src={film.data.backdrop} alt={film.data.title} />
@@ -43,7 +44,7 @@ export default function Carousel() {
 const Container = styled.div`
   position: relative;
   display: block;
-  width: 100vw;
+  width: 100%;
   height: ${carouselHeight}px;
   margin: 0 auto;
   @media only screen and (max-width: 760px) {
