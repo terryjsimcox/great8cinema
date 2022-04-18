@@ -1,11 +1,27 @@
 import PosterFront from '../components/Card/PosterFront';
-
+import styled from 'styled-components';
 export default {
   title: 'Cards/PosterFront',
   component: PosterFront,
+  parameters: {
+    backgrounds: {
+      default: 'default',
+      values: [{ name: 'default', value: '#272822' }],
+    },
+  },
 };
 
-const Template = (args) => <PosterFront {...args} />;
+const Template = (args) => (
+  <Container>
+    <PosterFront {...args} />
+  </Container>
+);
+
+const Container = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
 
 export const Loaded = Template.bind({});
 Loaded.args = {

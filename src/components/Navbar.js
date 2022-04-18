@@ -26,10 +26,9 @@ const defaultNavItems = [
   },
 ];
 
-export default function Navbar() {
+export default function Navbar({ state = null, updateState = null }) {
   const [scrollPos, setScrollPos] = useState(0);
   const [navOpen, setNavOpen] = useState(false);
-  const { state, updateState } = useApp();
 
   function handleClick(e, item) {
     state.current_page === item.name && e.preventDefault();
@@ -67,9 +66,9 @@ export default function Navbar() {
       </NavList>
       <MobileIcon>
         {!navOpen ? (
-          <HiMenuAlt4 onClick={() => setNavOpen(!navOpen)} />
+          <HiMenuAlt4 onClick={() => setNavOpen(true)} />
         ) : (
-          <HiX onClick={() => setNavOpen(!navOpen)} />
+          <HiX onClick={() => setNavOpen(false)} />
         )}
       </MobileIcon>
     </Container>
@@ -79,6 +78,7 @@ export default function Navbar() {
 const Container = styled.nav`
   position: fixed;
   top: 0;
+  left: 0;
   z-index: 100;
   display: flex;
   align-items: center;
@@ -94,6 +94,9 @@ const Container = styled.nav`
   }
   @media only screen and (max-width: 960px) {
     justify-content: center;
+    & > a {
+      margin: 0;
+    }
   }
 `;
 
@@ -115,6 +118,8 @@ const NavList = styled.ul`
   display: flex;
   z-index: 2;
   margin-inline-end: 4rem;
+  list-style: none;
+
   @media only screen and (max-width: 960px) {
     position: absolute;
     top: 5rem;
@@ -122,6 +127,7 @@ const NavList = styled.ul`
     right: 0;
     flex-direction: column;
     margin: 0;
+    padding: 0;
     opacity: ${({ open }) => (open ? 1 : 0)};
     transform: scale(1, 0);
     transition: transform 0.4s ease-in-out;
@@ -145,8 +151,9 @@ const NavItem = styled.li`
   }
   & > a {
     color: ${({ active }) => (active ? colors.white[100] : colors.white[200])};
-    font-family: ${fonts.EncodeSans};
+    font-family: ${fonts.EncodeSans}, sans-serif;
     font-size: 1.2rem;
+    text-decoration: none;
   }
   &::after {
     position: absolute;
@@ -171,13 +178,17 @@ const NavItem = styled.li`
 
   @media only screen and (max-width: 960px) {
     all: unset;
-    padding: 2rem;
+    padding: 0;
     opacity: 0;
     transition: opacity 0.2s ease-in-out;
     transition-delay: 1s;
     background-color: ${({ active }) =>
       active ? colors.dark[500] : colors.dark[700]};
     cursor: ${({ active }) => (active ? 'default' : 'pointer')};
+    & > a {
+      display: block;
+      padding: 2rem;
+    }
     &.open {
       opacity: 1;
       transition: opacity 3s ease;

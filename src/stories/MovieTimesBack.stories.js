@@ -4,6 +4,12 @@ import { MemoryRouter } from 'react-router-dom';
 export default {
   title: 'Cards/MovieTimesBack',
   component: MovieTimesBack,
+  parameters: {
+    backgrounds: {
+      default: 'default',
+      values: [{ name: 'default', value: '#272822' }],
+    },
+  },
 };
 
 const Template = (args) => (

@@ -33,7 +33,7 @@ export default function App() {
     <Container>
       <Router>
         <ScrollToTop />
-        <Navbar />
+        <Navbar state={state} updateState={updateState} />
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/Gift%20Cards' element={<GiftCards />}></Route>
