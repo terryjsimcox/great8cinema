@@ -13,7 +13,6 @@ const MovieTimesBack = ({
   shows = [],
   state = {},
   updateState = null,
-  testing = false,
 }) => {
   const findNextShow = (shows) => {
     const dateFormat = 'YYYYMMDD';
@@ -33,12 +32,11 @@ const MovieTimesBack = ({
   };
 
   return (
-    <Container testing={testing} loaded={isLoaded ? 1 : 1}>
+    <Container loaded={isLoaded ? 1 : 1}>
       <Title>{dayjs().format('dddd, MMMM D')}</Title>
       {findNextShow(shows)}
       <ShowLinks>
         {shows?.map((show) => {
-          console.log(show);
           if (
             dayjs(show.actual) > dayjs() &&
             dayjs(show.date).format('YYYYMMDD') === dayjs().format('YYYYMMDD')
@@ -95,7 +93,7 @@ const Container = styled.div`
   font-family: ${fonts.EncodeSans}, EncodeSans, sans-serif;
   background-color: rgba(0, 0, 0, 0.8);
   border-radius: ${borderRadius.md};
-  transform: ${({ testing }) => (testing ? 'scale(1)' : 'scale(0)')};
+  transform: scale(0);
   transform-origin: center;
   transition: transform 0.4s ease-in-out;
   user-select: none;

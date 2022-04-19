@@ -96,6 +96,9 @@ const TopContainer = styled.div`
   margin: 0 auto;
   padding: 2rem 0;
   border-bottom: 2px solid ${colors.dark[400]};
+  @media only screen and (max-width: 960px) {
+    flex-direction: column;
+  }
 `;
 
 const BottomContainer = styled.div`
@@ -115,6 +118,10 @@ const LinksList = styled.ul`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 1rem 12rem;
+  @media only screen and (max-width: 960px) {
+    grid-template-columns: 1fr;
+    margin: 2rem 0;
+  }
 `;
 
 const LinkItem = styled.li`

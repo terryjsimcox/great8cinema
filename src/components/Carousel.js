@@ -1,6 +1,5 @@
 import React from 'react';
 import Slider from 'react-slick';
-import { useApp } from '../context/AppContext';
 import { v4 as uuid } from 'uuid';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -8,7 +7,6 @@ import styled from 'styled-components';
 import { colors, carouselHeight } from '../containts/styles.defaults';
 
 export default function Carousel({ films }) {
-  console.log(films);
   const sliderSetting = {
     dots: false,
     fade: true,
@@ -27,7 +25,6 @@ export default function Carousel({ films }) {
           {films
             ?.filter((query) => query.data.category !== 'Archived')
             ?.map((film) => {
-              console.log(film);
               return (
                 <ImgContainer key={uuid()}>
                   <img src={film.data.backdrop} alt={film.data.title} />
@@ -51,7 +48,7 @@ const Container = styled.div`
     display: none;
   }
   @media only screen and (min-width: 761px) and (max-width: 1100px) {
-    height: 500px;
+    height: 525px;
   }
   @media only screen and (min-width: 1101px) and (max-width: 1400px) {
     height: 600px;
@@ -107,6 +104,15 @@ const StyledCarousel = styled(Slider)`
       }
     }
   }
+  @media only screen and (max-width: 760px) {
+    display: none;
+  }
+  @media only screen and (min-width: 761px) and (max-width: 1100px) {
+    height: 500px;
+  }
+  @media only screen and (min-width: 1101px) and (max-width: 1400px) {
+    height: 600px;
+  }
 `;
 
 const Section = styled.section`
@@ -118,7 +124,7 @@ const Section = styled.section`
     display: none;
   }
   @media only screen and (min-width: 761px) and (max-width: 1100px) {
-    height: 400px;
+    height: 500px;
   }
   @media only screen and (min-width: 1101px) and (max-width: 1400px) {
     height: 500px;

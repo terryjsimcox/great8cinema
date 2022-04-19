@@ -14,6 +14,7 @@ export default function Home() {
     location?.hash === ''
       ? ['Now', 'Showing']
       : location?.hash?.split('#')[1]?.split('%20');
+
   useEffect(() => {
     if (state.current_page === '')
       updateState({ ...state, current_page: `${page[0]} ${page[1]}` });
@@ -35,7 +36,7 @@ export default function Home() {
       <Section>
         <MovieListContainer>
           <Title>{state?.current_page}</Title>
-          {state.films
+          {state?.films
             ?.filter((movie) => movie.data.category === state.current_page)
             ?.map((movie) => (
               <MoviePosterCard
@@ -63,8 +64,12 @@ const Section = styled.section`
   top: -15rem;
   display: flex;
   justify-content: center;
-  margin-bottom: 4rem;
+  /* margin-bottom: 4rem; */
   background: linear-gradient(to top, hsla(0, 0%, 5%, 1) 90%, transparent);
+  @media only screen and (max-width: 960px) {
+    top: 0;
+    margin-bottom: 4rem;
+  }
 `;
 
 const MovieListContainer = styled.div`
@@ -76,12 +81,14 @@ const MovieListContainer = styled.div`
   gap: 4rem;
   margin-bottom: 0;
   padding: 2rem;
-  background: hsla(0, 0%, 5%, 0.5);
-  border: 2px solid ${colors.white[700]};
+  /* background: hsla(0, 0%, 5%, 0.5); */
+  /* border: 2px solid ${colors.white[700]}; */
   border-radius: ${borderRadius.sm};
   @media only screen and (max-width: 760px) {
     grid-template-columns: 1fr;
-    top: 7rem;
+    top: 5rem;
+    margin-bottom: 2rem;
+    border: none;
     & h2 {
       grid-column: 1/2;
     }

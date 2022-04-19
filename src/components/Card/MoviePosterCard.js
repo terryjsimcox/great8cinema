@@ -1,22 +1,21 @@
-import React, { useState } from "react";
-import PropTypes from "prop-types";
-import PosterFront from "./PosterFront";
-import MovieTimesBack from "./MovieTimesBack";
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+import PosterFront from './PosterFront';
+import MovieTimesBack from './MovieTimesBack';
 
-import styled from "styled-components";
+import styled from 'styled-components';
 
 const MoviePosterCard = ({
   id = null,
   movie = {},
   state = {},
   updateState = null,
-  testing = false,
 }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   return (
     <Container>
       <PosterFront
-        isLoaded={isLoaded || testing}
+        isLoaded={isLoaded}
         setIsLoaded={setIsLoaded}
         src={movie.poster}
         alt={movie.title}

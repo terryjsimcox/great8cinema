@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
-import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import { HashRouter as Router, Route, Routes } from 'react-router-dom';
+import axios from 'axios';
 import { useApp } from '../context/AppContext';
 
 //***** Components *****/
@@ -15,8 +15,13 @@ import Footer from './Footer';
 
 import styled from 'styled-components';
 
-export default function App() {
+const App = () => {
   const { state, updateState } = useApp();
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  const checkLoaded = () => {
+    setIsLoaded(true);
+  };
 
   const getFilms = async () => {
     const results = await axios.get(
@@ -29,8 +34,13 @@ export default function App() {
     getFilms();
   }, []);
 
+  useEffect(() => {
+    window.addEventListener('load', checkLoaded);
+    return () => window.removeEventListener('load', checkLoaded);
+  }, []);
+
   return (
-    <Container>
+    <Container isLoaded={isLoaded}>
       <Router>
         <ScrollToTop />
         <Navbar state={state} updateState={updateState} />
@@ -45,11 +55,12 @@ export default function App() {
       </Router>
     </Container>
   );
-}
-
+};
+export default App;
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   min-height: 100vh;
+  opacity: ${({ isLoaded }) => (isLoaded ? 1 : 0)};
 `;
