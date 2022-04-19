@@ -54,7 +54,12 @@ const Container = styled.div`
   margin-top: 8rem;
   padding-top: 5rem;
   padding-bottom: 5rem;
+
+  @media only screen and (max-width: 960px) {
+    width: 100vw;
+  }
 `;
+
 const Card = styled.div`
   display: flex;
   margin-bottom: 2rem;
@@ -64,6 +69,10 @@ const Card = styled.div`
   &:last-child {
     padding: 0;
   }
+  @media only screen and (max-width: 960px) {
+    flex-direction: column;
+    width: 100%;
+  }
 `;
 const Section = styled.section`
   display: flex;
@@ -71,6 +80,10 @@ const Section = styled.section`
   padding-right: 2rem;
   &:first-child {
     margin-right: 3rem;
+  }
+
+  @media only screen and (max-width: 960px) {
+    padding-right: 0;
   }
 `;
 const Title = styled.h4`
@@ -99,9 +112,29 @@ const Content = styled.div`
       background-color: ${colors.secondary[500]};
     }
   }
+  @media only screen and (max-width: 960px) {
+    margin-bottom: 2rem;
+    & > a {
+      margin-top: 2rem;
+    }
+  }
 `;
 const Iframe = styled.iframe`
   width: 500px;
   height: 350px;
   border-radius: ${borderRadius.sm};
+  animation: skeletion-loading 2s linear infinite alternate;
+
+  @keyframes skeletion-loading {
+    0% {
+      background-color: hsl(0, 0%, 25%);
+    }
+    100% {
+      background-color: hsl(0, 0%, 50%);
+    }
+  }
+  @media only screen and (max-width: 960px) {
+    width: 100%;
+    padding-right: 0;
+  }
 `;

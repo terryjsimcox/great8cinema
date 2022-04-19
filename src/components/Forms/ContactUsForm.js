@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import emailjs from 'emailjs-com';
+import { v4 as uuid } from 'uuid';
 import styled from 'styled-components';
+import Input from './Input';
+import TextArea from './TextArea';
+import { ContactInputs } from '../../containts/ContactForm.defaults';
 import { colors, fonts, borderRadius } from '../../containts/styles.defaults';
 
 const initialState = {
@@ -13,6 +17,7 @@ const initialState = {
 };
 const ContactUsForm = () => {
   const [formState, setFormState] = useState(initialState);
+
   const sendEmail = async (e) => {
     e.preventDefault();
     const result = await emailjs.send(
@@ -32,58 +37,58 @@ const ContactUsForm = () => {
     <Form onSubmit={sendEmail}>
       <Title>Contact Us</Title>
       <InputGroup>
-        <label>First Name:</label>
-        <input
+        <Input
+          label='First Name'
           type='text'
           name='firstName'
           value={formState.firstName}
-          onChange={(e) =>
-            setFormState({ ...formState, firstName: e.target.value })
-          }
+          onChange={(e) => {
+            setFormState({ ...formState, firstName: e.target.value });
+          }}
         />
-        <label>Last Name:</label>
-        <input
+        <Input
+          label='Last Name'
           type='text'
           name='lastName'
           value={formState.lastName}
-          onChange={(e) =>
-            setFormState({ ...formState, lastName: e.target.value })
-          }
+          onChange={(e) => {
+            setFormState({ ...formState, lastName: e.target.value });
+          }}
         />
-        <label> Email:</label>
-        <input
+        <Input
+          label='Email'
           type='email'
           name='email'
           value={formState.email}
-          onChange={(e) =>
-            setFormState({ ...formState, email: e.target.value })
-          }
+          onChange={(e) => {
+            setFormState({ ...formState, email: e.target.value });
+          }}
         />
-        <label>Phone:</label>
-        <input
+        <Input
+          label='Phone'
           type='tel'
           name='phone'
           value={formState.phone}
-          onChange={(e) =>
-            setFormState({ ...formState, phone: e.target.value })
-          }
+          onChange={(e) => {
+            setFormState({ ...formState, phone: e.target.value });
+          }}
         />
-        <label>Subject:</label>
-        <input
+        <Input
+          label='Subject'
           type='text'
           name='subject'
           value={formState.subject}
-          onChange={(e) =>
-            setFormState({ ...formState, subject: e.target.value })
-          }
+          onChange={(e) => {
+            setFormState({ ...formState, subject: e.target.value });
+          }}
         />
-        <label>Message:</label>
-        <textarea
+        <TextArea
+          label='Message'
           name='message'
           value={formState.message}
-          onChange={(e) =>
-            setFormState({ ...formState, message: e.target.value })
-          }></textarea>
+          onChange={(e) => {
+            setFormState({ ...formState, message: e.target.value });
+          }}></TextArea>
       </InputGroup>
       <Submit>
         <button type='submit'>Submit</button>
@@ -96,33 +101,25 @@ export default ContactUsForm;
 const Form = styled.form`
   display: flex;
   flex-direction: column;
+  width: 960px;
   padding: 0.5rem;
-  & button {
+  @media only screen and (max-width: 960px) {
+    width: 100%;
+    align-items: center;
   }
 `;
 
 const InputGroup = styled.div`
-  display: grid;
-  grid-template-columns: 0.2fr 1fr 0.2fr;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   gap: 1rem 0.5rem;
-  width: 950px;
+  width: 80%;
   padding: 1rem;
-  & label {
-    grid-column: 1/2;
-    color: ${colors.white[200]};
-    text-align: right;
-  }
-  & input {
-    grid-column: 2/3;
-    height: 2rem;
-    border-radius: 4px;
-    outline: none;
-    border: none;
-  }
-  & textarea {
-    grid-column: 2/3;
-    height: 200px;
-    border-radius: 4px;
+  @media only screen and (max-width: 960px) {
+    width: 90%;
+    padding: 0;
   }
 `;
 const Title = styled.h3`
@@ -134,6 +131,9 @@ const Submit = styled.div`
   display: flex;
   justify-content: flex-end;
   margin: 2rem;
+  @media only screen and (max-width: 960px) {
+    width: 90%;
+  }
   & button {
     width: 25%;
     margin-top: 4rem;
@@ -149,6 +149,10 @@ const Submit = styled.div`
     cursor: pointer;
     &:hover {
       background-color: ${colors.secondary[500]};
+    }
+    @media only screen and (max-width: 960px) {
+      width: 100%;
+      margin: 0;
     }
   }
 `;
