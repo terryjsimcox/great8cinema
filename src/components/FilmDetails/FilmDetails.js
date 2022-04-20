@@ -58,13 +58,15 @@ export default FilmDetails;
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  width: 100vw;
+  width: 100%;
 `;
 
 const Section = styled.section`
   position: relative;
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  width: 100%;
   height: inherit;
   background-color: hsla(0, 0%, 5%, 1);
 `;
@@ -89,6 +91,7 @@ const Details = styled.div`
   border-radius: ${borderRadius.sm};
   @media only screen and (max-width: 960px) {
     top: -2rem;
+    flex-direction: column;
     width: 100%;
     margin-bottom: 0;
     border: none;

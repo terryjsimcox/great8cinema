@@ -27,4 +27,10 @@ const Container = styled.ul`
     border: 2px solid ${colors.white[200]};
     border-radius: 1.5rem;
   }
+  @media only screen and (max-width: 960px) {
+    flex-wrap: wrap;
+    & > li {
+      margin-bottom: 1rem;
+    }
+  }
 `;
