@@ -12,16 +12,16 @@ const FilmDetails = () => {
   const movie =
     state?.films?.length > 0
       ? state?.films?.filter((query) => query.id === id)[0]
-      : JSON.parse(localStorage.getItem('state'))?.films?.filter(
-          (query) => query.id === id
-        )[0];
+      : JSON.parse(localStorage.getItem('filmDetails'));
+  console.log(movie, { ...state });
 
   useEffect(() => {
     localStorage.setItem(
-      'state',
-      JSON.stringify({ ...state, current_page: 'Details', isLoading: false })
+      'filmDetails',
+      JSON.stringify({ ...movie, isLoading: false })
     );
-  }, [state]);
+  }, []);
+
   const convertMinutes = (time) => {
     const hours = Math.floor(time / 60);
     const minutes = Math.floor(time % 60);

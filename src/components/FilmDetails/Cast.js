@@ -5,23 +5,21 @@ import styled from 'styled-components';
 import { colors, fonts } from '../../containts/styles.defaults';
 
 const Cast = ({ cast }) => {
-  console.log(cast);
   return (
     <Container>
       <Header>Cast</Header>
       <Section>
-        {cast.map((actor) =>
-          actor.popularity > 5 ? (
-            <Actor
-              key={uuid()}
-              src={actor.profile}
-              alt={actor.name}
-              name={actor.name}
-              character={actor.character}
-            />
-          ) : (
-            <></>
-          )
+        {cast.map(
+          (actor) =>
+            actor.popularity > 5 && (
+              <Actor
+                key={uuid()}
+                src={actor.profile}
+                alt={actor.name}
+                name={actor.name}
+                character={actor.character}
+              />
+            )
         )}
       </Section>
     </Container>
