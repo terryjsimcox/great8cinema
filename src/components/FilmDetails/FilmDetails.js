@@ -66,6 +66,7 @@ const Section = styled.section`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
   width: 100%;
   height: inherit;
   background-color: hsla(0, 0%, 5%, 1);
