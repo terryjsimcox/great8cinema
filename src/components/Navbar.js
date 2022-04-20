@@ -197,18 +197,21 @@ const NavItem = styled.li`
 `;
 
 const MobileIcon = styled.div`
+  position: absolute;
   display: none;
-  @media only screen and (max-width: 960px) {
+  top: 1.6rem;
+  cursor: pointer;
+  & > svg {
+    width: 2em;
+    height: 2rem;
+    fill: ${colors.white[100]};
+  }
+  @media only screen and (min-width: 200px) and (max-width: 400px) {
     display: block;
-    position: absolute;
+    right: 2rem;
+  }
+  @media only screen and (min-width: 401px) and (max-width: 960px) {
+    display: block;
     right: 5rem;
-    cursor: pointer;
-    & > svg {
-      width: 2em;
-      height: 2rem;
-      fill: ${colors.white[100]};
-    }
-    &:hover {
-    }
   }
 `;

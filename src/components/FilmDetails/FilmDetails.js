@@ -66,7 +66,7 @@ const Section = styled.section`
   display: flex;
   justify-content: center;
   height: inherit;
-  background-color: hsla(0, 0%, 9%, 1);
+  background-color: hsla(0, 0%, 5%, 1);
 `;
 
 const Title = styled.h3`
@@ -87,6 +87,13 @@ const Details = styled.div`
   background-color: hsla(0, 0%, 9%, 0.8);
   border: 2px solid ${colors.white[700]};
   border-radius: ${borderRadius.sm};
+  @media only screen and (max-width: 960px) {
+    top: -2rem;
+    width: 100%;
+    margin-bottom: 0;
+    border: none;
+    background-color: hsla(0, 0%, 5%, 0.8);
+  }
 `;
 
 const MovieDetails = styled.div`

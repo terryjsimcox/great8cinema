@@ -26,15 +26,26 @@ const Container = styled.div`
     right: 0;
     bottom: 0;
     left: 0;
-    background: linear-gradient(to top, hsla(0, 0%, 9%, 1) 5%, transparent);
+    background: linear-gradient(to top, hsla(0, 0%, 5%, 1) 5%, transparent);
+  }
+  @media only screen and (max-width: 960px) {
+    height: 400px;
+    & > div {
+      top: 5rem;
+      height: 300px;
+    }
   }
 `;
 
 const HeroImage = styled.img`
-  position: abolute;
+  position: absolute;
   z-index: -1;
   top: 0;
   left: 0;
   width: 100%;
   height: 900px;
+  @media only screen and (max-width: 960px) {
+    top: 5rem;
+    height: 300px;
+  }
 `;

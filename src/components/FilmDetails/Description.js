@@ -34,7 +34,13 @@ const Container = styled.div`
   grid-template-columns: 0.5fr 2fr 1fr;
   gap: 1rem;
   margin-top: 2rem;
-  @media only screen and (max-width: 1200px) {
+  @media only screen and (max-width: 400px) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+  @media only screen and (min-width: 401px) and (max-width: 1200px) {
     display: flex;
     flex-direction: column;
   }

@@ -12,15 +12,18 @@ const Poster = ({ movie }) => {
 export default Poster;
 
 const Container = styled.div`
+  display: flex;
+  align-items: center;
   width: 175px;
   height: 250px;
+  margin: 0 auto;
   & img {
     width: 100%;
     height: 100%;
     border-radius: 5px;
   }
-  @media only screen and (max-width: 1200px) {
+  /* @media only screen and (max-width: 1200px) {
     display: flex;
-    margin: 0 auto;
-  }
+    align-items: center;
+  } */
 `;

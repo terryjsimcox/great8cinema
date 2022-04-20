@@ -34,7 +34,7 @@ const Section = styled.section`
   grid-template-columns: 1fr 1fr;
   gap: 2rem;
   @media only screen and (max-width: 960px) {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr;
   }
   @media only screen and (min-width: 961px) and (max-width: 1200px) {
     grid-template-columns: 1fr 1fr;
