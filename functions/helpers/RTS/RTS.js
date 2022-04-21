@@ -18,14 +18,20 @@ const parseXML = async (data) => {
   });
 };
 
-const RTS = async () => {
-  const URI = process.env.RTS_GREAT8_URI;
+const RTS = async (site) => {
+  const URI =
+    site === 'sullivan'
+      ? process.env.RTS_SULLIVAN_URI
+      : process.env.RTS_GREAT8_URI;
   const body = process.env.RTS_REQUEST;
-
+  console.log(URI);
   try {
     const results = await axios.post(URI, body, {
       auth: {
-        username: process.env.RTS_GREAT8_USERNAME,
+        username:
+          site === 'sullivan'
+            ? process.env.RTS_SULLIVAN_USERNAME
+            : process.env.RTS_GREAT8_USERNAME,
         password: process.env.RTS_PASSWORD,
       },
       headers: {

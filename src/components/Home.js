@@ -10,6 +10,9 @@ import { colors, fonts, borderRadius } from '../containts/styles.defaults';
 export default function Home() {
   const { state, updateState } = useApp();
   const location = useLocation();
+
+  console.log(state.films);
+
   const page =
     location?.hash === ''
       ? ['Now', 'Showing']

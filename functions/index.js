@@ -3,8 +3,10 @@ const { RTS, TMDB, OMDB, Storage, Schedule } = require('./helpers');
 require('dotenv').config();
 
 exports.rtsSchedule = functions.https.onRequest(async (req, res) => {
-  const schedule = await RTS();
-  await Schedule();
+  const site = req.query.site;
+  console.log(site);
+  const schedule = await RTS(site);
+  await Schedule(site);
   res.send(schedule);
 });
 
@@ -58,8 +60,9 @@ exports.OMDB = functions.https.onRequest(async (req, res) => {
 });
 
 exports.GetFilms = functions.https.onRequest(async (req, res) => {
+  const site = req.query.site;
   try {
-    const results = await Storage.getDocuments();
+    const results = await Storage.getDocuments(site);
     res.set('Access-Control-Allow-Origin', '*');
     if (req.method === 'OPTIONS') {
       res.set('Access-Control-Allow-Methods', 'GET');

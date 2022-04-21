@@ -85,16 +85,14 @@ const reconstructActors = (cast) => {
 
 const reconstructFilmShows = (shows) => {
   let tempShows = [];
-  shows?.forEach(({ Show }) => {
-    Show?.forEach((time) => {
-      tempShows.push({
-        actual: time.DT[0],
-        date: dayjs(time.DT[0], 'YYYYMMDDhhmm').format('YYYYMMDD'),
-        time12: dayjs(time.DT[0], 'YYYYMMDDhhmm').format('h:mm a'),
-        time24: parseInt(dayjs(time.DT[0], 'YYYYMMDDhhmm').format('HHmm')),
-        auditorium: time.Aud[0],
-        showId: splitShowId(time.ID[0]),
-      });
+  shows.Show?.forEach((show) => {
+    tempShows.push({
+      actual: show.DT[0],
+      date: dayjs(show.DT[0], 'YYYYMMDDhhmm').format('YYYYMMDD'),
+      time12: dayjs(show.DT[0], 'YYYYMMDDhhmm').format('h:mm a'),
+      time24: parseInt(dayjs(show.DT[0], 'YYYYMMDDhhmm').format('HHmm')),
+      auditorium: show.Aud[0],
+      showId: splitShowId(show.ID[0]),
     });
   });
   return tempShows;
@@ -117,9 +115,9 @@ const getGenres = (genresList, filmGenres) => {
   return tempGenres;
 };
 
-const Schedule = async () => {
-  const rts = await RTS();
-  const dbFilms = await Storage.getDocuments();
+const Schedule = async (site) => {
+  const rts = await RTS(site);
+  const dbFilms = await Storage.getDocuments(site);
 
   rts.forEach(async (rtsFilm) => {
     const document = dbFilms.filter(
@@ -128,23 +126,24 @@ const Schedule = async () => {
 
     if (document.length === 0) {
       const temp = await MakeFilmDocument(rtsFilm.Title[0], rtsFilm);
-      await Storage.addDocument(temp);
+      await Storage.addDocument(site, temp);
     }
 
     if (document.length > 0) {
-      const tempShows = reconstructFilmShows(rtsFilm.Shows[0].Show);
+      const tempShows = reconstructFilmShows(rtsFilm.Shows[0]);
+
       if (document.length > 0 && tempShows.length > 0) {
         try {
-          await Storage.updateDocument(document[0].id, 'shows', tempShows);
+          await Storage.updateDocument(
+            site,
+            document[0].id,
+            'shows',
+            tempShows
+          );
         } catch (error) {
           console.error(error);
         }
       }
-
-      console.log(
-        dayjs(tempShows[0]?.date, 'YYYYMMDD') <= dayjs(),
-        dayjs(document[0]?.data?.released, 'DD ddd YYYY') <= dayjs()
-      );
 
       if (
         dayjs(document[0]?.data?.released, 'DD ddd YYYY') <= dayjs() &&
@@ -152,6 +151,7 @@ const Schedule = async () => {
       ) {
         try {
           await Storage.updateDocument(
+            site,
             document[0].id,
             'category',
             'Now Showing'
@@ -162,7 +162,7 @@ const Schedule = async () => {
       }
     }
   });
-  await Storage.archiveDocument(dbFilms, rts);
+  await Storage.archiveDocument(site, dbFilms, rts);
 };
 
 module.exports = {

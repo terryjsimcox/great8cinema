@@ -1,17 +1,18 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ReactComponent as Great8Svg } from '../../assets/images/great8cinema.svg';
+import { ReactComponent as Great8Svg } from '../../assets/images/Great8Cinema1.svg';
+import { ReactComponent as Sullivan6Svg } from '../../assets/images/Sullivan6Cinema.svg';
 import styled from 'styled-components';
 import { colors } from '../../containts/styles.defaults';
 
-export default function Great8Logo({ handleClick }) {
+export default function Great8Logo({ site = 'great8', handleClick }) {
   return (
     <Container
       to='/'
       onClick={handleClick}
       title='Great 8 Cinema Logo'
       aria-label='Navigate to the home page.'>
-      <Great8Svg />
+      {site === 'sullivan' ? <Sullivan6Svg /> : <Great8Svg />}
     </Container>
   );
 }
@@ -19,15 +20,20 @@ export default function Great8Logo({ handleClick }) {
 const Container = styled(Link)`
   z-index: 2;
   & svg {
-    & #great {
+    & #great,
+    .great,
+    .sullivan {
       fill: ${colors.white[100]};
       stroke: transparent;
     }
-    & #eight {
+    & #eight,
+    .eight,
+    .six {
       fill: ${colors.secondary[400]};
       stroke: transparent;
     }
-    & #cinema {
+    & #cinema,
+    .cinema {
       fill: ${colors.white[100]};
       stroke: transparent;
     }

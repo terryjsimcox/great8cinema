@@ -21,31 +21,31 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-const addDocument = async (document) => {
-  const docRef = await addDoc(collection(db, 'films'), document);
+const addDocument = async (site, document) => {
+  const docRef = await addDoc(collection(db, site), document);
   return docRef;
 };
 
-const updateDocument = async (docID, field, data) => {
+const updateDocument = async (site, docID, field, data) => {
   console.log('UpdateDocument:', field);
-  const dbDoc = doc(db, 'films', docID);
+  const dbDoc = doc(db, site, docID);
   await updateDoc(dbDoc, { [field]: data });
 };
 
-const archiveDocument = async (db, rts) => {
+const archiveDocument = async (site, db, rts) => {
   db.forEach(async (document) => {
     if (
       rts.filter((film) => film.FilmCode[0] === document.data.filmCode).length >
       0
     )
       return;
-    await updateDocument(document.id, 'category', 'Archived');
+    await updateDocument(site, document.id, 'category', 'Archived');
   });
 };
 
-const getDocuments = async () => {
+const getDocuments = async (site) => {
   let documents = [];
-  const docSnap = await getDocs(collection(db, 'films'));
+  const docSnap = await getDocs(collection(db, site));
   docSnap.forEach((doc) => {
     documents.push({ id: doc.id, data: doc.data() });
   });
