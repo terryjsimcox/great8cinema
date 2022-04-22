@@ -49,7 +49,7 @@ const App = () => {
     document.title =
       site === 'sullivan' ? 'Sullivan 6 Cinema' : 'Great 8 Cinema';
     const favicon = document.querySelector('#favicon');
-    console.log(favicon);
+    console.log(site, window.location.hostname);
     favicon.href = site === 'sullivan' ? SullivanFavicon : Great8Favicon;
   }, [site]);
   return (
