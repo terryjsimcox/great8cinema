@@ -37,14 +37,6 @@ const App = () => {
   };
 
   useEffect(() => {
-    document.title =
-      site === 'sullivan' ? 'Sullivan 6 Cinema' : 'Great 8 Cinema';
-    const favicon = document.querySelector('#favicon');
-    console.log(favicon);
-    favicon.href = site === 'sullivan' ? SullivanFavicon : Great8Favicon;
-  }, [site]);
-
-  useEffect(() => {
     getFilms();
   }, []);
 
@@ -53,6 +45,13 @@ const App = () => {
     return () => window.removeEventListener('load', checkLoaded);
   }, []);
 
+  useEffect(() => {
+    document.title =
+      site === 'sullivan' ? 'Sullivan 6 Cinema' : 'Great 8 Cinema';
+    const favicon = document.querySelector('#favicon');
+    console.log(favicon);
+    favicon.href = site === 'sullivan' ? SullivanFavicon : Great8Favicon;
+  }, [site]);
   return (
     <Container isLoaded={isLoaded}>
       <Router>
