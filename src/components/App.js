@@ -28,7 +28,9 @@ const App = () => {
 
   const getFilms = async () => {
     const site =
-      window.location.hostname === 'sullivan6cinema' ? 'sullivan' : 'great8';
+      window.location.hostname === 'sullivan6cinema.terrysimcox.com'
+        ? 'sullivan'
+        : 'great8';
     setSite(site);
     const results = await axios.get(
       `https://us-central1-great8cinema-a8432.cloudfunctions.net/GetFilms?site=${site}`
