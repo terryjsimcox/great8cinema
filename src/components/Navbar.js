@@ -27,6 +27,7 @@ export default function Navbar({ state = null, updateState = null }) {
     <Container>
       <Background opacity={scrollPos} />
       <Great8Logo
+        site={state?.site}
         handleClick={() =>
           updateState({ ...state, current_page: 'Now Showing' })
         }

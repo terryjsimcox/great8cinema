@@ -45,6 +45,7 @@ export default function Footer() {
       <TopContainer>
         <Logo>
           <Great8Logo
+            site={state.site}
             handleClick={() =>
               updateState({ ...state, current_page: 'Now Showing' })
             }
