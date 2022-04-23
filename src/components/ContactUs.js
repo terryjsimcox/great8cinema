@@ -3,25 +3,34 @@ import ContactUsForm from './Forms/ContactUsForm';
 import styled from 'styled-components';
 import { colors, fonts, borderRadius } from '../containts/styles.defaults';
 
-const ContactUs = () => {
+const ContactUs = ({ site }) => {
+  const direction =
+    site === 'sullivan'
+      ? 'https://www.google.com/maps/dir//Sullivan+6+Cinema+3001+S+Service+Rd+W+Sullivan,+MO+63080/@38.1995001,-91.182417,16z/data=!4m5!4m4!1m0!1m2!1m1!1s0x87d9624f4ec4057b:0xabea4ade5c96c512'
+      : 'https://maps.google.com/maps/dir//Great+Eight+Cinema+5+Prairie+Dell+Plaza+Dr+Union,+MO+63084/@38.4263076,-90.966187,16z/data=!4m5!4m4!1m0!1m2!1m1!1s0x87d94691b1820511:0x4b03f696e249dc9d';
   return (
     <Container>
       <Card>
         <Section>
-          <Title>Great 8 Cinema Locaion</Title>
+          <Title>
+            {site === 'sullivan' ? 'Sullivan 6 Cinema' : 'Great 8 Cinema'}{' '}
+            Location
+          </Title>
           <Content>
             <p>
-              5 Prairie Dell Plaza
+              {site === 'sullivan'
+                ? '1003 North Service Rd West'
+                : '5 Prairie Dell Plaza'}
               <br />
-              Union, MO 63084
+              {site === 'sullivan' ? 'Sullivan, MO 63080' : 'Union, MO 63084'}
               <br />
-              Business Office: (636)583-4800
+              Business Office:{' '}
+              {site === 'sullivan' ? '(573)860-4800' : '(636)583-4800'}
               <br />
-              24 Hour Movie Line: (636)583-8889
+              24 Hour Movie Line:{' '}
+              {site === 'sullivan' ? '(573)860-7469' : '(636)583-8889'}
             </p>
-            <a
-              href='https://maps.google.com/maps/dir//Great+Eight+Cinema+5+Prairie+Dell+Plaza+Dr+Union,+MO+63084/@38.4263076,-90.966187,16z/data=!4m5!4m4!1m0!1m2!1m1!1s0x87d94691b1820511:0x4b03f696e249dc9d'
-              target='_blank'>
+            <a href={direction} target='_blank'>
               Directions
             </a>
           </Content>
@@ -33,7 +42,9 @@ const ContactUs = () => {
             loading='lazy'
             style={{ border: 0 }}
             referrerPolicy='no-referrer-when-downgrade'
-            src='https://www.google.com/maps/embed/v1/place?key=AIzaSyBrDS9DLeTIodNMLqYuxDzF_EgOdMbw12o&q=Great 8 Cinema'
+            src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyBrDS9DLeTIodNMLqYuxDzF_EgOdMbw12o&q=${
+              site === 'sullivan' ? 'Sullivan 6 Cinema' : 'Great 8 Cinema'
+            }`}
             crossOrigin='anonymous'></Iframe>
         </Section>
       </Card>

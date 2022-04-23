@@ -3,7 +3,7 @@ import GiftCardImage from './GiftCardImage';
 import styled from 'styled-components';
 import { colors, fonts, borderRadius } from '../../containts/styles.defaults';
 
-const giftCards = () => {
+const giftCards = ({ site }) => {
   return (
     <Container>
       <Card>
@@ -13,13 +13,14 @@ const giftCards = () => {
             <Emphasized>Today!</Emphasized>
           </Title>
           <Content>
-            Give the gift of entertainment today! Great 8 Cinema is proud to
-            offer gift cards available for purchase online now! Gift card
-            purchases are available in any dollar amount. To purchase, click the
-            first link below. If you would like to check your gift card balance
-            there is a link below.
+            Give the gift of entertainment today!{' '}
+            {site === 'sullivan' ? 'Sullivan 6 Cinema' : 'Great 8 Cinema'} is
+            proud to offer gift cards available for purchase online now! Gift
+            card purchases are available in any dollar amount. To purchase,
+            click the first link below. If you would like to check your gift
+            card balance there is a link below.
           </Content>
-          <GiftCardImage />
+          <GiftCardImage site={site} />
         </TopSection>
         <BottomSection>
           <Section>
@@ -38,12 +39,16 @@ const giftCards = () => {
           </Section>
           <Section>
             <a
-              href='https://40580.formovietickets.com:2235/app/rtsweb/gift'
+              href={`https://${
+                site === 'sullivan' ? '33783' : '40580'
+              }.formovietickets.com:2235/app/rtsweb/gift`}
               target='_blank'>
               Purchase a Gift
             </a>
             <a
-              href='https://40580.formovietickets.com:2235/app/rtsweb/gift/balance'
+              href={`https://${
+                site === 'sullivan' ? '33783' : '40580'
+              }.formovietickets.com:2235/app/rtsweb/gift/balance`}
               target='_blank'>
               Check Balance
             </a>

@@ -3,11 +3,11 @@ import { Great8Logo } from '../Logo';
 import styled from 'styled-components';
 import { colors, fonts, borderRadius } from '../../containts/styles.defaults';
 
-const GiftCardImage = () => {
+const GiftCardImage = ({ site }) => {
   return (
     <Container>
       <Section>
-        <Logo />
+        <Logo site={site} />
         <Title>Gift Card</Title>
       </Section>
     </Container>

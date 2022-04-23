@@ -91,6 +91,7 @@ const MovieListContainer = styled.div`
   padding: 2rem;
   border-radius: ${borderRadius.sm};
   min-height: 25rem;
+  color: ${colors.white[200]};
   @media only screen and (max-width: 760px) {
     grid-template-columns: 1fr;
     top: 5rem;
@@ -98,7 +99,6 @@ const MovieListContainer = styled.div`
     border: none;
     & h2 {
       grid-column: 1/2;
-      color: ${colors.white[200]};
     }
   }
   @media only screen and (min-width: 761px) and (max-width: 1100px) {

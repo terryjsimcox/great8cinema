@@ -61,10 +61,10 @@ const App = () => {
         <Navbar state={state} updateState={updateState} />
         <Routes>
           <Route path='/' element={<Home />} />
-          <Route path='/GiftCards' element={<GiftCards />}></Route>
-          <Route path='/ContactUs' element={<ContactUs />}></Route>
-          <Route path='/AboutUs' element={<AboutUs />}></Route>
-          <Route path='/film/:id' element={<FilmDetails />}></Route>
+          <Route path='/GiftCards' element={<GiftCards site={site} />} />
+          <Route path='/ContactUs' element={<ContactUs site={site} />} />
+          <Route path='/AboutUs' element={<AboutUs />} />
+          <Route path='/film/:id' element={<FilmDetails />} />
         </Routes>
         <Footer />
       </Router>
