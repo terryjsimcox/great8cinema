@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { HashRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import axios from 'axios';
 import { useApp } from '../context/AppContext';
 
@@ -61,9 +61,9 @@ const App = () => {
         <Navbar state={state} updateState={updateState} />
         <Routes>
           <Route path='/' element={<Home />} />
-          <Route path='/Gift%20Cards' element={<GiftCards />}></Route>
-          <Route path='/Contact%20Us' element={<ContactUs />}></Route>
-          <Route path='/About%20Us' element={<AboutUs />}></Route>
+          <Route path='/GiftCards' element={<GiftCards />}></Route>
+          <Route path='/ContactUs' element={<ContactUs />}></Route>
+          <Route path='/AboutUs' element={<AboutUs />}></Route>
           <Route path='/film/:id' element={<FilmDetails />}></Route>
         </Routes>
         <Footer />

@@ -11,16 +11,16 @@ export default function Home() {
   const { state, updateState } = useApp();
   const location = useLocation();
 
-  console.log(state.films);
-
   const page =
     location?.hash === ''
-      ? ['Now', 'Showing']
-      : location?.hash?.split('#')[1]?.split('%20');
+      ? 'Now Showing'
+      : location?.hash?.split('#')[1] === 'NowShowing'
+      ? 'Now Showing'
+      : 'Coming Soon';
 
   useEffect(() => {
     if (state.current_page === '')
-      updateState({ ...state, current_page: `${page[0]} ${page[1]}` });
+      updateState({ ...state, current_page: page });
   }, [state.current_page]);
 
   useEffect(() => {
@@ -28,7 +28,7 @@ export default function Home() {
       'state',
       JSON.stringify({
         ...state,
-        current_page: `${page[0]} ${page[1]}`,
+        current_page: page,
       })
     );
   }, [state]);
@@ -67,7 +67,6 @@ const Section = styled.section`
   top: -15rem;
   display: flex;
   justify-content: center;
-  /* margin-bottom: 4rem; */
   background: linear-gradient(to top, hsla(0, 0%, 5%, 1) 90%, transparent);
   @media only screen and (max-width: 960px) {
     top: 0;
@@ -84,9 +83,8 @@ const MovieListContainer = styled.div`
   gap: 4rem;
   margin-bottom: 0;
   padding: 2rem;
-  /* background: hsla(0, 0%, 5%, 0.5); */
-  /* border: 2px solid ${colors.white[700]}; */
   border-radius: ${borderRadius.sm};
+  min-height: 5rem;
   @media only screen and (max-width: 760px) {
     grid-template-columns: 1fr;
     top: 5rem;
