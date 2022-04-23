@@ -53,6 +53,9 @@ export default function Home() {
                 updateState={updateState}
               />
             ))}
+          {state.films.filter(
+            (movie) => movie.data.category === state.current_page
+          ).length === 0 && <h2>Currently No Coming Soon</h2>}
         </MovieListContainer>
       </Section>
     </Container>
@@ -87,7 +90,7 @@ const MovieListContainer = styled.div`
   margin-bottom: 0;
   padding: 2rem;
   border-radius: ${borderRadius.sm};
-  min-height: 5rem;
+  min-height: 25rem;
   @media only screen and (max-width: 760px) {
     grid-template-columns: 1fr;
     top: 5rem;
@@ -95,6 +98,7 @@ const MovieListContainer = styled.div`
     border: none;
     & h2 {
       grid-column: 1/2;
+      color: ${colors.white[200]};
     }
   }
   @media only screen and (min-width: 761px) and (max-width: 1100px) {
