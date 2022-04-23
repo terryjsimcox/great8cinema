@@ -24,7 +24,6 @@ const RTS = async (site) => {
       ? process.env.RTS_SULLIVAN_URI
       : process.env.RTS_GREAT8_URI;
   const body = process.env.RTS_REQUEST;
-  console.log(URI);
   try {
     const results = await axios.post(URI, body, {
       auth: {

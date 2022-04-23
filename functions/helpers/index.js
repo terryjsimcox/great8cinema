@@ -98,6 +98,28 @@ const reconstructFilmShows = (shows) => {
   return tempShows;
 };
 
+const changeCategory = async (site, film, tempShows) => {
+  const checkedShows = [];
+
+  if (film.data.category === 'Now Showing')
+    return `${film.data.title}: ${false}`;
+
+  if (dayjs(film.data.released, 'DD ddd YYYY') <= dayjs()) {
+    tempShows.forEach((show) => {
+      if (dayjs(show.date, 'YYYYMMDD') <= dayjs()) checkedShows.push(show);
+    });
+
+    if (checkedShows.length > 0) {
+      try {
+        await Storage.updateDocument(site, film.id, 'category', 'Now Showing');
+        return `${film.data.title}: ${true}`;
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  }
+};
+
 const splitShowId = (showId) => {
   const rtsShowId = showId.split('');
   const newShowId = [];
@@ -126,35 +148,20 @@ const Schedule = async (site) => {
 
     if (document.length === 0) {
       const temp = await MakeFilmDocument(rtsFilm.Title[0], rtsFilm);
-      await Storage.addDocument(site, temp);
+      return await Storage.addDocument(site, temp);
     }
 
     if (document.length > 0) {
       const tempShows = reconstructFilmShows(rtsFilm.Shows[0]);
 
-      if (document.length > 0 && tempShows.length > 0) {
+      if (tempShows.length > 0) {
         try {
+          await changeCategory(site, document[0], tempShows);
           await Storage.updateDocument(
             site,
             document[0].id,
             'shows',
             tempShows
-          );
-        } catch (error) {
-          console.error(error);
-        }
-      }
-
-      if (
-        dayjs(document[0]?.data?.released, 'DD ddd YYYY') <= dayjs() &&
-        dayjs(tempShows[0]?.date, 'YYYYMMDD') <= dayjs()
-      ) {
-        try {
-          await Storage.updateDocument(
-            site,
-            document[0].id,
-            'category',
-            'Now Showing'
           );
         } catch (error) {
           console.error(error);

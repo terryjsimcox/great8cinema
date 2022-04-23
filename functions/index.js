@@ -4,7 +4,6 @@ require('dotenv').config();
 
 exports.rtsSchedule = functions.https.onRequest(async (req, res) => {
   const site = req.query.site;
-  console.log(site);
   const schedule = await RTS(site);
   await Schedule(site);
   res.send(schedule);

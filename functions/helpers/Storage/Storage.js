@@ -27,9 +27,8 @@ const addDocument = async (site, document) => {
 };
 
 const updateDocument = async (site, docID, field, data) => {
-  console.log('UpdateDocument:', field);
   const dbDoc = doc(db, site, docID);
-  await updateDoc(dbDoc, { [field]: data });
+  return await updateDoc(dbDoc, { [field]: data });
 };
 
 const archiveDocument = async (site, db, rts) => {
@@ -39,7 +38,7 @@ const archiveDocument = async (site, db, rts) => {
       0
     )
       return;
-    await updateDocument(site, document.id, 'category', 'Archived');
+    return await updateDocument(site, document.id, 'category', 'Archived');
   });
 };
 

@@ -45,7 +45,7 @@ const App = () => {
   useEffect(() => {
     window.addEventListener('load', checkLoaded);
     return () => window.removeEventListener('load', checkLoaded);
-  }, []);
+  }, [isLoaded]);
 
   useEffect(() => {
     document.title =
