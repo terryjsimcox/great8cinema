@@ -6,7 +6,6 @@ import styled from 'styled-components';
 import { colors } from '../../containts/styles.defaults';
 
 export default function Great8Logo({ site, handleClick }) {
-  console.log('Logo:', site);
   return (
     <Container
       to='/'

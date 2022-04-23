@@ -19,7 +19,10 @@ export default function Home() {
       : 'Coming Soon';
 
   useEffect(() => {
+    console.log('Checking current page...');
     if (state.current_page === '')
+      return updateState({ ...state, current_page: page });
+    if (state.current_page !== page)
       updateState({ ...state, current_page: page });
   }, [state.current_page]);
 
