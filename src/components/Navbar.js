@@ -22,12 +22,11 @@ export default function Navbar({ state = null, updateState = null }) {
   useOnScrollY(setScrollPos);
 
   let domNode = useClickOutside(() => setNavOpen(false));
-
   return (
     <Container>
       <Background opacity={scrollPos} />
+
       <Great8Logo
-        site={state?.hostname}
         handleClick={() =>
           updateState({ ...state, current_page: 'Now Showing' })
         }

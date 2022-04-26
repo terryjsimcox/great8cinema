@@ -14,8 +14,10 @@ const giftCards = ({ site }) => {
           </Title>
           <Content>
             Give the gift of entertainment today!{' '}
-            {site === 'sullivan' ? 'Sullivan 6 Cinema' : 'Great 8 Cinema'} is
-            proud to offer gift cards available for purchase online now! Gift
+            {site?.short === 'sullivan'
+              ? 'Sullivan 6 Cinema'
+              : 'Great 8 Cinema'}{' '}
+            is proud to offer gift cards available for purchase online now! Gift
             card purchases are available in any dollar amount. To purchase,
             click the first link below. If you would like to check your gift
             card balance there is a link below.

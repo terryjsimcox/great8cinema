@@ -11,7 +11,7 @@ import Cast from './Cast';
 import styled from 'styled-components';
 import { colors, fonts } from '../../containts/styles.defaults';
 
-const Description = ({ movie }) => {
+const Description = ({ movie, site }) => {
   return (
     <Container>
       <Poster movie={movie} />
@@ -22,7 +22,7 @@ const Description = ({ movie }) => {
         <Extra movie={movie} title='Writers' keys='writer' />
         <Cast cast={movie.data.actors} />
       </Section>
-      <Showtimes shows={movie?.data.shows} />
+      <Showtimes shows={movie?.data.shows} site={site} />
     </Container>
   );
 };

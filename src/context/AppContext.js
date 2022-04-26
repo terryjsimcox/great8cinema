@@ -1,10 +1,12 @@
 import React, { useContext, useState } from 'react';
+
 const AppContext = React.createContext();
 
 const initialState = {
   films: [],
   current_page: '',
-  hostname: '',
+  site: '',
+  isLoading: false,
 };
 
 export const useApp = () => {

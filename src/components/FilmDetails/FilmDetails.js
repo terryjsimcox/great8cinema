@@ -6,7 +6,7 @@ import Description from './Description';
 import styled from 'styled-components';
 import { colors, fonts, borderRadius } from '../../containts/styles.defaults';
 
-const FilmDetails = () => {
+const FilmDetails = ({ site }) => {
   const { id } = useParams();
   const { state } = useApp();
   const movie =
@@ -43,7 +43,7 @@ const FilmDetails = () => {
                 <div></div>
                 <p>{convertMinutes(movie?.data.length)}</p>
               </Subtitle>
-              <Description movie={movie} />
+              <Description movie={movie} site={site} />
             </MovieDetails>
           </Details>
         </Section>

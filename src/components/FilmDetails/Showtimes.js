@@ -28,14 +28,16 @@ const fixShows = (shows) => {
   return newShows;
 };
 
-const Shows = ({ shows }) => {
+const Shows = ({ shows, site }) => {
   return (
     <ul>
       {shows?.map((show) => (
         <li key={uuid()}>
           <a
             target='_blank'
-            href={`http://40580.formovietickets.com:2235/T.ASP?WCI=BT&RtsPurchaseId=${uuid()}&Page=PickTickets&SHOWID=${
+            href={`http://${
+              site.RTN
+            }.formovietickets.com:2235/T.ASP?WCI=BT&RtsPurchaseId=${uuid()}&Page=PickTickets&SHOWID=${
               show.showId
             }`}>
             {show.time12}
@@ -46,7 +48,7 @@ const Shows = ({ shows }) => {
   );
 };
 
-const Showtimes = ({ shows }) => {
+const Showtimes = ({ shows, site }) => {
   const newShows = fixShows(shows);
 
   return (
@@ -57,7 +59,7 @@ const Showtimes = ({ shows }) => {
             dayjs(show.date, 'YYYYMMDD').format('YYYYMMDD') && (
             <div key={uuid()}>
               <h4>{dayjs(show.date, 'YYYYMMDD').format('dddd MMM D ')}</h4>
-              <Shows shows={show.shows} />
+              <Shows shows={show.shows} site={site} />
             </div>
           )
       )}

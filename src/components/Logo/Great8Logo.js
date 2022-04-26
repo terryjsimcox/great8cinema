@@ -1,18 +1,20 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { ReactComponent as Great8Svg } from '../../assets/images/Great8Cinema1.svg';
 import { ReactComponent as Sullivan6Svg } from '../../assets/images/Sullivan6Cinema.svg';
 import styled from 'styled-components';
 import { colors } from '../../containts/styles.defaults';
+import { useApp } from '../../context/AppContext';
 
-export default function Great8Logo({ site, handleClick }) {
+export default function Great8Logo({ handleClick }) {
+  const { state } = useApp();
   return (
     <Container
       to='/'
       onClick={handleClick}
       title='Great 8 Cinema Logo'
       aria-label='Navigate to the home page.'>
-      {site === 'sullivan' ? <Sullivan6Svg /> : <Great8Svg />}
+      {state.site.short === 'sullivan' ? <Sullivan6Svg /> : <Great8Svg />}
     </Container>
   );
 }

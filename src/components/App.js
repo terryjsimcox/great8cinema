@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useState, useRef } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import axios from 'axios';
 import { useApp } from '../context/AppContext';
+import { useAxios, useWindowSize } from '../hooks';
 
 //***** Components *****/
 import ScrollToTop from './ScrollToTop';
@@ -13,49 +14,33 @@ import ContactUs from './ContactUs';
 import { FilmDetails } from './FilmDetails';
 import Footer from './Footer';
 
+import styled from 'styled-components';
+
 import Great8Favicon from '../assets/images/Great8Favicon.ico';
 import SullivanFavicon from '../assets/images/SullivanFavicon.ico';
 
-import styled from 'styled-components';
-
 const App = () => {
   const { state, updateState } = useApp();
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [site, setSite] = useState('');
-  const checkLoaded = () => {
-    setIsLoaded(true);
-  };
-
-  const getFilms = async () => {
-    const site =
-      window.location.hostname === 'sullivan6cinema.terrysimcox.com'
-        ? 'sullivan'
-        : 'great8';
-    setSite(site);
-    const results = await axios.get(
-      `https://us-central1-great8cinema-a8432.cloudfunctions.net/GetFilms?site=${site}`
-    );
-    updateState({ ...state, films: results.data, hostname: site });
-  };
+  const [site, setSite] = useState(null);
+  const renders = useRef(0);
+  const windowSize = useWindowSize();
+  renders.current++;
+  const { data, fetchError, isLoading } = useAxios(
+    `https://us-central1-great8cinema-a8432.cloudfunctions.net/GetFilms?site=${state.site.short}`
+  );
 
   useEffect(() => {
-    getFilms();
+    getSiteAndSet(window, setSite, state, updateState);
   }, []);
 
   useEffect(() => {
-    window.addEventListener('load', checkLoaded);
-    return () => window.removeEventListener('load', checkLoaded);
-  }, [isLoaded]);
-
-  useEffect(() => {
-    document.title =
-      site === 'sullivan' ? 'Sullivan 6 Cinema' : 'Great 8 Cinema';
-    const favicon = document.querySelector('#favicon');
-    console.log(site, window.location.hostname);
-    favicon.href = site === 'sullivan' ? SullivanFavicon : Great8Favicon;
-  }, [site]);
+    if (!fetchError) {
+      updateState({ ...state, films: data, isLoading });
+    }
+  }, [state.site, data, fetchError, isLoading]);
+  console.log(windowSize);
   return (
-    <Container isLoaded={isLoaded}>
+    <Container isLoading={isLoading}>
       <Router>
         <ScrollToTop />
         <Navbar state={state} updateState={updateState} />
@@ -64,7 +49,7 @@ const App = () => {
           <Route path='/GiftCards' element={<GiftCards site={site} />} />
           <Route path='/ContactUs' element={<ContactUs site={site} />} />
           <Route path='/AboutUs' element={<AboutUs />} />
-          <Route path='/film/:id' element={<FilmDetails />} />
+          <Route path='/film/:id' element={<FilmDetails site={site} />} />
         </Routes>
         <Footer />
       </Router>
@@ -77,5 +62,23 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   min-height: 100vh;
-  opacity: ${({ isLoaded }) => (isLoaded ? 1 : 0)};
 `;
+
+// HELPER FUNCTIONS
+
+async function getSiteAndSet(window, setSite, state, updateState) {
+  const tempSite =
+    window.location.hostname === 'sullivan6cinema.terrysimcox.com'
+      ? await import('../containts/Site').then(({ Sullivan }) => Sullivan)
+      : await import('../containts/Site').then(({ Great8 }) => Great8);
+
+  window.document.title = tempSite.title;
+  const favicon = window.document.querySelector('#favicon');
+  favicon.href =
+    tempSite.short === 'sullivan' ? SullivanFavicon : Great8Favicon;
+  updateState({
+    ...state,
+    site: tempSite,
+  });
+  setSite(tempSite);
+}

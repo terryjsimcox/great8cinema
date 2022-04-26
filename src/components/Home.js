@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { v4 as uuid } from 'uuid';
+import dayjs from 'dayjs';
 import { useApp } from '../context/AppContext';
 import { useLocation } from 'react-router-dom';
 import Carousel from './Carousel';
@@ -19,22 +20,30 @@ export default function Home() {
       : 'Coming Soon';
 
   useEffect(() => {
-    console.log('Checking current page...');
-    if (state.current_page === '')
-      return updateState({ ...state, current_page: page });
-    if (state.current_page !== page)
-      updateState({ ...state, current_page: page });
-  }, [state.current_page]);
+    if (!state.isLoading) {
+      if (state.current_page === '') {
+        return updateState({
+          ...state,
+          current_page: page,
+        });
+      }
+      if (state.current_page !== page) {
+        updateState({ ...state, current_page: page });
+      }
+    }
+  }, [state.current_page, state.site, state.isLoading]);
 
   useEffect(() => {
-    localStorage.setItem(
-      'state',
-      JSON.stringify({
-        ...state,
-        current_page: page,
-      })
-    );
-  }, [state]);
+    if (!state.isLoading) {
+      localStorage.setItem(
+        'state',
+        JSON.stringify({
+          ...state,
+          current_page: page,
+        })
+      );
+    }
+  }, [state, state.isLoading]);
 
   return (
     <Container>

@@ -12,11 +12,11 @@ export default function Footer() {
   const navLinks = [
     {
       name: 'Now Showing',
-      url: '/#Now Showing',
+      url: '/#NowShowing',
     },
     {
       name: 'Gift Cards',
-      url: '/Gift Cards',
+      url: '/GiftCards',
     },
     {
       name: 'Employment',
@@ -24,15 +24,15 @@ export default function Footer() {
     },
     {
       name: 'Coming Soon',
-      url: '/#Coming Soon',
+      url: '/#ComingSoon',
     },
     {
       name: 'Contact Us',
-      url: '/Contact Us',
+      url: '/ContactUs',
     },
     {
       name: 'About Us',
-      url: '/About Us',
+      url: '/AboutUs',
     },
   ];
 

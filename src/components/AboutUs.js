@@ -4,9 +4,12 @@ import { useApp } from '../context/AppContext';
 import styled from 'styled-components';
 import { colors, fonts, borderRadius } from '../containts/styles.defaults';
 import Great8Building from '../assets/images/great8.jpg';
+import { useImg } from '../hooks';
 
-const AboutUs = () => {
+const AboutUs = ({ site }) => {
   const { updateState } = useApp();
+  const building = useImg('great8.jpg');
+  console.log(building);
   return (
     <Container>
       <Card>
@@ -20,19 +23,28 @@ const AboutUs = () => {
               theater facility.
             </CardP>
             <CardP>
-              Our theater features eight individual auditoriums with stadium
-              seating, state of the art projection equipment, stereo surround
-              sound in all of the auditoriums, and many other amenities. DTS
-              Digital Sound for selected movies is also available.
+              Our theater features{' '}
+              {site?.short === 'sullivan' ? 'six' : 'eight'} individual
+              auditoriums with stadium seating, state of the art projection
+              equipment, stereo surround sound in all of the auditoriums, and
+              many other amenities. DTS Digital Sound for selected movies is
+              also available.
             </CardP>
             <CardBtn
-              to='/Contact%20Us'
+              to='/ContactUs'
               onClick={() => updateState('current_page', 'Contact Us')}>
               Contact Us
             </CardBtn>
           </CardContent>
           <CardContent>
-            <CardImage src={Great8Building} alt='Great 8 Cinema Building' />
+            <CardImage
+              src={building.image}
+              alt={
+                site?.short === 'sullivan'
+                  ? 'Sullivan 6 Cinema Building'
+                  : 'Great 8 Cinema Building'
+              }
+            />
           </CardContent>
         </CardSection>
       </Card>

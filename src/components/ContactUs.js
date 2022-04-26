@@ -5,7 +5,7 @@ import { colors, fonts, borderRadius } from '../containts/styles.defaults';
 
 const ContactUs = ({ site }) => {
   const direction =
-    site === 'sullivan'
+    site?.short === 'sullivan'
       ? 'https://www.google.com/maps/dir//Sullivan+6+Cinema+3001+S+Service+Rd+W+Sullivan,+MO+63080/@38.1995001,-91.182417,16z/data=!4m5!4m4!1m0!1m2!1m1!1s0x87d9624f4ec4057b:0xabea4ade5c96c512'
       : 'https://maps.google.com/maps/dir//Great+Eight+Cinema+5+Prairie+Dell+Plaza+Dr+Union,+MO+63084/@38.4263076,-90.966187,16z/data=!4m5!4m4!1m0!1m2!1m1!1s0x87d94691b1820511:0x4b03f696e249dc9d';
   return (
@@ -13,22 +13,26 @@ const ContactUs = ({ site }) => {
       <Card>
         <Section>
           <Title>
-            {site === 'sullivan' ? 'Sullivan 6 Cinema' : 'Great 8 Cinema'}{' '}
+            {site?.short === 'sullivan'
+              ? 'Sullivan 6 Cinema'
+              : 'Great 8 Cinema'}{' '}
             Location
           </Title>
           <Content>
             <p>
-              {site === 'sullivan'
+              {site?.short === 'sullivan'
                 ? '1003 North Service Rd West'
                 : '5 Prairie Dell Plaza'}
               <br />
-              {site === 'sullivan' ? 'Sullivan, MO 63080' : 'Union, MO 63084'}
+              {site?.short === 'sullivan'
+                ? 'Sullivan, MO 63080'
+                : 'Union, MO 63084'}
               <br />
               Business Office:{' '}
-              {site === 'sullivan' ? '(573)860-4800' : '(636)583-4800'}
+              {site?.short === 'sullivan' ? '(573)860-4800' : '(636)583-4800'}
               <br />
               24 Hour Movie Line:{' '}
-              {site === 'sullivan' ? '(573)860-7469' : '(636)583-8889'}
+              {site?.short === 'sullivan' ? '(573)860-7469' : '(636)583-8889'}
             </p>
             <a href={direction} target='_blank'>
               Directions
@@ -43,7 +47,9 @@ const ContactUs = ({ site }) => {
             style={{ border: 0 }}
             referrerPolicy='no-referrer-when-downgrade'
             src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyBrDS9DLeTIodNMLqYuxDzF_EgOdMbw12o&q=${
-              site === 'sullivan' ? 'Sullivan 6 Cinema' : 'Great 8 Cinema'
+              site?.short === 'sullivan'
+                ? 'Sullivan 6 Cinema'
+                : 'Great 8 Cinema'
             }`}
             crossOrigin='anonymous'></Iframe>
         </Section>

@@ -1,7 +1,7 @@
 {
-  "name": "great8cinema",
+  "name": "my-webpack-project",
   "version": "1.0.0",
-  "description": "Website for Great 8 Cinema",
+  "description": "My webpack project",
   "main": "index.js",
   "author": "Terry Simcox <terryjsimcox@gmail.com>",
   "license": "MIT",
@@ -31,9 +31,12 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "webpack --mode=production --node-env=production",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "build:dev": "webpack --mode=development",
+    "build:prod": "webpack --mode=production --node-env=production",
+    "watch": "webpack --watch"
   },
   "eslintConfig": {
     "extends": [
@@ -54,6 +57,12 @@
     ]
   },
   "devDependencies": {
-    "webpack": "^5.72.0"
+    "@babel/core": "^7.17.9",
+    "@babel/preset-env": "^7.16.11",
+    "@webpack-cli/generators": "^2.4.2",
+    "babel-loader": "^8.2.4",
+    "react-svg-loader": "^3.0.3",
+    "webpack": "^5.72.0",
+    "webpack-cli": "^4.9.2"
   }
 }
