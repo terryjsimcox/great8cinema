@@ -1,8 +1,7 @@
-import React, { useEffect, useLayoutEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import axios from 'axios';
 import { useApp } from '../context/AppContext';
-import { useAxios, useWindowSize } from '../hooks';
+import { useAxios } from '../hooks';
 
 //***** Components *****/
 import ScrollToTop from './ScrollToTop';
@@ -13,6 +12,7 @@ import GiftCards from './GiftCards/GiftCards';
 import ContactUs from './ContactUs';
 import { FilmDetails } from './FilmDetails';
 import Footer from './Footer';
+import { Loader } from '../components';
 
 import styled from 'styled-components';
 
@@ -23,7 +23,6 @@ const App = () => {
   const { state, updateState } = useApp();
   const [site, setSite] = useState(null);
   const renders = useRef(0);
-  const windowSize = useWindowSize();
   renders.current++;
   const { data, fetchError, isLoading } = useAxios(
     `https://us-central1-great8cinema-a8432.cloudfunctions.net/GetFilms?site=${state.site.short}`
@@ -38,7 +37,11 @@ const App = () => {
       updateState({ ...state, films: data, isLoading });
     }
   }, [state.site, data, fetchError, isLoading]);
-  console.log(windowSize);
+
+  if (isLoading) {
+    return <Loader />;
+  }
+
   return (
     <Container isLoading={isLoading}>
       <Router>
@@ -62,6 +65,7 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   min-height: 100vh;
+  opacity: ${({ isLoading }) => (isLoading ? 0 : 1)};
 `;
 
 // HELPER FUNCTIONS

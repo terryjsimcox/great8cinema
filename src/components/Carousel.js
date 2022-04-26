@@ -1,32 +1,24 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Slider from 'react-slick';
 import { v4 as uuid } from 'uuid';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import CarouselSettings from '../containts/CarouselSettings';
 import styled from 'styled-components';
-import { colors, carouselHeight } from '../containts/styles.defaults';
+import { colors } from '../containts/styles.defaults';
 
 export default function Carousel({ films }) {
-  const sliderSetting = {
-    dots: false,
-    fade: true,
-    infinite: true,
-    autoplay: true,
-    autoplaySpeed: 10000,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    pauseOnHover: true,
-  };
+  const carouselHeight = 900;
+
   return (
-    <Container>
-      <Section>
-        <StyledCarousel {...sliderSetting}>
+    <Container carouselHeight={carouselHeight}>
+      <Section carouselHeight={carouselHeight}>
+        <StyledCarousel {...CarouselSettings}>
           {films
             ?.filter((query) => query.data.category !== 'Archived')
             ?.map((film) => {
               return (
-                <ImgContainer key={uuid()}>
+                <ImgContainer key={uuid()} carouselHeight={carouselHeight}>
                   <img src={film.data.backdrop} alt={film.data.title} />
                 </ImgContainer>
               );
@@ -42,7 +34,7 @@ const Container = styled.div`
   position: relative;
   display: block;
   width: 100%;
-  height: ${carouselHeight}px;
+  height: ${({ carouselHeight }) => carouselHeight}px;
   margin: 0 auto;
   @media only screen and (max-width: 760px) {
     display: none;
@@ -51,7 +43,7 @@ const Container = styled.div`
     height: 525px;
   }
   @media only screen and (min-width: 1101px) and (max-width: 1400px) {
-    height: 600px;
+    height: 700px;
   }
 `;
 
@@ -60,7 +52,7 @@ const StyledCarousel = styled(Slider)`
   z-index: -1;
   display: block;
   width: 100vw;
-  height: ${carouselHeight}px;
+  height: ${({ carouselHeight }) => carouselHeight}px;
   margin: 0 auto;
   overflow: hidden;
   & > .slick-prev::before,
@@ -119,7 +111,7 @@ const Section = styled.section`
   display: flex;
   justify-content: center;
   width: 100vw;
-  height: ${carouselHeight}px;
+  height: ${({ carouselHeight }) => carouselHeight}px;
   @media only screen and (max-width: 760px) {
     display: none;
   }
@@ -145,7 +137,7 @@ const Gradient = styled.div`
 const ImgContainer = styled.div`
   position: relative;
   width: 100vw;
-  height: ${carouselHeight}px;
+  height: ${({ carouselHeight }) => carouselHeight}px;
   & img {
     position: absolute;
     top: 0;
@@ -153,7 +145,7 @@ const ImgContainer = styled.div`
     bottom: 0;
     left: 0;
     width: 100%;
-    height: ${carouselHeight}px;
+    aspect-ratio: 16 / 9;
     z-index: -1;
   }
   @media only screen and (min-width: 761px) and (max-width: 1100px) {

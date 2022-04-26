@@ -5,12 +5,7 @@ import MovieTimesBack from './MovieTimesBack';
 
 import styled from 'styled-components';
 
-const MoviePosterCard = ({
-  id = null,
-  movie = {},
-  state = {},
-  updateState = null,
-}) => {
+const MoviePosterCard = ({ id, movie, state, updateState }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   return (
     <Container>

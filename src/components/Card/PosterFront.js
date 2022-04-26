@@ -1,26 +1,11 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-const PosterFront = ({
-  isLoaded = false,
-  setIsLoaded = null,
-  src = '',
-  alt = '',
-}) => {
-  const imgRef = useRef();
-
-  const imgLoaded = (e) => {
-    if (e.type === 'load') setIsLoaded(true);
-  };
-
-  useEffect(() => {
-    imgRef?.current?.addEventListener('load', (e) => imgLoaded(e));
-  }, [imgRef]);
-
+const PosterFront = ({ isLoaded, setIsLoaded, src, alt }) => {
   return (
     <Container loaded={isLoaded ? 1 : 0}>
-      <img ref={imgRef} src={src} alt={alt} />
+      <img src={src} alt={alt} />
     </Container>
   );
 };
@@ -41,7 +26,6 @@ const Container = styled.div`
   width: 18rem;
   height: 27rem;
   border-radius: 1rem;
-  opacity: ${({ loaded }) => loaded};
 
   & img {
     width: 18rem;
