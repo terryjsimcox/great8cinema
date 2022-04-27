@@ -2,14 +2,15 @@ import React from 'react';
 import styled from 'styled-components';
 import { colors, fonts } from '../../containts/styles.defaults';
 
-const TextArea = ({ label, name, value, onChange }) => {
+const TextArea = ({ label, name, value, onChange, onBlur }) => {
   return (
     <Container>
       <Label>{label}</Label>
       <StyledTextArea
         name={name}
         value={value}
-        onChange={onChange}></StyledTextArea>
+        onChange={onChange}
+        onBlur={onBlur}></StyledTextArea>
     </Container>
   );
 };
@@ -37,7 +38,7 @@ const Label = styled.label`
   }
 `;
 const StyledTextArea = styled.textarea`
-  width: 70%;
+  width: 50%;
   height: 200px;
   padding: 0.5rem;
   font-size: 1.2rem;

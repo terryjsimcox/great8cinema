@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useDebugValue } from 'react';
 import emailjs from 'emailjs-com';
 import { v4 as uuid } from 'uuid';
 import styled from 'styled-components';
@@ -7,91 +7,275 @@ import TextArea from './TextArea';
 import { ContactInputs } from '../../containts/ContactForm.defaults';
 import { colors, fonts, borderRadius } from '../../containts/styles.defaults';
 
-const initialState = {
-  firstName: '',
-  lastName: '',
-  email: '',
-  phone: '',
-  subject: '',
-  message: '',
+const TEXT_REGEX = /^[A-z0-9]{1,24}$/;
+const EMAIL_REGEX = /^[a-z0-9]+@[a-z]+\.[a-z]{2,3}$/;
+const PHONE_REGEX = /^([0-9]{10}$)/;
+const MESSAGE_REGEX = /^[A-z0-9!@#$%&*()-_=+ '":;?{}\[\]/\\.]{1,500}$/;
+const ERROR_MSG = {
+  text: '1 to 24 Characters. Must begin with a letter.',
+  email: 'Email is required. Needs @ and a Top Level Domain like ".com".',
+  phone: 'Phone is required. Needs to be 10 digit number.',
+  message: 'A message is required. ',
 };
+
 const ContactUsForm = () => {
-  const [formState, setFormState] = useState(initialState);
+  const [btnDisable, setBtnDisable] = useState(true);
+  const [firstRender, setFirstRender] = useState(true);
+
+  const [firstName, setFirstName] = useState('');
+  const [firstNameError, setFirstNameError] = useState();
+  const [validFirstName, setValidFirstName] = useState(false);
+  const [firstNameFocus, setFirstNameFocus] = useState(false);
+
+  const [lastName, setLastName] = useState('');
+  const [lastNameError, setLastNameError] = useState();
+  const [validLastName, setValidLastName] = useState(false);
+  const [lastNameFocus, setLastNameFocus] = useState(false);
+
+  const [email, setEmail] = useState('');
+  const [emailError, setEmailError] = useState('');
+  const [validEmail, setValidEmail] = useState(false);
+  const [emailFocus, setEmailFocus] = useState(false);
+
+  const [phone, setPhone] = useState('');
+  const [phoneError, setPhoneError] = useState('');
+  const [validPhone, setValidPhone] = useState(false);
+  const [phoneFocus, setPhoneFocus] = useState(false);
+
+  const [subject, setSubject] = useState('');
+  const [subjectError, setSubjectError] = useState('');
+  const [validSubject, setValidSubject] = useState(false);
+  const [subjectFocus, setSubjectFocus] = useState(false);
+
+  const [message, setMessage] = useState('');
+  const [messageError, setMessageError] = useState('');
+  const [validMessage, setValidMessage] = useState(false);
+  const [messageFocus, setMessageFocus] = useState(false);
 
   const sendEmail = async (e) => {
     e.preventDefault();
+    const formData = {
+      firstName: firstName.toString(),
+      lastName: lastName.toString(),
+      email: email.toString(),
+      phone: phone.toString(),
+      subject: subject.toString(),
+      message: message.toString(),
+    };
     const result = await emailjs.send(
       'service_k8q4ut5',
       'template_eh4y1y8',
-      formState,
+      formData,
       'agIAQlRAMiwNnacIq'
     );
 
     if (result.text === 'OK') {
       e.target.reset();
-      return setFormState(initialState);
+      setBtnDisable(false);
+      setFirstName('');
+      setLastName('');
+      setEmail('');
+      setPhone('');
+      setSubject('');
+      setMessage('');
     }
-    console.error(result);
   };
+
+  useEffect(() => {
+    setValidFirstName(TEXT_REGEX.test(firstName));
+    if (!validFirstName) {
+      setFirstNameError(ERROR_MSG.name);
+    } else {
+      setFirstNameError('');
+    }
+  }, [firstName]);
+
+  useEffect(() => {
+    setValidLastName(TEXT_REGEX.test(lastName));
+    if (!validLastName) {
+      setLastNameError(ERROR_MSG.name);
+    } else {
+      setLastNameError('');
+    }
+  }, [lastName]);
+
+  useEffect(() => {
+    setValidEmail(EMAIL_REGEX.test(email));
+    if (!validEmail && !firstRender) {
+      setEmailError(ERROR_MSG.email);
+    } else {
+      setEmailError('');
+    }
+  }, [email]);
+
+  useEffect(() => {
+    setValidPhone(PHONE_REGEX.test(phone));
+    if (!validPhone && !firstRender) {
+      setPhoneError(ERROR_MSG.phone);
+    } else {
+      setPhoneError('');
+    }
+  }, [phone]);
+
+  useEffect(() => {
+    setValidSubject(TEXT_REGEX.test(subject));
+    if (!validSubject && !firstRender) {
+      setSubjectError(ERROR_MSG.phone);
+    } else {
+      setSubjectError('');
+    }
+  }, [subject]);
+
+  useEffect(() => {
+    setValidMessage(MESSAGE_REGEX.test(message));
+    if (!validMessage && !firstRender) {
+      setMessageError(ERROR_MSG.message);
+    } else {
+      setMessageError('');
+    }
+  }, [message]);
+
+  useEffect(() => {
+    if (
+      validFirstName &&
+      validLastName &&
+      validEmail &&
+      validPhone &&
+      validSubject &&
+      validMessage
+    ) {
+      setBtnDisable(false);
+    } else {
+      setBtnDisable(true);
+    }
+  }, [
+    validFirstName,
+    validLastName,
+    validEmail,
+    validPhone,
+    validSubject,
+    validMessage,
+  ]);
+
+  useEffect(() => {
+    setFirstRender(false);
+  }, []);
+
   return (
     <Form onSubmit={sendEmail}>
       <Title>Contact Us</Title>
       <InputGroup>
-        <Input
-          label='First Name'
-          type='text'
-          name='firstName'
-          value={formState.firstName}
-          onChange={(e) => {
-            setFormState({ ...formState, firstName: e.target.value });
-          }}
-        />
-        <Input
-          label='Last Name'
-          type='text'
-          name='lastName'
-          value={formState.lastName}
-          onChange={(e) => {
-            setFormState({ ...formState, lastName: e.target.value });
-          }}
-        />
-        <Input
-          label='Email'
-          type='email'
-          name='email'
-          value={formState.email}
-          onChange={(e) => {
-            setFormState({ ...formState, email: e.target.value });
-          }}
-        />
-        <Input
-          label='Phone'
-          type='tel'
-          name='phone'
-          value={formState.phone}
-          onChange={(e) => {
-            setFormState({ ...formState, phone: e.target.value });
-          }}
-        />
-        <Input
-          label='Subject'
-          type='text'
-          name='subject'
-          value={formState.subject}
-          onChange={(e) => {
-            setFormState({ ...formState, subject: e.target.value });
-          }}
-        />
-        <TextArea
-          label='Message'
-          name='message'
-          value={formState.message}
-          onChange={(e) => {
-            setFormState({ ...formState, message: e.target.value });
-          }}></TextArea>
+        <Container>
+          <Input
+            label='First Name'
+            type='text'
+            name='firstName'
+            value={firstName}
+            onFocus={() => setFirstNameFocus(true)}
+            onBlur={() => {
+              setValidFirstName(TEXT_REGEX.test(firstName));
+              if (!validFirstName) setFirstNameError(ERROR_MSG.text);
+              setFirstNameFocus(false);
+            }}
+            onChange={(e) => {
+              setFirstName(e.target.value);
+            }}
+          />
+          <p>{!validFirstName && firstNameError}</p>
+        </Container>
+        <Container>
+          <Input
+            label='Last Name'
+            type='text'
+            name='lastName'
+            value={lastName}
+            onFocus={() => setLastNameFocus(true)}
+            onBlur={() => {
+              setValidLastName(TEXT_REGEX.test(lastName));
+              if (!validLastName) setLastNameError(ERROR_MSG.text);
+              setLastNameFocus(false);
+            }}
+            onChange={(e) => {
+              setLastName(e.target.value);
+            }}
+          />
+          <p>{!validLastName && lastNameError}</p>
+        </Container>
+        <Container>
+          <Input
+            label='Email'
+            type='email'
+            name='email'
+            value={email}
+            onFocus={() => setEmailFocus(true)}
+            onBlur={() => {
+              setValidEmail(EMAIL_REGEX.test(email));
+              if (!validEmail) setEmailError(ERROR_MSG.email);
+              setEmailFocus(false);
+            }}
+            onChange={(e) => {
+              setEmail(e.target.value);
+            }}
+          />
+          <p>{!validEmail && emailError}</p>
+        </Container>
+        <Container>
+          <Input
+            label='Phone'
+            type='tel'
+            name='phone'
+            value={phone}
+            onFocus={() => setPhoneFocus(true)}
+            onBlur={() => {
+              setValidPhone(PHONE_REGEX.test(phone));
+              if (!validPhone) setPhoneError(ERROR_MSG.phone);
+              setPhoneFocus(false);
+            }}
+            onChange={(e) => {
+              setPhone(e.target.value);
+            }}
+          />
+          <p>{!validPhone && phoneError}</p>
+        </Container>
+        <Container>
+          <Input
+            label='Subject'
+            type='text'
+            name='subject'
+            value={subject}
+            onFocus={() => setSubjectFocus(true)}
+            onBlur={() => {
+              setValidSubject(TEXT_REGEX.test(subject));
+              if (!validSubject) setSubjectError(ERROR_MSG.text);
+              setSubjectFocus(false);
+            }}
+            onChange={(e) => {
+              setSubject(e.target.value);
+            }}
+          />
+          <p>{!validSubject && subjectError}</p>
+        </Container>
+        <Container>
+          <TextArea
+            label='Message'
+            name='message'
+            value={message}
+            onFocus={() => setMessageFocus(true)}
+            onBlur={(e) => {
+              setValidMessage(e.target.value !== '');
+              if (!validMessage) setMessageError(ERROR_MSG.message);
+              setMessageFocus(false);
+            }}
+            onChange={(e) => {
+              setMessage(e.target.value);
+            }}></TextArea>
+          <p>{!validMessage && messageError}</p>
+        </Container>
       </InputGroup>
       <Submit>
-        <button type='submit'>Submit</button>
+        <button type='submit' disabled={btnDisable}>
+          Submit
+        </button>
       </Submit>
     </Form>
   );
@@ -109,13 +293,30 @@ const Form = styled.form`
   }
 `;
 
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  justify-content: center;
+  /* height: calc(1rem + 0.5rem); */
+  & p {
+    position: relative;
+    left: calc(30% + 0.5rem);
+    width: 50%;
+    margin-top: 0.5rem;
+    color: ${colors.red[500]};
+    font-family: ${fonts.EncodeSans};
+    letter-spacing: 0.04rem;
+  }
+`;
+
 const InputGroup = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 1rem 0.5rem;
-  width: 80%;
+  width: 100%;
   padding: 1rem;
   @media only screen and (max-width: 960px) {
     width: 90%;
@@ -154,5 +355,23 @@ const Submit = styled.div`
       width: 100%;
       margin: 0;
     }
+    &:disabled {
+      opacity: 0.5;
+      &:hover {
+        background-color: ${colors.secondary[700]};
+        cursor: default;
+      }
+    }
   }
 `;
+
+function debounce(cb, delay = 1000) {
+  let timeout;
+
+  return (...args) => {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => {
+      cb(...args);
+    }, delay);
+  };
+}

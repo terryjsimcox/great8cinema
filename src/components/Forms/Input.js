@@ -2,11 +2,17 @@ import React from 'react';
 import styled from 'styled-components';
 import { colors, fonts } from '../../containts/styles.defaults';
 
-const Input = ({ label, type, name, value, onChange }) => {
+const Input = ({ label, type, name, value, onChange, onBlur }) => {
   return (
     <Container>
       <Label>{label}</Label>
-      <StyledInput type={type} name={name} value={value} onChange={onChange} />
+      <StyledInput
+        type={type}
+        name={name}
+        value={value}
+        onChange={onChange}
+        onBlur={onBlur}
+      />
     </Container>
   );
 };
@@ -15,7 +21,6 @@ export default Input;
 
 const Container = styled.div`
   display: flex;
-  width: 100%;
   align-items: center;
 
   @media only screen and (max-width: 960px) {
@@ -36,7 +41,7 @@ const Label = styled.label`
   }
 `;
 const StyledInput = styled.input`
-  width: 70%;
+  width: 50%;
   padding: 0.5rem;
   font-size: 1.2rem;
   font-weight: ${fonts.weight[500]};
