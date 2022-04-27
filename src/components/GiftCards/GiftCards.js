@@ -41,18 +41,14 @@ const giftCards = ({ site }) => {
           </Section>
           <Section>
             <a
-              href={`https://${
-                site === 'sullivan' ? '33783' : '40580'
-              }.formovietickets.com:2235/app/rtsweb/gift`}
+              href={`https://${site.RTN}.formovietickets.com:2235/app/rtsweb/gift`}
               target='_blank'>
-              Purchase a Gift
+              Purchase a Gift Card
             </a>
             <a
-              href={`https://${
-                site === 'sullivan' ? '33783' : '40580'
-              }.formovietickets.com:2235/app/rtsweb/gift/balance`}
+              href={`https://${site.RTN}.formovietickets.com:2235/app/rtsweb/gift/balance`}
               target='_blank'>
-              Check Balance
+              Check Card Balance
             </a>
           </Section>
         </BottomSection>
