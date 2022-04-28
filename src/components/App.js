@@ -10,6 +10,7 @@ import Home from './Home';
 import AboutUs from './AboutUs';
 import GiftCards from './GiftCards/GiftCards';
 import ContactUs from './ContactUs';
+import NewFeature from './NewFeature';
 import { FilmDetails } from './FilmDetails';
 import Footer from './Footer';
 import { Loader } from '../components';
@@ -52,6 +53,7 @@ const App = () => {
           <Route path='/GiftCards' element={<GiftCards site={site} />} />
           <Route path='/ContactUs' element={<ContactUs site={site} />} />
           <Route path='/AboutUs' element={<AboutUs />} />
+          <Route path='/Employment' element={<NewFeature />} />
           <Route path='/film/:id' element={<FilmDetails site={site} />} />
         </Routes>
         <Footer />
