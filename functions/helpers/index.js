@@ -153,9 +153,10 @@ const Schedule = async (site) => {
 
     if (document.length > 0) {
       const tempShows = reconstructFilmShows(rtsFilm.Shows[0]);
-
+      console.log('TempShows:', tempShows.length);
       if (tempShows.length > 0) {
         try {
+          console.log(`Trying to update ${document[0]?.data?.title} shows.`);
           await changeCategory(site, document[0], tempShows);
           await Storage.updateDocument(
             site,
