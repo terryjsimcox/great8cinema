@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Slider from 'react-slick';
 import { v4 as uuid } from 'uuid';
 import 'slick-carousel/slick/slick.css';

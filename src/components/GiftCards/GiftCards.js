@@ -42,12 +42,14 @@ const giftCards = ({ site }) => {
           <Section>
             <a
               href={`https://${site.RTN}.formovietickets.com:2235/app/rtsweb/gift`}
-              target='_blank'>
+              target='_blank'
+              rel='noreferrer'>
               Purchase a Gift Card
             </a>
             <a
               href={`https://${site.RTN}.formovietickets.com:2235/app/rtsweb/gift/balance`}
-              target='_blank'>
+              target='_blank'
+              rel='noreferrer'>
               Check Card Balance
             </a>
           </Section>

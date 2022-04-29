@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { v4 as uuid } from 'uuid';
-import dayjs from 'dayjs';
 import { useApp } from '../context/AppContext';
 import { useLocation } from 'react-router-dom';
 import Carousel from './Carousel';
@@ -31,7 +30,7 @@ export default function Home() {
         updateState({ ...state, current_page: page });
       }
     }
-  }, [state.current_page, state.site, state.isLoading]);
+  }, [state.current_page, state.site, state.isLoading, page]);
 
   useEffect(() => {
     if (!state.isLoading) {
@@ -43,7 +42,7 @@ export default function Home() {
         })
       );
     }
-  }, [state, state.isLoading]);
+  }, [state, state.isLoading, page]);
 
   return (
     <Container>

@@ -1,16 +1,14 @@
-import React, { useState, useEffect, useDebugValue } from 'react';
+import React, { useState, useEffect } from 'react';
 import emailjs from 'emailjs-com';
-import { v4 as uuid } from 'uuid';
 import styled from 'styled-components';
 import Input from './Input';
 import TextArea from './TextArea';
-import { ContactInputs } from '../../containts/ContactForm.defaults';
 import { colors, fonts, borderRadius } from '../../containts/styles.defaults';
 
 const TEXT_REGEX = /^[A-z0-9]{1,24}$/;
 const EMAIL_REGEX = /^[a-z0-9]+@[a-z]+\.[a-z]{2,3}$/;
 const PHONE_REGEX = /^([0-9]{10}$)/;
-const MESSAGE_REGEX = /^[A-z0-9!@#$%&*()-_=+ '":;?{}\[\]/\\.]{1,500}$/;
+const MESSAGE_REGEX = /^[A-z0-9!@#$%&*()-_=+ '":;?{}[\]/\\.]{1,500}$/;
 const ERROR_MSG = {
   text: '1 to 24 Characters. Must begin with a letter.',
   email: 'Email is required. Needs @ and a Top Level Domain like ".com".',
@@ -88,7 +86,7 @@ const ContactUsForm = () => {
     } else {
       setFirstNameError('');
     }
-  }, [firstName]);
+  }, [firstName, validFirstName]);
 
   useEffect(() => {
     setValidLastName(TEXT_REGEX.test(lastName));
@@ -97,7 +95,7 @@ const ContactUsForm = () => {
     } else {
       setLastNameError('');
     }
-  }, [lastName]);
+  }, [lastName, validLastName]);
 
   useEffect(() => {
     setValidEmail(EMAIL_REGEX.test(email));
@@ -106,7 +104,7 @@ const ContactUsForm = () => {
     } else {
       setEmailError('');
     }
-  }, [email]);
+  }, [email, validEmail, firstRender]);
 
   useEffect(() => {
     setValidPhone(PHONE_REGEX.test(phone));
@@ -115,7 +113,7 @@ const ContactUsForm = () => {
     } else {
       setPhoneError('');
     }
-  }, [phone]);
+  }, [phone, validPhone, firstRender]);
 
   useEffect(() => {
     setValidSubject(TEXT_REGEX.test(subject));
@@ -124,7 +122,7 @@ const ContactUsForm = () => {
     } else {
       setSubjectError('');
     }
-  }, [subject]);
+  }, [subject, validSubject, firstRender]);
 
   useEffect(() => {
     setValidMessage(MESSAGE_REGEX.test(message));
@@ -133,7 +131,7 @@ const ContactUsForm = () => {
     } else {
       setMessageError('');
     }
-  }, [message]);
+  }, [message, validMessage, firstRender]);
 
   useEffect(() => {
     if (

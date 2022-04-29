@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 import styled from 'styled-components';
 import { colors, fonts, borderRadius } from '../containts/styles.defaults';
-import Great8Building from '../assets/images/great8.jpg';
 import { useImg } from '../hooks';
 
 const AboutUs = ({ site }) => {
