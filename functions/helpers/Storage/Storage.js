@@ -6,6 +6,7 @@ const {
   getFirestore,
   getDocs,
   doc,
+  serverTimestamp,
 } = require('firebase/firestore');
 
 const firebaseConfig = {
@@ -22,7 +23,11 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 const addDocument = async (site, document) => {
-  const docRef = await addDoc(collection(db, site), document);
+  const docRef = await addDoc(collection(db, site), {
+    ...document,
+    updatedTimestamp: serverTimestamp(),
+    createdTimpstamp: serverTimestamp(),
+  });
   return docRef;
 };
 
@@ -31,14 +36,14 @@ const updateDocument = async (site, docID, field, data) => {
   return await updateDoc(dbDoc, { [field]: data });
 };
 
-const archiveDocument = async (site, db, rts) => {
+const archiveDocument = (site, db, rts) => {
   db.forEach(async (document) => {
     if (
       rts.filter((film) => film.FilmCode[0] === document.data.filmCode).length >
       0
     )
       return;
-    return await updateDocument(site, document.id, 'category', 'Archived');
+    await updateDocument(site, document.id, 'category', 'Archived');
   });
 };
 

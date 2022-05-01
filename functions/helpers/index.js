@@ -172,7 +172,6 @@ const Schedule = async (site) => {
   });
   await Storage.archiveDocument(site, dbFilms, rts);
 };
-
 module.exports = {
   TMDB,
   RTS,

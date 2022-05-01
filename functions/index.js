@@ -1,4 +1,5 @@
 const functions = require('firebase-functions');
+
 const { RTS, TMDB, OMDB, Storage, Schedule } = require('./helpers');
 require('dotenv').config();
 
@@ -74,3 +75,10 @@ exports.GetFilms = functions.https.onRequest(async (req, res) => {
     console.log(err);
   }
 });
+
+exports.UpdateSchedule = functions.pubsub
+  .schedule('30 11-21 * * *')
+  .onRun(async () => {
+    await Schedule('great8');
+    await Schedule('sullivan');
+  });
