@@ -6,6 +6,7 @@ import { useApp } from '../context/AppContext';
 import TicketPrices from './TicketPrices';
 import styled from 'styled-components';
 import { colors, fonts } from '../containts/styles.defaults';
+import FB_Popcorn_image from '../assets/images/fb-button-icon.png';
 
 export default function Footer() {
   const { state, updateState } = useApp();
@@ -68,12 +69,9 @@ export default function Footer() {
       </TopContainer>
       <BottomContainer>
         <FBLogo
-          href='https://www.facebook.com/great8cinema/?ref=ts'
+          href={`https://www.facebook.com/${state.site.FB}/?ref=ts`}
           target='_blank'>
-          <img
-            src='https://firebasestorage.googleapis.com/v0/b/great8cinema-a8432.appspot.com/o/images%2Ffb-button-icon.png?alt=media&token=75bae2ed-09a9-4601-b45f-d8215e7a0eff'
-            alt='Fb logo'
-          />
+          <img src={FB_Popcorn_image} alt='Fb logo' />
         </FBLogo>
         <p>&copy; Copyrights. All rights reserved.</p>
       </BottomContainer>

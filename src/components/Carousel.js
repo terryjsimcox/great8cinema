@@ -3,7 +3,7 @@ import Slider from 'react-slick';
 import { v4 as uuid } from 'uuid';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import CarouselSettings from '../containts/CarouselSettings';
+import { CarouselSettings } from '../containts/CarouselSettings';
 import styled from 'styled-components';
 import { colors } from '../containts/styles.defaults';
 
