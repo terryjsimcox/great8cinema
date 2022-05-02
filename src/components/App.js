@@ -13,7 +13,7 @@ import ContactUs from './ContactUs';
 import NewFeature from './NewFeature';
 import { FilmDetails } from './FilmDetails';
 import Footer from './Footer';
-import { Loader } from '../components';
+import { Employment, Loader } from '../components';
 
 import styled from 'styled-components';
 
@@ -53,7 +53,7 @@ const App = () => {
           <Route path='/GiftCards' element={<GiftCards site={site} />} />
           <Route path='/ContactUs' element={<ContactUs site={site} />} />
           <Route path='/AboutUs' element={<AboutUs />} />
-          <Route path='/Employment' element={<NewFeature />} />
+          <Route path='/Employment' element={<Employment />} />
           <Route path='/film/:id' element={<FilmDetails site={site} />} />
         </Routes>
         <Footer />
