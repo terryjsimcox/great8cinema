@@ -1,4 +1,5 @@
 import React from 'react';
+import { v4 as uuid } from 'uuid';
 import { useFormValidation } from '../../hooks';
 import validateEmployment from './ValidateEmployment';
 import styled from 'styled-components';
@@ -16,56 +17,56 @@ const formState = {
 };
 
 const EmploymentInputs = {
-  Personal: [
-    {
+  Personal: {
+    FirstName: {
       name: 'firstName',
       label: 'First Name',
       type: 'text',
       placeholder: 'Enter your first name',
     },
-    {
+    LastName: {
       name: 'lastName',
       label: 'Last Name',
       type: 'text',
       placeholder: 'Enter your last name',
     },
-    {
+    SN: {
       name: 'sn',
       label: 'Social Security Number',
       type: 'text',
       placeholder: 'Enter your social security number',
     },
-    {
+    Phone: {
       name: 'phone',
       label: 'Phone Number',
       type: 'text',
       placeholder: 'Enter your phone number',
     },
-    {
+    Address: {
       name: 'addres',
       label: 'Address',
       type: 'text',
       placeholder: 'Enter your address',
     },
-    {
+    City: {
       name: 'city',
       label: 'City',
       type: 'text',
       placeholder: 'Enter your city',
     },
-    {
+    State: {
       name: 'state',
       label: 'State',
       type: 'text',
       placeholder: 'Enter your state',
     },
-    {
+    Zipcode: {
       name: 'zipcode',
       label: 'Zip Code',
       type: 'text',
       placeholder: 'Enter your zip code',
     },
-  ],
+  },
 };
 
 const EmploymentForm = () => {
@@ -73,23 +74,7 @@ const EmploymentForm = () => {
   return (
     <Container>
       <Form onSubmit={form.handleSubmit}>
-        {EmploymentInputs.Personal.map((fields) => {
-          return (
-            <FormInputGroup>
-              <label htmlFor={fields.name}>{fields.label}</label>
-              <input
-                type={fields.type}
-                id={fields.name}
-                name={fields.name}
-                placeholder={fields.placeholder}
-                value={form.values[fields.name]}
-                onBlur={(e) => form.handleBlur(e)}
-                onChange={(e) => form.handleChange(e)}
-              />
-              <p>{form.errors[fields.name]}</p>
-            </FormInputGroup>
-          );
-        })}
+        {}
         <FormBtn>
           <button type='submit'>Submit</button>
         </FormBtn>
@@ -114,3 +99,21 @@ const FormInputGroup = styled.div`
 `;
 
 const FormBtn = styled.div``;
+
+function createInputsGroups(field, values, handleBlur, handleChange, errors) {
+  console.log(field);
+  return (
+    <FormInputGroup>
+      <label htmlFor={[field].name}>{field.label}</label>
+      <input
+        type={[field].type}
+        id={field.name}
+        name={field.name}
+        value={values[field.name]}
+        onBlur={(e) => handleBlur(e)}
+        onChange={(e) => handleChange(e)}
+      />
+      <p>{errors[field.name]}</p>
+    </FormInputGroup>
+  );
+}

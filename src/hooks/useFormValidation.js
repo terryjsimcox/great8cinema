@@ -10,6 +10,7 @@ const useFormValidation = (initialState, validate) => {
   };
 
   const handleBlur = (e) => {
+    const { name, value } = e.target;
     setErrors(validate(values));
   };
 
