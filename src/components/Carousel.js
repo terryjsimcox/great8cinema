@@ -1,31 +1,123 @@
-import React from 'react';
-import Slider from 'react-slick';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { FaArrowAltCircleRight, FaArrowAltCircleLeft } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 import { v4 as uuid } from 'uuid';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
-import { CarouselSettings } from '../containts/CarouselSettings';
 import styled from 'styled-components';
 import { colors } from '../containts/styles.defaults';
 
-export default function Carousel({ films }) {
-  const carouselHeight = 900;
+export default function Carousel({
+  films,
+  dots = false,
+  duration = 10000,
+  pauseOnHover = false,
+  autoPlay = false,
+}) {
+  const [current, setCurrent] = useState(0);
 
+  const carouselRef = useRef();
+  const timerID = useRef();
+
+  const length = films.filter(
+    (filter) => filter.data.category !== 'Archived'
+  ).length;
+
+  const nextSlide = () => {
+    setCurrent(current === length - 1 ? 0 : current + 1);
+  };
+
+  const prevSlide = () => {
+    setCurrent(current === 0 ? length - 1 : current - 1);
+  };
+
+  const startTimer = useCallback(() => {
+    timerID.current = setInterval(() => {
+      setCurrent((prevCurrent) =>
+        prevCurrent === length - 1 ? 0 : prevCurrent + 1
+      );
+    }, duration);
+  }, [length, duration]);
+
+  const stopTimer = (intervalId) => {
+    clearInterval(intervalId);
+  };
+
+  useEffect(() => {
+    if (autoPlay) {
+      startTimer(duration);
+    }
+    return () => {
+      if (autoPlay) {
+        stopTimer(timerID.current);
+      }
+    };
+  }, [autoPlay]);
+
+  useEffect(() => {
+    const listners = carouselRef.current;
+    if (pauseOnHover) {
+      listners.addEventListener('mouseenter', () => stopTimer(timerID.current));
+      listners.addEventListener('mouseleave', () => startTimer(duration));
+    }
+
+    return () => {
+      if (pauseOnHover) {
+        listners.removeEventListener('mouseenter', () =>
+          stopTimer(timerID.current)
+        );
+        listners.removeEventListener('mouseleave', () => startTimer(duration));
+      }
+    };
+  }, [pauseOnHover]);
   return (
-    <Container carouselHeight={carouselHeight}>
-      <Section carouselHeight={carouselHeight}>
-        <StyledCarousel {...CarouselSettings}>
-          {films
-            ?.filter((query) => query.data.category !== 'Archived')
-            ?.map((film) => {
-              return (
-                <ImgContainer key={uuid()} carouselHeight={carouselHeight}>
-                  <img src={film.data.backdrop} alt={film.data.title} />
-                </ImgContainer>
-              );
-            })}
-        </StyledCarousel>
-        <Gradient />
-      </Section>
+    <Container>
+      <StyledCarousel ref={carouselRef} className='carousel'>
+        <FaArrowAltCircleLeft className='left-arrow' onClick={prevSlide} />
+        <FaArrowAltCircleRight className='right-arrow' onClick={nextSlide} />
+        {films
+          ?.filter((query) => query.data.category !== 'Archived')
+          ?.map((film, index) => {
+            return (
+              <ImgContainer
+                key={`${film.data.title}${index}`}
+                className={current === index ? 'slide active' : 'slide'}>
+                <img src={film.data.backdrop} alt={film.data.title} />
+                <FilmLogo
+                  className={current === index ? 'slide active' : 'slide'}
+                  filmlogo={film.data.filmLogo}>
+                  <div>
+                    {film.data.filmLogo ? (
+                      <img
+                        src={film.data.filmLogo.path}
+                        alt={film.data.title}
+                        filmlogo={film.data.filmLogo}
+                      />
+                    ) : (
+                      <h2>{film.data.title}</h2>
+                    )}
+                    <Link
+                      className={
+                        current === index ? 'link slide active' : 'link slide'
+                      }
+                      to={`film/${film.id}`}
+                      filmlogo={film.data?.filmLogo}>
+                      Get Tickets Now
+                    </Link>
+                  </div>
+                </FilmLogo>
+              </ImgContainer>
+            );
+          })}
+      </StyledCarousel>
+      {dots && (
+        <DotContainer>
+          {[...Array(length)].map((e, index) => (
+            <Dot
+              key={uuid()}
+              className={index === current ? 'active' : ''}
+              onClick={() => setCurrent(index)}></Dot>
+          ))}
+        </DotContainer>
+      )}
     </Container>
   );
 }
@@ -33,9 +125,10 @@ export default function Carousel({ films }) {
 const Container = styled.div`
   position: relative;
   display: block;
-  width: 100%;
-  height: ${({ carouselHeight }) => carouselHeight}px;
+  width: 1920px;
+  height: 800px;
   margin: 0 auto;
+  border-bottom: 2px solid #817e7e;
   @media only screen and (max-width: 760px) {
     display: none;
   }
@@ -47,55 +140,45 @@ const Container = styled.div`
   }
 `;
 
-const StyledCarousel = styled(Slider)`
+const StyledCarousel = styled.div`
   position: relative;
-  z-index: -1;
-  display: block;
-  width: 100vw;
-  height: ${({ carouselHeight }) => carouselHeight}px;
+  display: flex;
+  flex-direction: column;
+  width: 1920px;
+  height: 800px;
   margin: 0 auto;
+  border-bottom: 2px solid #817e7e;
   overflow: hidden;
-  & > .slick-prev::before,
-  & > .slick-next::before {
-    font-size: 2rem;
-  }
-  & > .slick-prev {
-    display: none;
+
+  & > .left-arrow,
+  & > .right-arrow {
+    position: absolute;
+    top: 50%;
     z-index: 5;
-    left: 1rem;
-    &::before {
-      display: none;
-      z-index: 5;
-    }
+    font-size: 4rem;
+    color: ${colors.white[200]};
+    cursor: pointer;
+    user-select: none;
   }
-  & > .slick-next {
-    z-index: 5;
+
+  & > .left-arrow {
+    left: 2rem;
+  }
+
+  & > .right-arrow {
     right: 2rem;
-    &::before {
-      display: none;
-    }
   }
-  & > .slick-dots {
-    bottom: 1rem;
-    & li {
-      & button {
-        &:hover {
-          &::before {
-            color: ${colors.white[100]};
-          }
-        }
-      }
-      & button::before {
-        font-size: 1.2rem;
-        color: ${colors.white[300]};
-      }
-    }
-    & > .slick-active {
-      & button::before {
-        color: ${colors.white[100]};
-      }
-    }
+
+  & > .slide {
+    opacity: 0;
+    /* transition: opacity 2s ease; */
   }
+
+  & > .slide.active {
+    opacity: 1;
+    transition: opacity 2s ease;
+  }
+
   @media only screen and (max-width: 760px) {
     display: none;
   }
@@ -107,51 +190,96 @@ const StyledCarousel = styled(Slider)`
   }
 `;
 
-const Section = styled.section`
-  display: flex;
-  justify-content: center;
-  width: 100vw;
-  height: ${({ carouselHeight }) => carouselHeight}px;
-  @media only screen and (max-width: 760px) {
-    display: none;
-  }
-  @media only screen and (min-width: 761px) and (max-width: 1100px) {
-    height: 500px;
-  }
-  @media only screen and (min-width: 1101px) and (max-width: 1400px) {
-    height: 500px;
-  }
-`;
-
-const Gradient = styled.div`
-  content: '';
+const ImgContainer = styled.div`
   position: absolute;
-  z-index: 1;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
-  background: linear-gradient(to top, hsla(0, 0%, 5%, 1) 5%, transparent);
-`;
+  width: 1920px;
+  height: 800px;
 
-const ImgContainer = styled.div`
-  position: relative;
-  width: 100vw;
-  height: ${({ carouselHeight }) => carouselHeight}px;
   & img {
     position: absolute;
     top: 0;
     right: 0;
     bottom: 0;
     left: 0;
-    width: 100%;
-    aspect-ratio: 16 / 9;
-    z-index: -1;
+    width: 1920px;
+    height: 800px;
   }
   @media only screen and (min-width: 761px) and (max-width: 1100px) {
     height: 500px;
   }
   @media only screen and (min-width: 1101px) and (max-width: 1400px) {
     height: 600px;
+  }
+`;
+
+const FilmLogo = styled.div`
+  position: absolute;
+  left: 0;
+  bottom: 5rem;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 20rem;
+  & div {
+    position: relative;
+    left: 5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 20%;
+    & > h2 {
+      font-size: 3rem;
+      color: ${colors.white[100]};
+    }
+  }
+
+  & > div > img {
+    position: relative;
+    width: 100%;
+    height: ${({ filmlogo }) => (filmlogo?.height ? filmlogo?.height : 100)}px;
+  }
+  & > div > .link {
+    position: relative;
+    top: 50%;
+    display: flex;
+    align-items: center;
+    max-width: 15rem;
+    height: 50px;
+    margin-top: 2rem;
+    padding: 1rem 2rem;
+    color: ${colors.white[100]};
+    font-size: 1.2rem;
+    text-align: center;
+    background-color: ${({ filmlogo }) =>
+      filmlogo?.buttonColor ? filmlogo?.buttonColor : '#398ff3'};
+    border-radius: 0.5rem;
+  }
+`;
+
+const DotContainer = styled.div`
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: translateX(-50%);
+  margin-bottom: 2rem;
+`;
+const Dot = styled.div`
+  content: '';
+  width: 25px;
+  height: 25px;
+  margin-right: 1rem;
+  border-radius: 50%;
+  background-color: ${colors.white[700]};
+  cursor: pointer;
+  &.active {
+    background-color: white;
   }
 `;

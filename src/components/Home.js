@@ -7,6 +7,13 @@ import { MoviePosterCard } from './Card';
 import styled from 'styled-components';
 import { colors, fonts, borderRadius } from '../containts/styles.defaults';
 
+const carouselSettings = {
+  dots: true,
+  pauseOnHover: true,
+  duration: 20000,
+  autoPlay: true,
+};
+
 export default function Home() {
   const { state, updateState } = useApp();
   const location = useLocation();
@@ -46,7 +53,7 @@ export default function Home() {
 
   return (
     <Container>
-      <Carousel films={state.films} />
+      <Carousel films={state.films} {...carouselSettings} />
       <Section>
         <MovieListContainer>
           <Title>{state?.current_page}</Title>
@@ -74,11 +81,12 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
+  border-bottom: 2px solid #817e7e;
 `;
 
 const Section = styled.section`
   position: relative;
-  top: -15rem;
+  top: 0;
   display: flex;
   justify-content: center;
   background: linear-gradient(to top, hsla(0, 0%, 5%, 1) 90%, transparent);
