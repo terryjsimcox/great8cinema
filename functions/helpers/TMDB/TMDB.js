@@ -37,7 +37,7 @@ const getMovieDetails = async (filmTitle, year = new Date().getFullYear()) => {
     );
     return results.data.results[0];
   } catch (error) {
-    console.error(error);
+    return { isAxiosError: true, error };
   }
 };
 
@@ -48,7 +48,7 @@ const getActorsDetails = async (movieID) => {
     );
     return results.data;
   } catch (error) {
-    console.error(error);
+    return { isAxoisError: true, error };
   }
 };
 

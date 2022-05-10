@@ -15,14 +15,22 @@ const MakeFilmDocument = async (title, film) => {
     TMDB_id: '',
     actors: [],
     backdrop: '',
+    backdropPaths: [],
     category: null,
     director: [],
     filmCode: '',
+    filmLogo: {
+      buttonColor: '',
+      height: '',
+      width: '',
+      path: '',
+    },
     genres: [],
     length: '',
     manualEdited: false,
     plot: '',
     poster: '',
+    posterPaths: [],
     rating: '',
     released: '',
     rtsTitle: '',
@@ -32,28 +40,31 @@ const MakeFilmDocument = async (title, film) => {
     writer: [],
     year: '',
   };
-
+  console.log(title);
   try {
     const MDBfilm = await TMDB.movie(title);
-    const actors = await TMDB.actors(MDBfilm.id);
-    const OMDBfilm = MDBfilm.title && (await OMDB(MDBfilm.title));
+    if (MDBfilm === undefined) return;
+    const actors = await TMDB.actors(MDBfilm?.id);
+    const OMDBfilm = MDBfilm?.title && (await OMDB(MDBfilm.title));
 
     temp._id = uuid();
-    temp.TMDB_id = MDBfilm.id;
-    temp.actors = reconstructActors(actors.cast);
-    temp.backdrop = `https://image.tmdb.org/t/p/original${MDBfilm.backdrop_path}`;
+    temp.TMDB_id = MDBfilm?.id;
+    temp.actors = reconstructActors(actors?.cast);
+    temp.backdrop = `https://image.tmdb.org/t/p/original${MDBfilm?.backdrop_path}`;
+    temp.backdropPaths.push(MDBfilm?.backdrop_path);
     temp.category = 'Coming Soon';
     temp.filmCode = film.FilmCode[0];
-    temp.genres = getGenres(genresList, MDBfilm.genre_ids);
+    temp.genres = getGenres(genresList, MDBfilm?.genre_ids);
     temp.length = film.Length[0];
-    temp.plot = MDBfilm.overview;
-    temp.poster = `https://image.tmdb.org/t/p/original${MDBfilm.poster_path}`;
-    temp.released = OMDBfilm.Released ? OMDBfilm.Released : null;
+    temp.plot = MDBfilm?.overview;
+    temp.poster = `https://image.tmdb.org/t/p/original${MDBfilm?.poster_path}`;
+    temp.posterPaths.push(MDBfilm?.poster_path);
+    temp.released = OMDBfilm?.Released ? OMDBfilm?.Released : null;
     temp.rating = film.Rating[0] ? film.Rating[0] : null;
-    temp.title = MDBfilm.title;
+    temp.title = MDBfilm?.title;
     temp.rtsTitle = film.Title[0];
     temp.shows = reconstructFilmShows(film.Shows);
-    temp.year = OMDBfilm.Year ? OMDBfilm.Year : null;
+    temp.year = OMDBfilm?.Year ? OMDBfilm?.Year : null;
 
     OMDBfilm?.Writer?.split(',')?.map((writer) => temp.writer.push(writer));
     OMDBfilm?.Director?.split(',')?.map((director) =>
@@ -68,7 +79,7 @@ const MakeFilmDocument = async (title, film) => {
 const reconstructActors = (cast) => {
   let tempCast = [];
 
-  cast.forEach((actor) => {
+  cast?.forEach((actor) => {
     const tempActor = {
       name: actor.name,
       profile:
@@ -133,7 +144,7 @@ const splitShowId = (showId) => {
 
 const getGenres = (genresList, filmGenres) => {
   let tempGenres = [];
-  filmGenres.forEach((id) => tempGenres.push(_.find(genresList, { id }).name));
+  filmGenres?.forEach((id) => tempGenres.push(_.find(genresList, { id }).name));
   return tempGenres;
 };
 
@@ -145,15 +156,14 @@ const Schedule = async (site) => {
     const document = dbFilms.filter(
       (film) => film.data.rtsTitle === rtsFilm.Title[0]
     );
-
-    if (document.length === 0) {
+    if (document.length === 0 && rtsFilm.Title[0] !== undefined) {
       const temp = await MakeFilmDocument(rtsFilm.Title[0], rtsFilm);
+      if (temp === undefined) return;
       return await Storage.addDocument(site, temp);
     }
 
     if (document.length > 0) {
       const tempShows = reconstructFilmShows(rtsFilm.Shows[0]);
-      console.log('TempShows:', tempShows.length);
       if (tempShows.length > 0) {
         try {
           console.log(`Trying to update ${document[0]?.data?.title} shows.`);
@@ -170,7 +180,7 @@ const Schedule = async (site) => {
       }
     }
   });
-  await Storage.archiveDocument(site, dbFilms, rts);
+  Storage.archiveDocument(site, dbFilms, rts);
 };
 module.exports = {
   TMDB,

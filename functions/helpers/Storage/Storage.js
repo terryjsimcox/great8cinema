@@ -43,7 +43,8 @@ const archiveDocument = (site, db, rts) => {
       0
     )
       return;
-    await updateDocument(site, document.id, 'category', 'Archived');
+    if (document.data.title !== '')
+      await updateDocument(site, document.id, 'category', 'Archived');
   });
 };
 

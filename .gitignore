@@ -69,4 +69,4 @@ node_modules/
 build/
 
 # public image folder for testing
-public/images
+#public/images
