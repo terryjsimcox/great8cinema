@@ -27,9 +27,7 @@ export default function Navbar({ state = null, updateState = null }) {
       <Background opacity={scrollPos} />
 
       <Great8Logo
-        handleClick={() =>
-          updateState({ ...state, current_page: 'Now Showing' })
-        }
+        handleClick={() => updateState({ ...state, current_page: 'Home' })}
       />
       <NavList ref={domNode} open={navOpen} className={navOpen && 'open'}>
         {MenuItems.map((item) => (
@@ -40,7 +38,8 @@ export default function Navbar({ state = null, updateState = null }) {
             className={navOpen && 'open'}
             onClick={(e) => handleClick(e, item)}
             title={item.name}
-            aria-label={item.description}>
+            // aria-label={item.description}
+          >
             <Link to={item.url} title={item.name}>
               {item.name}
             </Link>
@@ -74,7 +73,7 @@ const Container = styled.nav`
   width: 100%;
   height: 5rem;
   & > a {
-    margin-inline-start: 2rem;
+    margin-inline-start: 7.5rem;
   }
 
   @media print {
@@ -105,7 +104,7 @@ const Background = styled.div`
 const NavList = styled.ul`
   display: flex;
   z-index: 2;
-  margin-inline-end: 4rem;
+  margin-inline-end: 7.5rem;
   list-style: none;
 
   @media only screen and (max-width: 960px) {
@@ -139,7 +138,7 @@ const NavItem = styled.li`
   }
   & > a {
     color: ${({ active }) => (active ? colors.white[100] : colors.white[200])};
-    font-family: ${fonts.EncodeSans}, sans-serif;
+    font-family: ${fonts.Poppins}, sans-serif;
     font-size: 1.2rem;
     text-decoration: none;
   }

@@ -3,7 +3,7 @@ import { FaArrowAltCircleRight, FaArrowAltCircleLeft } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { v4 as uuid } from 'uuid';
 import styled from 'styled-components';
-import { colors } from '../containts/styles.defaults';
+import { colors, fonts } from '../containts/styles.defaults';
 
 export default function Carousel({
   films,
@@ -84,15 +84,18 @@ export default function Carousel({
                 <FilmLogo
                   className={current === index ? 'slide active' : 'slide'}
                   filmlogo={film.data.filmLogo}>
+                  {film.data.filmLogo && film.data.filmLogo.path !== '' ? (
+                    <img
+                      src={film.data.filmLogo.path}
+                      alt={film.data.title}
+                      filmlogo={film.data.filmLogo}
+                    />
+                  ) : (
+                    <h2>{film.data.title}</h2>
+                  )}
                   <div>
-                    {film.data.filmLogo ? (
-                      <img
-                        src={film.data.filmLogo.path}
-                        alt={film.data.title}
-                        filmlogo={film.data.filmLogo}
-                      />
-                    ) : (
-                      <h2>{film.data.title}</h2>
+                    {film.data.filmLogo.caption && (
+                      <h3>{film.data.filmLogo.caption}</h3>
                     )}
                     <Link
                       className={
@@ -122,15 +125,18 @@ export default function Carousel({
   );
 }
 
-const ContainerWidth = '100%';
-const ContainerHeight = '800px';
+const ContainerWidth = `1200px`;
+const ContainerHeight = '600px';
 
 const Container = styled.div`
   position: relative;
+  top: 5rem;
   display: block;
   width: 100%;
   height: ${ContainerHeight};
   margin: 0 auto;
+  border-bottom: 2px solid #817e7e;
+  overflow: hidden;
   &:hover {
     & > .dots {
       opacity: 1;
@@ -160,12 +166,9 @@ const StyledCarousel = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
-  width: ${ContainerWidth};
-  height: ${ContainerHeight};
-  margin: 0 auto;
-  border-bottom: 2px solid #817e7e;
-  overflow: hidden;
-
+  width: 100%;
+  height: 100%;
+  background-color: hsl(0, 0%, 0%);
   &:hover {
   }
 
@@ -174,8 +177,8 @@ const StyledCarousel = styled.div`
     position: absolute;
     top: 50%;
     z-index: 5;
-    font-size: 4rem;
-    color: ${colors.white[700]};
+    font-size: 2.5rem;
+    color: ${colors.white[200]};
     cursor: pointer;
     user-select: none;
     opacity: 0;
@@ -200,7 +203,6 @@ const StyledCarousel = styled.div`
 
   & > .slide.active {
     opacity: 1;
-    transition: opacity 2s ease;
   }
 
   @media only screen and (min-width: 769px) and (max-width: 1024px) {
@@ -221,26 +223,20 @@ const ImgContainer = styled.div`
   right: 0;
   bottom: 0;
   left: 0;
-  width: ${ContainerWidth};
-  height: ${ContainerHeight};
-
+  width: 100%;
+  height: 100%;
   & img {
     position: absolute;
     top: 0;
-    right: 0;
-    bottom: 0;
     left: 0;
-    width: ${ContainerWidth};
-    height: ${ContainerHeight};
+    width: 100%;
+    height: 800px;
     @media only screen and (min-width: 769px) and (max-width: 1024px) {
       height: 426px;
     }
 
     @media only screen and (min-width: 1025px) and (max-width: 1200px) {
       height: 525px;
-    }
-    @media only screen and (min-width: 1201px) {
-      height: ${ContainerHeight};
     }
   }
   @media only screen and (min-width: 769px) and (max-width: 1024px) {
@@ -250,50 +246,59 @@ const ImgContainer = styled.div`
   @media only screen and (min-width: 1025px) and (max-width: 1200px) {
     height: 525px;
   }
-  @media only screen and (min-width: 1201px) {
-    height: ${ContainerHeight};
-  }
 `;
 
 const FilmLogo = styled.div`
   position: absolute;
   left: 0;
-  bottom: 5rem;
   z-index: 2;
   display: flex;
   align-items: center;
   width: 100%;
-  height: 20rem;
-  & div {
-    position: relative;
-    left: 8rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 20%;
-    & > h2 {
-      font-size: 3rem;
-      color: ${colors.white[100]};
-    }
+  height: 100%;
+
+  & > h2 {
+    position: absolute;
+    top: 2rem;
+    left: 7.5rem;
+    font-size: 3rem;
+    color: ${colors.white[100]};
   }
 
-  & > div > img {
-    position: relative;
-    width: 100%;
+  & > img {
+    position: absolute;
+    z-index: 3;
+    top: 2rem;
+    left: 7.5rem;
+    width: 250px;
     height: ${({ filmlogo }) => (filmlogo?.height ? filmlogo?.height : 100)}px;
   }
-  & > div > .link {
+
+  & > div {
+    position: absolute;
+    right: calc(7.5rem + 18px);
+    bottom: 2rem;
+    width: 20rem;
+  }
+
+  & > div > h3 {
     position: relative;
-    top: 50%;
+    right: 0;
+    color: ${colors.white[100]};
+    font-family: ${fonts.Poppins};
+    font-size: 1.2rem;
+    font-weight: 400;
+  }
+  & > div > .link {
     display: flex;
     align-items: center;
-    max-width: 15rem;
+    justify-content: center;
+    width: 100%;
     height: 50px;
     margin-top: 2rem;
     padding: 1rem 2rem;
     color: ${colors.white[100]};
     font-size: 1.2rem;
-    text-align: center;
     background-color: ${({ filmlogo }) =>
       filmlogo?.buttonColor ? filmlogo?.buttonColor : '#398ff3'};
     border-radius: 0.5rem;
@@ -302,6 +307,7 @@ const FilmLogo = styled.div`
 
 const DotContainer = styled.div`
   position: absolute;
+  z-index: 5;
   bottom: 0;
   left: 50%;
   display: flex;
@@ -311,6 +317,9 @@ const DotContainer = styled.div`
   margin-bottom: 2rem;
   opacity: 0;
   transition: opacity 2s ease;
+  @media only screen and (min-width: 1025px) and (max-width: 1200px) {
+    display: none;
+  }
 `;
 const Dot = styled.div`
   content: '';

@@ -50,6 +50,7 @@ export const fonts = {
   EncodeSans: 'Encode Sans',
   Quintessential: 'Quintessential',
   Quicksand: 'Quicksand',
+  Poppins: 'Poppins',
   PermanentMarker: 'Permanent Marker',
   weight: {
     100: 100,

@@ -13,7 +13,7 @@ export default function Footer() {
   const navLinks = [
     {
       name: 'Now Showing',
-      url: '/#NowShowing',
+      url: '/',
     },
     {
       name: 'Gift Cards',
@@ -25,7 +25,7 @@ export default function Footer() {
     },
     {
       name: 'Coming Soon',
-      url: '/#ComingSoon',
+      url: '/',
     },
     {
       name: 'Contact Us',
