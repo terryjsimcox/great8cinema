@@ -110,7 +110,7 @@ const MovieListContainer = styled.div`
   top: 0;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 5rem;
+  gap: 10rem 10rem;
   width: calc(100% - 15rem);
   padding-top: 2rem;
   padding-bottom: 2rem;

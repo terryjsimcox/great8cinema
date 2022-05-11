@@ -84,18 +84,18 @@ export default function Carousel({
                 <FilmLogo
                   className={current === index ? 'slide active' : 'slide'}
                   filmlogo={film.data.filmLogo}>
-                  {film.data.filmLogo && film.data.filmLogo.path !== '' ? (
+                  {film.data?.filmLogo && film.data?.filmLogo?.path !== '' ? (
                     <img
-                      src={film.data.filmLogo.path}
+                      src={film.data?.filmLogo?.path}
                       alt={film.data.title}
-                      filmlogo={film.data.filmLogo}
+                      filmlogo={film.data?.filmLogo}
                     />
                   ) : (
                     <h2>{film.data.title}</h2>
                   )}
                   <div>
-                    {film.data.filmLogo.caption && (
-                      <h3>{film.data.filmLogo.caption}</h3>
+                    {film.data?.filmLogo?.caption && (
+                      <h3>{film.data?.filmLogo?.caption}</h3>
                     )}
                     <Link
                       className={
