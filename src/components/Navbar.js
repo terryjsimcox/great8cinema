@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { v4 as uuid } from 'uuid';
@@ -12,16 +12,16 @@ import { Great8Logo } from './Logo';
 export default function Navbar({ state = null, updateState = null }) {
   const [scrollPos, setScrollPos] = useState(0);
   const [navOpen, setNavOpen] = useState(false);
+  const domNode = useRef();
 
   function handleClick(e, item) {
     state.current_page === item.name && e.preventDefault();
     updateState({ ...state, current_page: item.name });
     setNavOpen(window.innerWidth <= 959 && !navOpen);
   }
-
   useOnScrollY(setScrollPos);
 
-  let domNode = useClickOutside(() => setNavOpen(false));
+  useClickOutside(domNode, () => setNavOpen(false));
   return (
     <Container>
       <Background opacity={scrollPos} />

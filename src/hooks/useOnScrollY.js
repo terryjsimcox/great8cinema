@@ -1,6 +1,6 @@
 import { useEffect, useCallback } from 'react';
 
-const useOnScrollY = (handler) => {
+const useOnScrollY = (handler, ref) => {
   const checkScrollY = useCallback(() => {
     window.scrollY > 150 ? handler(1) : handler(0);
   }, [handler]);

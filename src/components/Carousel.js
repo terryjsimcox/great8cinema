@@ -109,7 +109,7 @@ export default function Carousel({
           })}
       </StyledCarousel>
       {dots && (
-        <DotContainer>
+        <DotContainer className='dots'>
           {[...Array(length)].map((e, index) => (
             <Dot
               key={uuid()}
@@ -122,21 +122,37 @@ export default function Carousel({
   );
 }
 
+const ContainerWidth = '100%';
+const ContainerHeight = '800px';
+
 const Container = styled.div`
   position: relative;
   display: block;
-  width: 1920px;
-  height: 800px;
+  width: 100%;
+  height: ${ContainerHeight};
   margin: 0 auto;
-  border-bottom: 2px solid #817e7e;
-  @media only screen and (max-width: 760px) {
+  &:hover {
+    & > .dots {
+      opacity: 1;
+    }
+    & > div > .left-arrow,
+    & > div > .right-arrow {
+      opacity: 1;
+    }
+  }
+  @media only screen and (max-width: 768px) {
     display: none;
   }
-  @media only screen and (min-width: 761px) and (max-width: 1100px) {
+
+  @media only screen and (min-width: 769px) and (max-width: 1024px) {
+    height: 426px;
+  }
+
+  @media only screen and (min-width: 1025px) and (max-width: 1200px) {
     height: 525px;
   }
-  @media only screen and (min-width: 1101px) and (max-width: 1400px) {
-    height: 700px;
+  @media only screen and (min-width: 1201px) {
+    height: ${ContainerHeight};
   }
 `;
 
@@ -144,11 +160,14 @@ const StyledCarousel = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
-  width: 1920px;
-  height: 800px;
+  width: ${ContainerWidth};
+  height: ${ContainerHeight};
   margin: 0 auto;
   border-bottom: 2px solid #817e7e;
   overflow: hidden;
+
+  &:hover {
+  }
 
   & > .left-arrow,
   & > .right-arrow {
@@ -156,9 +175,14 @@ const StyledCarousel = styled.div`
     top: 50%;
     z-index: 5;
     font-size: 4rem;
-    color: ${colors.white[200]};
+    color: ${colors.white[700]};
     cursor: pointer;
     user-select: none;
+    opacity: 0;
+    transition: opacity 2s ease;
+    &:hover {
+      color: ${colors.white[100]};
+    }
   }
 
   & > .left-arrow {
@@ -179,14 +203,15 @@ const StyledCarousel = styled.div`
     transition: opacity 2s ease;
   }
 
-  @media only screen and (max-width: 760px) {
-    display: none;
+  @media only screen and (min-width: 769px) and (max-width: 1024px) {
+    height: 426px;
   }
-  @media only screen and (min-width: 761px) and (max-width: 1100px) {
-    height: 500px;
+
+  @media only screen and (min-width: 1025px) and (max-width: 1200px) {
+    height: 525px;
   }
-  @media only screen and (min-width: 1101px) and (max-width: 1400px) {
-    height: 600px;
+  @media only screen and (min-width: 1201px) {
+    height: ${ContainerHeight};
   }
 `;
 
@@ -196,8 +221,8 @@ const ImgContainer = styled.div`
   right: 0;
   bottom: 0;
   left: 0;
-  width: 1920px;
-  height: 800px;
+  width: ${ContainerWidth};
+  height: ${ContainerHeight};
 
   & img {
     position: absolute;
@@ -205,14 +230,28 @@ const ImgContainer = styled.div`
     right: 0;
     bottom: 0;
     left: 0;
-    width: 1920px;
-    height: 800px;
+    width: ${ContainerWidth};
+    height: ${ContainerHeight};
+    @media only screen and (min-width: 769px) and (max-width: 1024px) {
+      height: 426px;
+    }
+
+    @media only screen and (min-width: 1025px) and (max-width: 1200px) {
+      height: 525px;
+    }
+    @media only screen and (min-width: 1201px) {
+      height: ${ContainerHeight};
+    }
   }
-  @media only screen and (min-width: 761px) and (max-width: 1100px) {
-    height: 500px;
+  @media only screen and (min-width: 769px) and (max-width: 1024px) {
+    height: 426px;
   }
-  @media only screen and (min-width: 1101px) and (max-width: 1400px) {
-    height: 600px;
+
+  @media only screen and (min-width: 1025px) and (max-width: 1200px) {
+    height: 525px;
+  }
+  @media only screen and (min-width: 1201px) {
+    height: ${ContainerHeight};
   }
 `;
 
@@ -227,7 +266,7 @@ const FilmLogo = styled.div`
   height: 20rem;
   & div {
     position: relative;
-    left: 5rem;
+    left: 8rem;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -270,6 +309,8 @@ const DotContainer = styled.div`
   justify-content: center;
   transform: translateX(-50%);
   margin-bottom: 2rem;
+  opacity: 0;
+  transition: opacity 2s ease;
 `;
 const Dot = styled.div`
   content: '';
@@ -279,7 +320,10 @@ const Dot = styled.div`
   border-radius: 50%;
   background-color: ${colors.white[700]};
   cursor: pointer;
+  &:hover {
+    background-color: ${colors.white[100]};
+  }
   &.active {
-    background-color: white;
+    background-color: ${colors.white[100]};
   }
 `;

@@ -80,6 +80,7 @@ export default function Home() {
 const Container = styled.div`
   display: flex;
   flex-direction: column;
+  width: 100%;
   height: 100%;
   border-bottom: 2px solid #817e7e;
 `;
