@@ -74,7 +74,7 @@ const Container = styled.div`
 
 async function getSiteAndSet(window, setSite, state, updateState) {
   const tempSite =
-    window.location.hostname === 'localhost' //'sullivan6cinema.terrysimcox.com'
+    window.location.hostname === 'sullivan6cinema.terrysimcox.com'
       ? await import('../containts/Site').then(({ Sullivan }) => Sullivan)
       : await import('../containts/Site').then(({ Great8 }) => Great8);
 
