@@ -83,7 +83,7 @@ export default function Carousel({
                 <img src={film.data.backdrop} alt={film.data.title} />
                 <FilmLogo
                   className={current === index ? 'slide active' : 'slide'}
-                  filmlogo={film.data.filmLogo}>
+                  filmlogo={film.data?.filmLogo}>
                   {film.data?.filmLogo && film.data?.filmLogo?.path !== '' ? (
                     <img
                       src={film.data?.filmLogo?.path}

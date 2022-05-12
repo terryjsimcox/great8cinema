@@ -53,7 +53,7 @@ const App = () => {
           <Route path='/GiftCards' element={<GiftCards site={site} />} />
           <Route path='/ContactUs' element={<ContactUs site={site} />} />
           <Route path='/AboutUs' element={<AboutUs />} />
-          <Route path='/Employment' element={<Employment />} />
+          <Route path='/Employment' element={<NewFeature />} />
           <Route path='/film/:id' element={<FilmDetails site={site} />} />
         </Routes>
         <Footer />
@@ -74,7 +74,7 @@ const Container = styled.div`
 
 async function getSiteAndSet(window, setSite, state, updateState) {
   const tempSite =
-    window.location.hostname === 'sullivan6cinema.terrysimcox.com'
+    window.location.hostname === 'localhost' //'sullivan6cinema.terrysimcox.com'
       ? await import('../containts/Site').then(({ Sullivan }) => Sullivan)
       : await import('../containts/Site').then(({ Great8 }) => Great8);
 
