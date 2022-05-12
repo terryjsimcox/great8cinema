@@ -9,17 +9,14 @@ import { colors, fonts, borderRadius } from '../../containts/styles.defaults';
 const FilmDetails = ({ site }) => {
   const { id } = useParams();
   const { state } = useApp();
+  const localState = JSON.parse(localStorage.getItem('state'));
   const movie =
     state?.films?.length > 0
       ? state?.films?.filter((query) => query.id === id)[0]
-      : JSON.parse(localStorage.getItem('filmDetails'));
-  console.log(movie, { ...state });
+      : localState?.films?.filter((query) => query.id === id)[0];
 
   useEffect(() => {
-    localStorage.setItem(
-      'filmDetails',
-      JSON.stringify({ ...movie, isLoading: false })
-    );
+    localStorage.setItem('state', JSON.stringify({ ...state }));
   }, []);
 
   const convertMinutes = (time) => {
@@ -27,8 +24,8 @@ const FilmDetails = ({ site }) => {
     const minutes = Math.floor(time % 60);
     return `${hours}h ${minutes}m`;
   };
-
-  if (id) {
+  console.log(movie);
+  if (movie) {
     return (
       <Container>
         <Hero movie={movie} />
@@ -43,7 +40,7 @@ const FilmDetails = ({ site }) => {
                 <div></div>
                 <p>{convertMinutes(movie?.data.length)}</p>
               </Subtitle>
-              <Description movie={movie} site={site} />
+              <Description movie={movie} site={site ? site : localState.site} />
             </MovieDetails>
           </Details>
         </Section>
