@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ReactComponent as Great8Svg } from '../../assets/images/Great8Cinema1.svg';
-import { ReactComponent as Sullivan6Svg } from '../../assets/images/Sullivan6Cinema.svg';
+import { ReactComponent as Great8Svg } from '../../assets/images/Great8CinemaLogo.svg';
+import { ReactComponent as Sullivan6Svg } from '../../assets/images/Sullivan6CinemaLogo.svg';
 import styled from 'styled-components';
 import { colors } from '../../containts/styles.defaults';
 import { useApp } from '../../context/AppContext';

@@ -262,6 +262,7 @@ const FilmLogo = styled.div`
     top: 2rem;
     left: 7.5rem;
     font-size: 3rem;
+    font-family: ${fonts.Poppins};
     color: ${colors.white[100]};
   }
 
